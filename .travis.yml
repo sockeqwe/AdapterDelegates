@@ -3,12 +3,15 @@ language: android
 android:
   components:
     - build-tools-22.0.1
-    - extra-android-m2repository
-    - extra-google-m2repository
     - android-22
-#    - android-18
-#    - sys-img-armeabi-v7a-android-18
-#    - sys-img-armeabi-v7a-android-22
+    - platform-tools
+    - tools
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+
+  licenses:
+     - 'android-sdk-license-.+'
 
 jdk:
   - oraclejdk8
