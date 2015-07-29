@@ -22,4 +22,7 @@ allprojects {
 ext {
   recyclerView = 'com.android.support:recyclerview-v7:22.2.0'
   appCompat = 'com.android.support:appcompat-v7:22.2.0'
+
+  javaSourceCompatibility = JavaVersion.VERSION_1_7
+  javaTargetCompatibility = JavaVersion.VERSION_1_7
 }
