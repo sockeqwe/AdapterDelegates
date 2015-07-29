@@ -97,5 +97,5 @@ This can be reduced by extending either from `ListDelegationAdapter` if the dats
 This library is available on maven central:
 
 ```groovy
-compile `com.hannesdorfmann:adapterdelegates:1.0.1'
+compile 'com.hannesdorfmann:adapterdelegates:1.0.1'
 ```
