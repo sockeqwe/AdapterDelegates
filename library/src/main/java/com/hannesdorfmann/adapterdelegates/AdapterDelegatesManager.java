@@ -106,7 +106,7 @@ public class AdapterDelegatesManager<T> {
    * @param delegate The delegate to remove
    * @return self
    */
-  public AdapterDelegatesManager<T> removeDeletate(@NonNull AdapterDelegate<T> delegate) {
+  public AdapterDelegatesManager<T> removeDelegate(@NonNull AdapterDelegate<T> delegate) {
 
     if (delegate == null) {
       throw new NullPointerException("AdapterDelegate is null");
