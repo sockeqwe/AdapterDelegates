@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    >
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:paddingBottom="8dp"
+      android:paddingTop="8dp"
+      android:clipToPadding="false"
+      />
+
+
+  <Button
+      android:id="@+id/reptielsActivity"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Reptiles without Advertisement"
+      />
+
+</LinearLayout>
