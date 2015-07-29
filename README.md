@@ -21,7 +21,7 @@ public class CatAdapterDelegate extends AbsAdapterDelegate<List<Animal>> {
     inflater = activity.getLayoutInflater();
   }
 
-  @Override public boolean isForViewType(@NonNull List<DisplayableItem> items, int position) {
+  @Override public boolean isForViewType(@NonNull List<Animal> items, int position) {
     return items.get(position) instanceof Cat;
   }
 
@@ -29,7 +29,7 @@ public class CatAdapterDelegate extends AbsAdapterDelegate<List<Animal>> {
     return new CatViewHolder(inflater.inflate(R.layout.item_cat, parent, false));
   }
 
-  @Override public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position,
+  @Override public void onBindViewHolder(@NonNull List<Animal> items, int position,
       @NonNull RecyclerView.ViewHolder holder) {
 
     CatViewHolder vh = (CatViewHolder) holder;
@@ -58,7 +58,7 @@ public class AnimalAdapter extends RecyclerView.Adapter {
   private AdapterDelegatesManager<List<Animal>> delegatesManager;
   private List<Animal> items;
 
-  public MainAdapter(Activity activity, List<DisplayableItem> items) {
+  public MainAdapter(Activity activity, List<Animal> items) {
     this.items = items;
 
     // Delegates
