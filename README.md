@@ -63,10 +63,10 @@ public class AnimalAdapter extends RecyclerView.Adapter {
 
     // Delegates
     delegatesManager = new AdapterDelegatesManager<>();
-    delegatesManager.addDelegate(new CatAdapterDelegate(activity, 1));
-    delegatesManager.addDelegate(new DogAdapterDelegate(activity, 2));
-    delegatesManager.addDelegate(new GeckoAdapterDelegate(activity, 3));
-    delegatesManager.addDelegate(new SnakeAdapterDelegate(activity, 4));
+    delegatesManager.addDelegate(new CatAdapterDelegate(activity, 0));
+    delegatesManager.addDelegate(new DogAdapterDelegate(activity, 1));
+    delegatesManager.addDelegate(new GeckoAdapterDelegate(activity, 2));
+    delegatesManager.addDelegate(new SnakeAdapterDelegate(activity, 3));
 
   }
 
@@ -90,9 +90,23 @@ public class AnimalAdapter extends RecyclerView.Adapter {
 
 ## Reducing boiler plate code
 As you have seen in the code snipped above this may require to write the same boiler plate code  again and again to hook in `AdapterDelegatesManager` to `Adapter`.
-This can be reduced by extending either from `ListDelegationAdapter` if the datsource the adapter displays is `java.util.List<?>` or `AbsDelegationAdapter` which is a more general one (not limited to `java.util.List`)
+This can be reduced by extending either from `ListDelegationAdapter` if the data source the adapter displays is `java.util.List<?>` or `AbsDelegationAdapter` which is a more general one (not limited to `java.util.List`)
 
-For instance have a look at [ReptilesAdapter](https://github.com/sockeqwe/AdapterDelegates/blob/master/app/src/main/java/com/hannesdorfmann/adapterdelegates/sample/ReptilesAdapter.java) from sample app to see how slim an adapter implementation could be.
+In example the same `AnimalAdapter` from above could be simplified as follows by exending from `ListDelegationAdapter`:
+public class AnimalAdapter extends ListDelegationAdapter<List<Animal>> {
+
+  public AnimalAdapter(Activity activity, List<Animal> items) {
+
+    // DelegatesManager is a protected Field in ListDelegationAdapter
+    delegatesManager.addDelegate(new CatAdapterDelegate(activity, 0));
+    delegatesManager.addDelegate(new DogAdapterDelegate(activity, 1));
+    delegatesManager.addDelegate(new GeckoAdapterDelegate(activity, 2));
+    delegatesManager.addDelegate(new SnakeAdapterDelegate(activity, 3));
+
+    // Set the items from super class.
+    setItems(items);
+  }
+}
 
 ## Dependencies
 This library is available on maven central:
