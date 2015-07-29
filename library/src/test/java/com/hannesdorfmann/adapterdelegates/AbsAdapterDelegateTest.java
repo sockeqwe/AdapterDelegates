@@ -30,7 +30,7 @@ public class AbsAdapterDelegateTest {
 
     int viewType = 0;
 
-    AbsAdaterDelegate d = new AbsAdaterDelegate(viewType) {
+    AbsAdapterDelegate d = new AbsAdapterDelegate(viewType) {
       @Override public boolean isForViewType(Object items, int position) {
         return false;
       }

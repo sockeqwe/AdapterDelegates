@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 /**
  * @author Hannes Dorfmann
  */
-public class SpyableAdapterDelegate<T> extends AbsAdaterDelegate<T> {
+public class SpyableAdapterDelegate<T> extends AbsAdapterDelegate<T> {
 
   public boolean isForViewTypeReturnedYes = false;
   public boolean onCreateViewHolderCalled = false;

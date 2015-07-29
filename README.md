@@ -12,7 +12,7 @@ An `AdapterDelegate` get added to an `AdapterDelegatesManager`. This manager is 
 
 For example:
 ```java
-public class CatAdapterDelegate extends AbsAdaterDelegate<List<Animal>> {
+public class CatAdapterDelegate extends AbsAdapterDelegate<List<Animal>> {
 
   private LayoutInflater inflater;
 
@@ -97,5 +97,5 @@ This can be reduced by extending either from `ListDelegationAdapter` if the dats
 This library is available on maven central:
 
 ```groovy
-compile `com.hannesdorfmann:adapterdelegates:1.0.0'
+compile `com.hannesdorfmann:adapterdelegates:1.0.1'
 ```

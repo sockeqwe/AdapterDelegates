@@ -23,14 +23,14 @@ package com.hannesdorfmann.adapterdelegates;
  *
  * @author Hannes Dorfmann
  */
-public abstract class AbsAdaterDelegate<T> implements AdapterDelegate<T> {
+public abstract class AbsAdapterDelegate<T> implements AdapterDelegate<T> {
 
   /**
    * The item view type
    */
   protected int viewType;
 
-  public AbsAdaterDelegate(int viewType) {
+  public AbsAdapterDelegate(int viewType) {
     this.viewType = viewType;
   }
 

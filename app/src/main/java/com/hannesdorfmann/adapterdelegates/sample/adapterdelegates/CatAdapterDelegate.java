@@ -23,7 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.hannesdorfmann.adapterdelegates.AbsAdaterDelegate;
+import com.hannesdorfmann.adapterdelegates.AbsAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates.sample.R;
 import com.hannesdorfmann.adapterdelegates.sample.model.Cat;
 import com.hannesdorfmann.adapterdelegates.sample.model.DisplayableItem;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author Hannes Dorfmann
  */
-public class CatAdapterDelegate extends AbsAdaterDelegate<List<DisplayableItem>> {
+public class CatAdapterDelegate extends AbsAdapterDelegate<List<DisplayableItem>> {
 
   private LayoutInflater inflater;
 

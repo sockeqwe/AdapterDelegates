@@ -22,7 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.hannesdorfmann.adapterdelegates.AbsAdaterDelegate;
+import com.hannesdorfmann.adapterdelegates.AbsAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates.sample.R;
 import com.hannesdorfmann.adapterdelegates.sample.model.Advertisement;
 import com.hannesdorfmann.adapterdelegates.sample.model.DisplayableItem;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * @author Hannes Dorfmann
  */
-public class AdvertisementAdapterDelegate extends AbsAdaterDelegate<List<DisplayableItem>> {
+public class AdvertisementAdapterDelegate extends AbsAdapterDelegate<List<DisplayableItem>> {
 
   LayoutInflater inflater;
 

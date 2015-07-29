@@ -16,7 +16,7 @@ public class AdapterDelegatesManagerTest {
 
     int viewType = 0;
 
-    AdapterDelegate d1 = new AbsAdaterDelegate(viewType) {
+    AdapterDelegate d1 = new AbsAdapterDelegate(viewType) {
       @Override public boolean isForViewType(Object items, int position) {
         return false;
       }
@@ -31,7 +31,7 @@ public class AdapterDelegatesManagerTest {
       }
     };
 
-    AdapterDelegate d2 = new AbsAdaterDelegate(viewType) {
+    AdapterDelegate d2 = new AbsAdapterDelegate(viewType) {
       @Override public boolean isForViewType(Object items, int position) {
         return false;
       }
