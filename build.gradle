@@ -25,4 +25,6 @@ ext {
 
   javaSourceCompatibility = JavaVersion.VERSION_1_7
   javaTargetCompatibility = JavaVersion.VERSION_1_7
+
+  buildTools = '22.0.1'
 }
