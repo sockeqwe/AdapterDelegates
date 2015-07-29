@@ -92,6 +92,7 @@ public class AnimalAdapter extends RecyclerView.Adapter {
 As you have seen in the code snipped above this may require to write the same boiler plate code  again and again to hook in `AdapterDelegatesManager` to `Adapter`.
 This can be reduced by extending either from `ListDelegationAdapter` if the datsource the adapter displays is `java.util.List<?>` or `AbsDelegationAdapter` which is a more general one (not limited to `java.util.List`)
 
+For instance have a look at [ReptilesAdapter](https://github.com/sockeqwe/AdapterDelegates/blob/master/app/src/main/java/com/hannesdorfmann/adapterdelegates/sample/ReptilesAdapter.java) from sample app to see how slim an adapter implementation could be.
 
 ## Dependencies
 This library is available on maven central:
