@@ -93,6 +93,8 @@ As you have seen in the code snipped above this may require to write the same bo
 This can be reduced by extending either from `ListDelegationAdapter` if the data source the adapter displays is `java.util.List<?>` or `AbsDelegationAdapter` which is a more general one (not limited to `java.util.List`)
 
 In example the same `AnimalAdapter` from above could be simplified as follows by exending from `ListDelegationAdapter`:
+
+```java
 public class AnimalAdapter extends ListDelegationAdapter<List<Animal>> {
 
   public AnimalAdapter(Activity activity, List<Animal> items) {
@@ -107,6 +109,7 @@ public class AnimalAdapter extends ListDelegationAdapter<List<Animal>> {
     setItems(items);
   }
 }
+```
 
 ## Dependencies
 This library is available on maven central:
