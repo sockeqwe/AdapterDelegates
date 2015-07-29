@@ -64,7 +64,7 @@ public class AdapterDelegatesManagerTest {
     Assert.assertTrue(manager.delegates.get(viewType) == d2);
 
     // Remove a delegate should have no impact, because its already remmoved
-    manager.removeDeletate(d1);
+    manager.removeDelegate(d1);
     Assert.assertTrue(manager.delegates.get(viewType) == d2);
 
     // Should remove d2
