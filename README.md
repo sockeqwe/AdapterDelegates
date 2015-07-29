@@ -88,7 +88,7 @@ public class AnimalAdapter extends RecyclerView.Adapter {
 }
 ```
 
-## Reducing boiler plate code
+## Reducing boilerplate code
 As you have seen in the code snipped above this may require to write the same boiler plate code  again and again to hook in `AdapterDelegatesManager` to `Adapter`.
 This can be reduced by extending either from `ListDelegationAdapter` if the data source the adapter displays is `java.util.List<?>` or `AbsDelegationAdapter` which is a more general one (not limited to `java.util.List`)
 
