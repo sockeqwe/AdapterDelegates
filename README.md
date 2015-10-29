@@ -58,7 +58,7 @@ public class AnimalAdapter extends RecyclerView.Adapter {
   private AdapterDelegatesManager<List<Animal>> delegatesManager;
   private List<Animal> items;
 
-  public MainAdapter(Activity activity, List<Animal> items) {
+  public AnimalAdapter(Activity activity, List<Animal> items) {
     this.items = items;
 
     // Delegates
