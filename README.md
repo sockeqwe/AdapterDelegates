@@ -111,11 +111,22 @@ public class AnimalAdapter extends ListDelegationAdapter<List<Animal>> {
 }
 ```
 
+## Fallback AdapterDelegate
+What if your adapter's data source contains a certain element you don't have a registered an `AdapterDelegate` for? In this case the `AdapterDelegateManager` will throw an exception at runtime. However, this is not always what you want. You can specify a fallback `AdapterDelegate` that will be used if no other `AdapterDelegate` has been found to handle a certain `AdapterDelegate`.
+
+```java
+AdapterDelegate fallbackDelegate = ...;
+adapterDelegateManager.setFallbackDelegate( fallbackDelegate );
+```
+
+Please note that the fallback delegate must return an integer value from `fallbackDelegate.getItemViewType()` that **doesn't** conflict with any other `AdapterDelegate` added by `adapterDelegateManager.addDelegate( fooDelegate )`.
+The manager will check for conflicts at runtime. To minimize the risk of conflicts you can use `AbsFallbackAdapterDelegate` as base class for your fallback implementation. `AbsFallbackAdapterDelegate` uses `Integer.MAX_VALUE - 1` internally to avoid conflicts with other adapter delegates. Note also that boolean return type of `isForViewType()` of a fallback delegate will be ignored (will not be take into account). However, you are free to write your own adapter delegate fallback that doesn't extend from `AbsFallbackAdapterDelegate`.
+
 ## Dependencies
 This library is available on maven central:
 
 ```groovy
-compile 'com.hannesdorfmann:adapterdelegates:1.0.2'
+compile 'com.hannesdorfmann:adapterdelegates:1.1.0'
 ```
 
 [![Build Status](https://travis-ci.org/sockeqwe/AdapterDelegates.svg?branch=master)](https://travis-ci.org/sockeqwe/AdapterDelegates)
