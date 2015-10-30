@@ -17,6 +17,7 @@
 package com.hannesdorfmann.adapterdelegates;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -40,6 +41,11 @@ import android.view.ViewGroup;
  * <li> {@link #onBindViewHolder(Object, int, RecyclerView.ViewHolder)}: Must be called from {@link
  * RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)}</li>
  * </ul>
+ *
+ * You can also set a fallback {@link AdapterDelegate} by using {@link
+ * #setFallbackDelegate(AdapterDelegate)} that will be used if no {@link AdapterDelegate} is
+ * responsible to handle a certain view type. If no fallback is specified, an Exception will be
+ * thrown if no {@link AdapterDelegate} is responsible to handle a certain view type
  * </p>
  *
  * @param <T> The type of the datasource of the adapter
@@ -51,6 +57,7 @@ public class AdapterDelegatesManager<T> {
    * Map for ViewType to AdapterDeleage
    */
   SparseArrayCompat<AdapterDelegate<T>> delegates = new SparseArrayCompat();
+  private AdapterDelegate<T> fallbackDelegate;
 
   /**
    * Adds an {@link AdapterDelegate}. Internally calls {@link #addDelegate(AdapterDelegate,
@@ -78,6 +85,9 @@ public class AdapterDelegatesManager<T> {
    * @throws IllegalArgumentException if <b>allowReplacingDelegate</b>  is false and an {@link
    * AdapterDelegate} is already added (registered)
    * with the same ViewType {@link AdapterDelegate#getItemViewType()}.
+   * @throws IllegalArgumentException if the {@link AdapterDelegate#getItemViewType()} is the same
+   * as fallback AdapterDelegate one.
+   * @see #setFallbackDelegate(AdapterDelegate)
    */
   public AdapterDelegatesManager<T> addDelegate(@NonNull AdapterDelegate<T> delegate,
       boolean allowReplacingDelegate) {
@@ -87,6 +97,12 @@ public class AdapterDelegatesManager<T> {
     }
 
     int viewType = delegate.getItemViewType();
+
+    if (fallbackDelegate != null && fallbackDelegate.getItemViewType() == viewType) {
+      throw new IllegalArgumentException(
+          "Conflict: the passed AdapterDelegate has the same ViewType integer (value = " + viewType
+              + ") as the fallback AdapterDelegate");
+    }
     if (!allowReplacingDelegate && delegates.get(viewType) != null) {
       throw new IllegalArgumentException(
           "An AdapterDelegate is already registered for the viewType = " + viewType
@@ -156,6 +172,10 @@ public class AdapterDelegatesManager<T> {
       }
     }
 
+    if (fallbackDelegate != null) {
+      return fallbackDelegate.getItemViewType();
+    }
+
     throw new IllegalArgumentException(
         "No AdapterDelegate added that matches position=" + position + " in data source");
   }
@@ -172,7 +192,11 @@ public class AdapterDelegatesManager<T> {
   @NonNull public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     AdapterDelegate<T> delegate = delegates.get(viewType);
     if (delegate == null) {
-      throw new NullPointerException("No AdapterDelegate added for ViewType " + viewType);
+      if (fallbackDelegate == null) {
+        throw new NullPointerException("No AdapterDelegate added for ViewType " + viewType);
+      } else {
+        delegate = fallbackDelegate;
+      }
     }
 
     RecyclerView.ViewHolder vh = delegate.onCreateViewHolder(parent);
@@ -193,14 +217,51 @@ public class AdapterDelegatesManager<T> {
    * @throws NullPointerException if no AdapterDelegate has been registered for ViewHolders
    * viewType
    */
-  public void onBindViewHolder(@NonNull T items, int position, @NonNull RecyclerView.ViewHolder viewHolder) {
+  public void onBindViewHolder(@NonNull T items, int position,
+      @NonNull RecyclerView.ViewHolder viewHolder) {
 
     AdapterDelegate<T> delegate = delegates.get(viewHolder.getItemViewType());
     if (delegate == null) {
-      throw new NullPointerException(
-          "No AdapterDelegate added for ViewType " + viewHolder.getItemViewType());
+      if (fallbackDelegate == null) {
+        throw new NullPointerException(
+            "No AdapterDelegate added for ViewType " + viewHolder.getItemViewType());
+      } else {
+        delegate = fallbackDelegate;
+      }
     }
 
     delegate.onBindViewHolder(items, position, viewHolder);
+  }
+
+  /**
+   * Set a fallback delegate that should be used if no {@link AdapterDelegate} has been found that
+   * can handle a certain view type.
+   *
+   * @param fallbackDelegate The {@link AdapterDelegate} that should be used as fallback if no
+   * other
+   * AdapterDelegate has handled a certain view type. <code>null</code> you can set this to null if
+   * you want to remove a previously set fallback AdapterDelegate
+   * @throws IllegalArgumentException If passed Fallback
+   */
+  public AdapterDelegatesManager<T> setFallbackDelegate(
+      @Nullable AdapterDelegate<T> fallbackDelegate) {
+
+    if (fallbackDelegate != null) {
+      // Setting a new fallback delegate
+      int delegatesCount = delegates.size();
+      int fallbackViewType = fallbackDelegate.getItemViewType();
+      for (int i = 0; i < delegatesCount; i++) {
+        AdapterDelegate<T> delegate = delegates.valueAt(i);
+        if (delegate.getItemViewType() == fallbackViewType) {
+          throw new IllegalArgumentException(
+              "Conflict: The given fallback - delegate has the same ViewType integer (value = "
+                  + fallbackViewType + ")  as an already assigned AdapterDelegate "
+                  + delegate.getClass().getName());
+        }
+      }
+    }
+    this.fallbackDelegate = fallbackDelegate;
+
+    return this;
   }
 }

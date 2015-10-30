@@ -23,6 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import com.hannesdorfmann.adapterdelegates.sample.model.DisplayableItem;
 import com.hannesdorfmann.adapterdelegates.sample.model.Gecko;
 import com.hannesdorfmann.adapterdelegates.sample.model.Snake;
+import com.hannesdorfmann.adapterdelegates.sample.model.UnknownReptile;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +36,7 @@ public class ReptilesActivity extends AppCompatActivity {
 
     RecyclerView rv = (RecyclerView) findViewById(R.id.recyclerView);
     rv.setLayoutManager(new LinearLayoutManager(this));
-    MainAdapter adapter = new MainAdapter(this, getAnimals());
+    ReptilesAdapter adapter = new ReptilesAdapter(this, getAnimals());
     rv.setAdapter(adapter);
   }
 
@@ -49,6 +50,7 @@ public class ReptilesActivity extends AppCompatActivity {
     animals.add(new Gecko("Stenodactylus", "Dune Gecko"));
     animals.add(new Gecko("Leopard Gecko", "Eublepharis"));
     animals.add(new Gecko("Madagascar Gecko", "Phelsuma"));
+    animals.add(new UnknownReptile());
 
     animals.add(new Snake("Mub Adder", "Adder"));
     animals.add(new Snake("Texas Blind Snake", "Blind snake"));

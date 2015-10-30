@@ -2,6 +2,7 @@ package com.hannesdorfmann.adapterdelegates;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import junit.framework.Assert;
@@ -248,6 +249,83 @@ public class AdapterDelegatesManagerTest {
   private void resetDelegates(SpyableAdapterDelegate<?>... delegates) {
     for (SpyableAdapterDelegate d : delegates) {
       d.reset();
+    }
+  }
+
+  @Test(expected = NullPointerException.class) public void testNoDelegates() {
+    AdapterDelegatesManager<Object> delegatesManager = new AdapterDelegatesManager<>();
+    delegatesManager.onCreateViewHolder(null, 1); // No Delegate --> throw Exception
+  }
+
+  @Test public void testUnknownDelegate() {
+    AdapterDelegatesManager<Object> delegatesManager = new AdapterDelegatesManager<>();
+    delegatesManager.addDelegate(new SpyableAdapterDelegate<Object>(0));
+
+    delegatesManager.onCreateViewHolder(null, 0); // NO exception
+    try {
+      delegatesManager.onCreateViewHolder(null,
+          1); // There is no delegates manager for ViewType == 1,
+      Assert.fail(
+          "Exception should be thrown because no Delegate for given ViewType is registered");
+    } catch (NullPointerException e) {
+      // No delegate for view type 1 registered --> Nullpointer exception will be thrown
+    }
+  }
+
+  @Test public void testFallbackUnknownDelegate() {
+
+    int fallbackViewType = Integer.MAX_VALUE - 1;
+    int itemPosition = 1;
+    List<Object> items = new ArrayList<>();
+    items.add(new Object());
+
+    AdapterDelegatesManager<List<Object>> delegatesManager = new AdapterDelegatesManager<>();
+    SpyableAdapterDelegate fallbackDelegate = new SpyableAdapterDelegate(fallbackViewType);
+
+    SpyableAdapterDelegate<List<Object>> otherDelegate = new SpyableAdapterDelegate<>(0);
+    delegatesManager.setFallbackDelegate(fallbackDelegate);
+    delegatesManager.addDelegate(otherDelegate);
+
+    RecyclerView.ViewHolder vh = delegatesManager.onCreateViewHolder(null,
+        fallbackViewType); // There is no delegates manager for ViewType == 1
+
+    Assert.assertSame(vh, fallbackDelegate.viewHolder);
+    Assert.assertTrue(fallbackDelegate.onCreateViewHolderCalled);
+    Assert.assertFalse(otherDelegate.onCreateViewHolderCalled);
+
+    // Test bind viewHolder
+    delegatesManager.onBindViewHolder(items, itemPosition, vh);
+    Assert.assertTrue(fallbackDelegate.onBindViewHolderCalled);
+    Assert.assertFalse(otherDelegate.onBindViewHolderCalled);
+  }
+
+  @Test public void testFallbackViewTypeConflictsDelegateViewType() {
+
+    int viewType = 2;
+
+    AdapterDelegatesManager<List> manager1 = new AdapterDelegatesManager<>();
+    AdapterDelegatesManager<List> manager2 = new AdapterDelegatesManager<>();
+
+    // Both have the same view type
+    SpyableAdapterDelegate<List> fallback = new SpyableAdapterDelegate<>(viewType);
+    SpyableAdapterDelegate<List> delegate = new SpyableAdapterDelegate<>(viewType);
+    manager1.setFallbackDelegate(fallback);
+
+    try {
+      manager1.addDelegate(delegate);
+      Assert.fail(
+          "An excepetion should be thrown because AdapterDelegate conflicts with fallback ViewType");
+    } catch (IllegalArgumentException e) {
+      // Excepted exception
+    }
+
+    manager2.addDelegate(delegate);
+    try {
+      manager2.setFallbackDelegate(fallback);
+      Assert.fail(
+          "An exception should be thrown because fallback conflicts with AdapterDelegates ViewType");
+    } catch (IllegalArgumentException exception) {
+      // Expected Exception
     }
   }
 }
