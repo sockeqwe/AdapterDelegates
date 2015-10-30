@@ -120,7 +120,7 @@ adapterDelegateManager.setFallbackDelegate( fallbackDelegate );
 ```
 
 Please note that the fallback delegate must return an integer value from `fallbackDelegate.getItemViewType()` that **doesn't** conflict with any other `AdapterDelegate` added by `adapterDelegateManager.addDelegate( fooDelegate )`.
-The manager will check for conflicts at runtime. To minimize the risk of conflicts you can use `AbsFallbackAdapterDelegate` as base class for your fallback implementation. `AbsFallbackAdapterDelegate` uses `Integer.MAX_VALUE - 1` internally to avoid conflicts with other adapter delegates. Note also that boolean return type of `isForViewType()` of a fallback delegate will be ignored (will not be take into account). However, you are free to write your own adapter delegate fallback that doesn't extend from `AbsFallbackAdapterDelegate`.
+The manager will check for conflicts at runtime. To minimize the risk of conflicts you can use `AbsFallbackAdapterDelegate` as base class for your fallback implementation. `AbsFallbackAdapterDelegate` uses `Integer.MAX_VALUE - 1` internally to avoid conflicts with other adapter delegates. However, you are free to write your own adapter delegate fallback that doesn't extend from `AbsFallbackAdapterDelegate`. Note also that boolean return type of `isForViewType()` of a fallback delegate will be ignored (will not be take into account).
 
 ## Dependencies
 This library is available on maven central:
