@@ -112,7 +112,7 @@ public class AnimalAdapter extends ListDelegationAdapter<List<Animal>> {
 ```
 
 ## Fallback AdapterDelegate
-What if your adapter's data source contains a certain element you don't have a registered an `AdapterDelegate` for? In this case the `AdapterDelegateManager` will throw an exception at runtime. However, this is not always what you want. You can specify a fallback `AdapterDelegate` that will be used if no other `AdapterDelegate` has been found to handle a certain `AdapterDelegate`.
+What if your adapter's data source contains a certain element you don't have registered an `AdapterDelegate` for? In this case the `AdapterDelegateManager` will throw an exception at runtime. However, this is not always what you want. You can specify a fallback `AdapterDelegate` that will be used if no other `AdapterDelegate` has been found to handle a certain `AdapterDelegate`.
 
 ```java
 AdapterDelegate fallbackDelegate = ...;
