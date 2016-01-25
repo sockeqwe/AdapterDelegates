@@ -42,8 +42,16 @@ import android.view.ViewGroup;
  */
 public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
 
-  protected AdapterDelegatesManager<T> delegatesManager = new AdapterDelegatesManager<T>();
+  protected AdapterDelegatesManager<T> delegatesManager;
   protected T items;
+
+  public AbsDelegationAdapter() {
+    delegatesManager = new AdapterDelegatesManager<T>();
+  }
+
+  public AbsDelegationAdapter(AdapterDelegatesManager<T> delegatesManager) {
+    this.delegatesManager = delegatesManager;
+  }
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     return delegatesManager.onCreateViewHolder(parent, viewType);
