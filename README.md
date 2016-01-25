@@ -1,6 +1,14 @@
 # AdapterDelegates
 Read the motivation for this project in [my blog post](http://hannesdorfmann.com/android/adapter-delegates/).
 
+## Dependencies
+This library is available on maven central:
+
+```groovy
+compile 'com.hannesdorfmann:adapterdelegates:1.1.0'
+```
+
+[![Build Status](https://travis-ci.org/sockeqwe/AdapterDelegates.svg?branch=master)](https://travis-ci.org/sockeqwe/AdapterDelegates)
 
 ## Idea
 The idea of this library is to build your adapters by composing reusable components.
@@ -122,11 +130,20 @@ adapterDelegateManager.setFallbackDelegate( fallbackDelegate );
 Please note that the fallback delegate must return an integer value from `fallbackDelegate.getItemViewType()` that **doesn't** conflict with any other `AdapterDelegate` added by `adapterDelegateManager.addDelegate( fooDelegate )`.
 The manager will check for conflicts at runtime. To minimize the risk of conflicts you can use `AbsFallbackAdapterDelegate` as base class for your fallback implementation. `AbsFallbackAdapterDelegate` uses `Integer.MAX_VALUE - 1` internally to avoid conflicts with other adapter delegates. However, you are free to write your own adapter delegate fallback that doesn't extend from `AbsFallbackAdapterDelegate`. Note also that boolean return type of `isForViewType()` of a fallback delegate will be ignored (will not be take into account).
 
-## Dependencies
-This library is available on maven central:
 
-```groovy
-compile 'com.hannesdorfmann:adapterdelegates:1.1.0'
+## License
 ```
+Copyright 2015 Hannes Dorfmann
 
-[![Build Status](https://travis-ci.org/sockeqwe/AdapterDelegates.svg?branch=master)](https://travis-ci.org/sockeqwe/AdapterDelegates)
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
