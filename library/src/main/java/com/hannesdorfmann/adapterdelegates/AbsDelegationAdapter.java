@@ -16,6 +16,7 @@
 
 package com.hannesdorfmann.adapterdelegates;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -60,7 +61,7 @@ public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
     this(new AdapterDelegatesManager<T>());
   }
 
-  public AbsDelegationAdapter(AdapterDelegatesManager<T> delegatesManager) {
+  public AbsDelegationAdapter(@NonNull AdapterDelegatesManager<T> delegatesManager) {
     if (delegatesManager == null) {
       throw new NullPointerException("AdapterDelegatesManager is null");
     }

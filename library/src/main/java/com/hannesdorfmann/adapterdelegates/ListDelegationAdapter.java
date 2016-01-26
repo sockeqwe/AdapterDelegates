@@ -16,6 +16,7 @@
 
 package com.hannesdorfmann.adapterdelegates;
 
+import android.support.annotation.NonNull;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public class ListDelegationAdapter<T extends List<?>> extends AbsDelegationAdapt
   public ListDelegationAdapter() {
   }
 
-  public ListDelegationAdapter(AdapterDelegatesManager<T> delegatesManager) {
+  public ListDelegationAdapter(@NonNull AdapterDelegatesManager<T> delegatesManager) {
     super(delegatesManager);
   }
 
