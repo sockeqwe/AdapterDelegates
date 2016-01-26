@@ -50,5 +50,5 @@ public class ListDelegationAdapterTest {
 
     adapter.getItemCount();
   }
-  
+
 }
