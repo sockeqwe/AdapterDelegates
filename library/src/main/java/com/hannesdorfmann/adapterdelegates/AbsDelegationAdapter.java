@@ -28,10 +28,21 @@ import android.view.ViewGroup;
  * class:
  * <pre>
  * {@code
- *    class MyAdaper extends AbsDelegationAdapter<MyDataSourceType>{
+ *    class MyAdapter extends AbsDelegationAdapter<MyDataSourceType>{
  *        public MyAdaper(){
  *            this.delegatesManager.add(new FooAdapterDelegate());
  *            this.delegatesManager.add(new BarAdapterDelegate());
+ *        }
+ *    }
+ * }
+ * </pre>
+ *
+ * or you can pass a already prepared {@link AdapterDelegatesManager} via constructor like this:
+ * <pre>
+ * {@code
+ *    class MyAdapter extends AbsDelegationAdapter<MyDataSourceType>{
+ *        public MyAdapter(AdapterDelegatesManager manager){
+ *          super(manager)
  *        }
  *    }
  * }
@@ -46,10 +57,14 @@ public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
   protected T items;
 
   public AbsDelegationAdapter() {
-    delegatesManager = new AdapterDelegatesManager<T>();
+    this(new AdapterDelegatesManager<T>());
   }
 
   public AbsDelegationAdapter(AdapterDelegatesManager<T> delegatesManager) {
+    if (delegatesManager == null) {
+      throw new NullPointerException("AdapterDelegatesManager is null");
+    }
+
     this.delegatesManager = delegatesManager;
   }
 

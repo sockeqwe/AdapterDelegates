@@ -39,6 +39,13 @@ import java.util.List;
  */
 public class ListDelegationAdapter<T extends List<?>> extends AbsDelegationAdapter<T> {
 
+  public ListDelegationAdapter() {
+  }
+
+  public ListDelegationAdapter(AdapterDelegatesManager<T> delegatesManager) {
+    super(delegatesManager);
+  }
+
   @Override public int getItemCount() {
     return items == null ? 0 : items.size();
   }

@@ -46,7 +46,6 @@ public class AbsAdapterDelegateTest {
     };
 
     Assert.assertSame(viewType, d.getItemViewType());
-
-
   }
+
 }
