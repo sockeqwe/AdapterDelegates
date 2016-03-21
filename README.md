@@ -1,5 +1,5 @@
 # AdapterDelegates
-Read the motivation for this project in [my blog post](http://hannesdorfmann.com/android/adapter-delegates/).
+Read the motivation for this project in [my blog post](http://hannesdorfmann.com/android/adapter-delegates).
 
 ## Dependencies
 This library is available on maven central:
