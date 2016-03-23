@@ -100,7 +100,7 @@ public class AnimalAdapter extends RecyclerView.Adapter {
 As you have seen in the code snipped above this may require to write the same boiler plate code  again and again to hook in `AdapterDelegatesManager` to `Adapter`.
 This can be reduced by extending either from `ListDelegationAdapter` if the data source the adapter displays is `java.util.List<?>` or `AbsDelegationAdapter` which is a more general one (not limited to `java.util.List`)
 
-In example the same `AnimalAdapter` from above could be simplified as follows by exending from `ListDelegationAdapter`:
+In example the same `AnimalAdapter` from above could be simplified as follows by extending from `ListDelegationAdapter`:
 
 ```java
 public class AnimalAdapter extends ListDelegationAdapter<List<Animal>> {
@@ -118,6 +118,45 @@ public class AnimalAdapter extends ListDelegationAdapter<List<Animal>> {
   }
 }
 ```
+
+Also you may have noticed that you often have to write boilerplate code to cast items and ViewHolders when working with list of items as apapters dataset source.
+`AbsListItemAdapterDelegate` can help you here. Let's take this class to create a `CatListItemAdapterDelegate` similar to the `CatAdapterDelegate` from top of this page but without the code for casting items.
+
+```java
+public class CatListItemAdapterDelegate extends AbsListItemAdapterDelegate<Cat, Animal, CatViewHolder> {
+
+  private LayoutInflater inflater;
+
+  public CatAdapterDelegate(Activity activity, int viewType) {
+    super(viewType);
+    inflater = activity.getLayoutInflater();
+  }
+
+  @Override public boolean isForViewType(Cat item, List<Animal> items, int position) {
+    return item instanceof Cat;
+  }
+
+  @Override public CatViewHolder onCreateViewHolder(ViewGroup parent) {
+    return new CatViewHolder(inflater.inflate(R.layout.item_cat, parent, false));
+  }
+
+  @Override public void onBindViewHolder(Cat item, CatViewHolder vh) {
+    vh.name.setText(item.getName());
+  }
+
+  static class CatViewHolder extends RecyclerView.ViewHolder {
+
+    public TextView name;
+
+    public CatViewHolder(View itemView) {
+      super(itemView);
+      name = (TextView) itemView.findViewById(R.id.name);
+    }
+  }
+}
+```
+
+As you see, instead of writing code that casts list item to cat we can use `AbsListItemAdapterDelegate` to do the same job (by declaring generic types).
 
 ## Fallback AdapterDelegate
 What if your adapter's data source contains a certain element you don't have registered an `AdapterDelegate` for? In this case the `AdapterDelegateManager` will throw an exception at runtime. However, this is not always what you want. You can specify a fallback `AdapterDelegate` that will be used if no other `AdapterDelegate` has been found to handle a certain `AdapterDelegate`.

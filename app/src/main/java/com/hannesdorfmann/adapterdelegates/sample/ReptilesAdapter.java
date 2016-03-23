@@ -20,7 +20,7 @@ import android.app.Activity;
 import com.hannesdorfmann.adapterdelegates.ListDelegationAdapter;
 import com.hannesdorfmann.adapterdelegates.sample.adapterdelegates.GeckoAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates.sample.adapterdelegates.ReptilesFallbackDelegate;
-import com.hannesdorfmann.adapterdelegates.sample.adapterdelegates.SnakeAdapterDelegate;
+import com.hannesdorfmann.adapterdelegates.sample.adapterdelegates.SnakeListItemAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates.sample.model.DisplayableItem;
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class ReptilesAdapter extends ListDelegationAdapter<List<DisplayableItem>
 
     // Delegates
     this.delegatesManager.addDelegate(new GeckoAdapterDelegate(activity, 0));
-    this.delegatesManager.addDelegate(new SnakeAdapterDelegate(activity, 1));
+    this.delegatesManager.addDelegate(new SnakeListItemAdapterDelegate(activity, 1));
     this.delegatesManager.setFallbackDelegate(new ReptilesFallbackDelegate(activity));
 
     setItems(items);

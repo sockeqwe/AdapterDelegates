@@ -24,7 +24,7 @@ import com.hannesdorfmann.adapterdelegates.sample.adapterdelegates.Advertisement
 import com.hannesdorfmann.adapterdelegates.sample.adapterdelegates.CatAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates.sample.adapterdelegates.DogAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates.sample.adapterdelegates.GeckoAdapterDelegate;
-import com.hannesdorfmann.adapterdelegates.sample.adapterdelegates.SnakeAdapterDelegate;
+import com.hannesdorfmann.adapterdelegates.sample.adapterdelegates.SnakeListItemAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates.sample.model.DisplayableItem;
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class MainAdapter extends RecyclerView.Adapter {
     delegatesManager.addDelegate(new CatAdapterDelegate(activity, 1));
     delegatesManager.addDelegate(new DogAdapterDelegate(activity, 2));
     delegatesManager.addDelegate(new GeckoAdapterDelegate(activity, 3));
-    delegatesManager.addDelegate(new SnakeAdapterDelegate(activity, 4));
+    delegatesManager.addDelegate(new SnakeListItemAdapterDelegate(activity, 4));
 
   }
 
