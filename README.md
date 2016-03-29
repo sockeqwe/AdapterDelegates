@@ -5,7 +5,7 @@ Read the motivation for this project in [my blog post](http://hannesdorfmann.com
 This library is available on maven central:
 
 ```groovy
-compile 'com.hannesdorfmann:adapterdelegates:1.1.1'
+compile 'com.hannesdorfmann:adapterdelegates:1.2.0'
 ```
 
 [![Build Status](https://travis-ci.org/sockeqwe/AdapterDelegates.svg?branch=master)](https://travis-ci.org/sockeqwe/AdapterDelegates)
@@ -100,6 +100,7 @@ public class AnimalAdapter extends RecyclerView.Adapter {
 As you have seen in the code snipped above this may require to write the same boiler plate code  again and again to hook in `AdapterDelegatesManager` to `Adapter`.
 This can be reduced by extending either from `ListDelegationAdapter` if the data source the adapter displays is `java.util.List<?>` or `AbsDelegationAdapter` which is a more general one (not limited to `java.util.List`)
 
+#### ListDelegationAdapter
 In example the same `AnimalAdapter` from above could be simplified as follows by extending from `ListDelegationAdapter`:
 
 ```java
@@ -118,8 +119,8 @@ public class AnimalAdapter extends ListDelegationAdapter<List<Animal>> {
   }
 }
 ```
-
-Also you may have noticed that you often have to write boilerplate code to cast items and ViewHolders when working with list of items as apapters dataset source.
+#### AbsListItemAdapterDelegate
+Also you may have noticed that you often have to write boilerplate code to cast items and ViewHolders when working with list of items as adapters dataset source.
 `AbsListItemAdapterDelegate` can help you here. Let's take this class to create a `CatListItemAdapterDelegate` similar to the `CatAdapterDelegate` from top of this page but without the code for casting items.
 
 ```java
@@ -171,6 +172,7 @@ The manager will check for conflicts at runtime. To minimize the risk of conflic
 
 
 ## License
+
 ```
 Copyright 2015 Hannes Dorfmann
 
