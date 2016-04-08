@@ -3,6 +3,7 @@ package com.hannesdorfmann.adapterdelegates;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
  * class CatAdapterDelegate extends AbsListItemAdapterDelegate<Cat, Animal, CatViewHolder>{
  *
  *    @Override
- *    protected boolean isForViewType(Animal item, List<Animal> items, position){
+ *    protected boolean isForViewType(Cat item, List<Animal> items, position){
  *      return item instanceof Cat;
  *    }
  *
@@ -51,7 +52,11 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
   }
 
   @Override public final boolean isForViewType(@NonNull List<T> items, int position) {
-    return isForViewType(items.get(position), items, position);
+    try {
+      return isForViewType((I) items.get(position), items, position);
+    } catch (ClassCastException e) {
+      return false;
+    }
   }
 
   @Override public final void onBindViewHolder(@NonNull List<T> items, int position,
@@ -67,7 +72,7 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
    * @param position The items position in the dataset (list)
    * @return true if this AdapterDelegate is responsible for that, otherwise false
    */
-  protected abstract boolean isForViewType(@NonNull T item, List<T> items, int position);
+  protected abstract boolean isForViewType(@NonNull I item, List<T> items, int position);
 
   /**
    * Creates the  {@link RecyclerView.ViewHolder} for the given data source item
