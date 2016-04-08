@@ -133,7 +133,7 @@ public class CatListItemAdapterDelegate extends AbsListItemAdapterDelegate<Cat, 
     inflater = activity.getLayoutInflater();
   }
 
-  @Override public boolean isForViewType(Cat item, List<Animal> items, int position) {
+  @Override public boolean isForViewType(Animal item, List<Animal> items, int position) {
     return item instanceof Cat;
   }
 
