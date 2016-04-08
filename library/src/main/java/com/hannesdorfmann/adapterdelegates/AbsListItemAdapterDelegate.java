@@ -3,6 +3,7 @@ package com.hannesdorfmann.adapterdelegates;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
 import java.util.List;
 
 /**
@@ -51,7 +52,11 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
   }
 
   @Override public final boolean isForViewType(@NonNull List<T> items, int position) {
-    return isForViewType((I) items.get(position), items, position);
+    try {
+      return isForViewType((I) items.get(position), items, position);
+    } catch (ClassCastException e) {
+      return false;
+    }
   }
 
   @Override public final void onBindViewHolder(@NonNull List<T> items, int position,

@@ -27,8 +27,7 @@ public class SnakeListItemAdapterDelegate extends
   }
 
   @Override
-  protected boolean isForViewType(@NonNull DisplayableItem item, List<DisplayableItem> items,
-      int position) {
+  protected boolean isForViewType(@NonNull Snake item, List<DisplayableItem> items, int position) {
     return item instanceof Snake;
   }
 
