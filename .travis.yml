@@ -33,7 +33,7 @@ notifications:
 
 sudo: false
 
-script: gradle clean build
+script: ./gradlew clean build
 
 cache:
   directories:
