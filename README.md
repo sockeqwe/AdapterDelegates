@@ -170,7 +170,7 @@ Note also that boolean return type of `isForViewType()` of a fallback delegate w
 
 
 ## Migrating from `1.x` to `2.0`
-In contrast to `1.x in 2.0 `AdapterDelegatesManager` internally assigns view type integers automatically for you (you can also explicitly assign view type if you want to). That means that `AdapterDelegates.getItemViewType()` is no longer needed and has been removed. Therefore, `AbsAdapterDelegate` is also no longer needed and has been removed too.
+In contrast to `1.x` in `2.0` `AdapterDelegatesManager` internally assigns view type integers automatically for you (you can also explicitly assign view type if you want to). That means that `AdapterDelegates.getItemViewType()` is no longer needed and has been removed. Therefore, `AbsAdapterDelegate` is also no longer needed and has been removed too.
 To keep version 2.0 backward compatible with project that are already using `1.x` the package has been renamed to `com.hannesdorfmann.adapterdelegates2` and also the atrifact id has been renamed to `adapterdelegates2`.
 
 ## License
