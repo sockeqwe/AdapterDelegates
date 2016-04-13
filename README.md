@@ -71,8 +71,8 @@ public class AnimalAdapter extends RecyclerView.Adapter {
     delegatesManager = new AdapterDelegatesManager<>();
 
     // AdapterDelegatesManager internally assigns view types integers
-    delegatesManager.addDelegate(new CatAdapterDelegate(activity));
-                    .addDelegate(new DogAdapterDelegate(activity));
+    delegatesManager.addDelegate(new CatAdapterDelegate(activity))
+                    .addDelegate(new DogAdapterDelegate(activity))
                     .addDelegate(new GeckoAdapterDelegate(activity));
 
     // You can explicitly assign integer view type if you want to
@@ -110,10 +110,10 @@ public class AnimalAdapter extends ListDelegationAdapter<List<Animal>> {
   public AnimalAdapter(Activity activity, List<Animal> items) {
 
     // DelegatesManager is a protected Field in ListDelegationAdapter
-    delegatesManager.addDelegate(new CatAdapterDelegate(activity));
-                    .addDelegate(new DogAdapterDelegate(activity));
-                    .addDelegate(new GeckoAdapterDelegate(activity));
-                    .addDelegate(new SnakeAdapterDelegate(activity));
+    delegatesManager.addDelegate(new CatAdapterDelegate(activity))
+                    .addDelegate(new DogAdapterDelegate(activity))
+                    .addDelegate(new GeckoAdapterDelegate(activity))
+                    .addDelegate(23, new SnakeAdapterDelegate(activity));
 
     // Set the items from super class.
     setItems(items);
