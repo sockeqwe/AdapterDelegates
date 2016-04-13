@@ -5,7 +5,7 @@ Read the motivation for this project in [my blog post](http://hannesdorfmann.com
 This library is available on maven central:
 
 ```groovy
-compile 'com.hannesdorfmann:adapterdelegates:1.2.0'
+compile 'com.hannesdorfmann:adapterdelegates2:2.0.0'
 ```
 
 [![Build Status](https://travis-ci.org/sockeqwe/AdapterDelegates.svg?branch=master)](https://travis-ci.org/sockeqwe/AdapterDelegates)
@@ -20,12 +20,11 @@ An `AdapterDelegate` get added to an `AdapterDelegatesManager`. This manager is 
 
 For example:
 ```java
-public class CatAdapterDelegate extends AbsAdapterDelegate<List<Animal>> {
+public class CatAdapterDelegate implements AdapterDelegate<List<Animal>> {
 
   private LayoutInflater inflater;
 
-  public CatAdapterDelegate(Activity activity, int viewType) {
-    super(viewType);
+  public CatAdapterDelegate(Activity activity) {
     inflater = activity.getLayoutInflater();
   }
 
@@ -69,13 +68,15 @@ public class AnimalAdapter extends RecyclerView.Adapter {
   public AnimalAdapter(Activity activity, List<Animal> items) {
     this.items = items;
 
-    // Delegates
     delegatesManager = new AdapterDelegatesManager<>();
-    delegatesManager.addDelegate(new CatAdapterDelegate(activity, 0));
-    delegatesManager.addDelegate(new DogAdapterDelegate(activity, 1));
-    delegatesManager.addDelegate(new GeckoAdapterDelegate(activity, 2));
-    delegatesManager.addDelegate(new SnakeAdapterDelegate(activity, 3));
 
+    // AdapterDelegatesManager internally assigns view types integers
+    delegatesManager.addDelegate(new CatAdapterDelegate(activity));
+                    .addDelegate(new DogAdapterDelegate(activity));
+                    .addDelegate(new GeckoAdapterDelegate(activity));
+
+    // You can explicitly assign integer view type if you want to
+    delegatesManager.addDelegate(23, new SnakeAdapterDelegate(activity));
   }
 
   @Override public int getItemViewType(int position) {
@@ -97,11 +98,11 @@ public class AnimalAdapter extends RecyclerView.Adapter {
 ```
 
 ## Reducing boilerplate code
-As you have seen in the code snipped above this may require to write the same boiler plate code  again and again to hook in `AdapterDelegatesManager` to `Adapter`.
+As you have seen in the code snipped above this may require to write the same boiler plate code again and again to hook in `AdapterDelegatesManager` to `Adapter`.
 This can be reduced by extending either from `ListDelegationAdapter` if the data source the adapter displays is `java.util.List<?>` or `AbsDelegationAdapter` which is a more general one (not limited to `java.util.List`)
 
 #### ListDelegationAdapter
-In example the same `AnimalAdapter` from above could be simplified as follows by extending from `ListDelegationAdapter`:
+For example the same `AnimalAdapter` from above could be simplified as follows by extending from `ListDelegationAdapter`:
 
 ```java
 public class AnimalAdapter extends ListDelegationAdapter<List<Animal>> {
@@ -109,10 +110,10 @@ public class AnimalAdapter extends ListDelegationAdapter<List<Animal>> {
   public AnimalAdapter(Activity activity, List<Animal> items) {
 
     // DelegatesManager is a protected Field in ListDelegationAdapter
-    delegatesManager.addDelegate(new CatAdapterDelegate(activity, 0));
-    delegatesManager.addDelegate(new DogAdapterDelegate(activity, 1));
-    delegatesManager.addDelegate(new GeckoAdapterDelegate(activity, 2));
-    delegatesManager.addDelegate(new SnakeAdapterDelegate(activity, 3));
+    delegatesManager.addDelegate(new CatAdapterDelegate(activity));
+                    .addDelegate(new DogAdapterDelegate(activity));
+                    .addDelegate(new GeckoAdapterDelegate(activity));
+                    .addDelegate(new SnakeAdapterDelegate(activity));
 
     // Set the items from super class.
     setItems(items);
@@ -128,8 +129,7 @@ public class CatListItemAdapterDelegate extends AbsListItemAdapterDelegate<Cat, 
 
   private LayoutInflater inflater;
 
-  public CatAdapterDelegate(Activity activity, int viewType) {
-    super(viewType);
+  public CatAdapterDelegate(Activity activity) {
     inflater = activity.getLayoutInflater();
   }
 
@@ -157,19 +157,21 @@ public class CatListItemAdapterDelegate extends AbsListItemAdapterDelegate<Cat, 
 }
 ```
 
-As you see, instead of writing code that casts list item to cat we can use `AbsListItemAdapterDelegate` to do the same job (by declaring generic types).
+As you see, instead of writing code that casts list item to Cat we can use `AbsListItemAdapterDelegate` to do the same job (by declaring generic types).
 
 ## Fallback AdapterDelegate
-What if your adapter's data source contains a certain element you don't have registered an `AdapterDelegate` for? In this case the `AdapterDelegateManager` will throw an exception at runtime. However, this is not always what you want. You can specify a fallback `AdapterDelegate` that will be used if no other `AdapterDelegate` has been found to handle a certain `AdapterDelegate`.
+What if your adapter's data source contains a certain element you don't have registered an `AdapterDelegate` for? In this case the `AdapterDelegateManager` will throw an exception at runtime. However, this is not always what you want. You can specify a fallback `AdapterDelegate` that will be used if no other `AdapterDelegate` has been found to handle a certain view type.
 
 ```java
 AdapterDelegate fallbackDelegate = ...;
 adapterDelegateManager.setFallbackDelegate( fallbackDelegate );
 ```
+Note also that boolean return type of `isForViewType()` of a fallback delegate will be ignored (will not be take into account). So it doesn't matter if you return true or false. You can use `AbsFallbackAdapterDelegate` that already implements `isForViewType()` so that you only have to override `onCreateViewHolder()` and `onBindViewHolder()` for your fallback adapter delegate.
 
-Please note that the fallback delegate must return an integer value from `fallbackDelegate.getItemViewType()` that **doesn't** conflict with any other `AdapterDelegate` added by `adapterDelegateManager.addDelegate( fooDelegate )`.
-The manager will check for conflicts at runtime. To minimize the risk of conflicts you can use `AbsFallbackAdapterDelegate` as base class for your fallback implementation. `AbsFallbackAdapterDelegate` uses `Integer.MAX_VALUE - 1` internally to avoid conflicts with other adapter delegates. However, you are free to write your own adapter delegate fallback that doesn't extend from `AbsFallbackAdapterDelegate`. Note also that boolean return type of `isForViewType()` of a fallback delegate will be ignored (will not be take into account).
 
+## Migrating from `1.x` to `2.0`
+In contrast to `1.x in 2.0 `AdapterDelegatesManager` internally assigns view type integers automatically for you (you can also explicitly assign view type if you want to). That means that `AdapterDelegates.getItemViewType()` is no longer needed and has been removed. Therefore, `AbsAdapterDelegate` is also no longer needed and has been removed too.
+To keep version 2.0 backward compatible with project that are already using `1.x` the package has been renamed to `com.hannesdorfmann.adapterdelegates2` and also the atrifact id has been renamed to `adapterdelegates2`.
 
 ## License
 
