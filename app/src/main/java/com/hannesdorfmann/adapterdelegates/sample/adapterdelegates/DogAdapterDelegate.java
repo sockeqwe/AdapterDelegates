@@ -23,7 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.hannesdorfmann.adapterdelegates.AbsAdapterDelegate;
+import com.hannesdorfmann.adapterdelegates.AdapterDelegate;
 import com.hannesdorfmann.adapterdelegates.sample.R;
 import com.hannesdorfmann.adapterdelegates.sample.model.DisplayableItem;
 import com.hannesdorfmann.adapterdelegates.sample.model.Dog;
@@ -32,12 +32,11 @@ import java.util.List;
 /**
  * @author Hannes Dorfmann
  */
-public class DogAdapterDelegate extends AbsAdapterDelegate<List<DisplayableItem>> {
+public class DogAdapterDelegate implements AdapterDelegate<List<DisplayableItem>> {
 
   private LayoutInflater inflater;
 
-  public DogAdapterDelegate(Activity activity, int viewType) {
-    super(viewType);
+  public DogAdapterDelegate(Activity activity) {
     inflater = activity.getLayoutInflater();
   }
 

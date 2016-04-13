@@ -13,11 +13,9 @@ import org.junit.Test;
  */
 public class AdapterDelegatesManagerTest {
 
-  @Test public void testAddRemove() {
+  @Test public void addRemove() {
 
-    int viewType = 0;
-
-    AdapterDelegate d1 = new AbsAdapterDelegate(viewType) {
+    AdapterDelegate d1 = new AdapterDelegate() {
       @Override public boolean isForViewType(Object items, int position) {
         return false;
       }
@@ -32,7 +30,7 @@ public class AdapterDelegatesManagerTest {
       }
     };
 
-    AdapterDelegate d2 = new AbsAdapterDelegate(viewType) {
+    AdapterDelegate d2 = new AdapterDelegate() {
       @Override public boolean isForViewType(Object items, int position) {
         return false;
       }
@@ -50,30 +48,39 @@ public class AdapterDelegatesManagerTest {
     AdapterDelegatesManager manager = new AdapterDelegatesManager();
     manager.addDelegate(d1);
 
-    Assert.assertTrue(manager.delegates.get(viewType) == d1);
+    Assert.assertTrue(manager.delegates.get(0) == d1);
+    Assert.assertEquals(0, manager.getViewType(d1));
 
     try {
       // replacing no allowed
-      manager.addDelegate(d2);
+      manager.addDelegate(0, d2);
       Assert.fail("Replacing delegate should fail");
     } catch (IllegalArgumentException e) {
-      Assert.assertTrue(manager.delegates.get(viewType) == d1);
+      Assert.assertTrue(manager.delegates.get(0) == d1);
+      Assert.assertEquals(0, manager.getViewType(d1));
+      Assert.assertEquals(1, manager.delegates.size());
     }
 
     // replacing allowed
-    manager.addDelegate(d2, true);
-    Assert.assertTrue(manager.delegates.get(viewType) == d2);
+    manager.addDelegate(0, true, d2);
+    Assert.assertTrue(manager.delegates.get(0) == d2);
+    Assert.assertEquals(0, manager.getViewType(d2));
+    Assert.assertEquals(-1, manager.getViewType(d1));
 
-    // Remove a delegate should have no impact, because its already remmoved
+    // Remove a delegate should have no impact, because its already removed
     manager.removeDelegate(d1);
-    Assert.assertTrue(manager.delegates.get(viewType) == d2);
+    Assert.assertEquals(-1, manager.getViewType(d1));
+    Assert.assertTrue(manager.delegates.get(0) == d2);
+    Assert.assertEquals(1, manager.delegates.size());
 
     // Should remove d2
-    manager.removeDelegate(viewType);
-    Assert.assertNull(manager.delegates.get(viewType));
+    manager.removeDelegate(0);
+    Assert.assertNull(manager.delegates.get(0));
+    Assert.assertEquals(0, manager.delegates.size());
+    Assert.assertEquals(-1, manager.getViewType(d2));
   }
 
-  @Test public void testIsForViewType() {
+  @Test public void isForViewType() {
 
     // 3 elements and each element has it's own viewtype and hence own delegate
     List<Object> items = Arrays.asList(new Object(), new Object(), new Object());
@@ -111,7 +118,7 @@ public class AdapterDelegatesManagerTest {
     resetDelegates(d0, d1, d2);
   }
 
-  @Test public void testOnCreateViewHolder() {
+  @Test public void onCreateViewHolder() {
 
     // 3 elements and each element has it's own viewtype and hence own delegate
     List<Object> items = Arrays.asList(new Object(), new Object(), new Object());
@@ -150,7 +157,7 @@ public class AdapterDelegatesManagerTest {
     Assert.assertFalse(d1.onCreateViewHolderCalled);
   }
 
-  @Test public void testOnBindViewHolder() {
+  @Test public void onBindViewHolder() {
 
     // 3 elements and each element has it's own viewtype and hence own delegate
     List<Object> items = Arrays.asList(new Object(), new Object(), new Object());
@@ -272,7 +279,7 @@ public class AdapterDelegatesManagerTest {
     }
   }
 
-  @Test public void testFallbackUnknownDelegate() {
+  @Test public void fallbackUnknownDelegate() {
 
     int fallbackViewType = Integer.MAX_VALUE - 1;
     int itemPosition = 1;
@@ -299,33 +306,55 @@ public class AdapterDelegatesManagerTest {
     Assert.assertFalse(otherDelegate.onBindViewHolderCalled);
   }
 
-  @Test public void testFallbackViewTypeConflictsDelegateViewType() {
-
-    int viewType = 2;
-
-    AdapterDelegatesManager<List> manager1 = new AdapterDelegatesManager<>();
-    AdapterDelegatesManager<List> manager2 = new AdapterDelegatesManager<>();
-
-    // Both have the same view type
-    SpyableAdapterDelegate<List> fallback = new SpyableAdapterDelegate<>(viewType);
-    SpyableAdapterDelegate<List> delegate = new SpyableAdapterDelegate<>(viewType);
-    manager1.setFallbackDelegate(fallback);
-
+  @Test public void viewTypeInConflictWithFallbackDelegate() {
     try {
-      manager1.addDelegate(delegate);
+      AdapterDelegatesManager<List> manager = new AdapterDelegatesManager<>();
+      manager.addDelegate(AdapterDelegatesManager.FALLBACK_DELEGATE_VIEW_TYPE, new SpyableAdapterDelegate<List>(0));
       Assert.fail(
-          "An excepetion should be thrown because AdapterDelegate conflicts with fallback ViewType");
+          "An exception should be thrown because view type integer is already reserved for fallback delegate");
     } catch (IllegalArgumentException e) {
-      // Excepted exception
+      Assert.assertEquals("The view type = "
+              + AdapterDelegatesManager.FALLBACK_DELEGATE_VIEW_TYPE
+              + " is reserved for fallback adapter delegate (see setFallbackDelegate() ). Please use another view type.",
+          e.getMessage());
+    }
+  }
+
+  @Test public void getViewType() {
+    AdapterDelegatesManager<List> manager = new AdapterDelegatesManager<>();
+
+    try {
+      manager.getViewType(null);
+      Assert.fail("Nullpointer Exception expected");
+    } catch (NullPointerException e) {
     }
 
-    manager2.addDelegate(delegate);
-    try {
-      manager2.setFallbackDelegate(fallback);
-      Assert.fail(
-          "An exception should be thrown because fallback conflicts with AdapterDelegates ViewType");
-    } catch (IllegalArgumentException exception) {
-      // Expected Exception
-    }
+    SpyableAdapterDelegate<List> delegate1 = new SpyableAdapterDelegate<>(0);
+    SpyableAdapterDelegate<List> delegate2 = new SpyableAdapterDelegate<>(1);
+    Assert.assertEquals(-1, manager.getViewType(delegate1));
+    Assert.assertEquals(-1, manager.getViewType(delegate2));
+
+    manager.addDelegate(delegate1);
+    manager.addDelegate(delegate2);
+
+    Assert.assertEquals(0, manager.getViewType(delegate1));
+    Assert.assertEquals(1, manager.getViewType(delegate2));
+
+    SpyableAdapterDelegate<List> delegate3 = new SpyableAdapterDelegate<>(2);
+    SpyableAdapterDelegate<List> delegate4 = new SpyableAdapterDelegate<>(3);
+
+    manager.addDelegate(4, delegate4);
+    Assert.assertEquals(4, manager.getViewType(delegate4));
+
+    manager.addDelegate(delegate3);
+    Assert.assertEquals(3, manager.getViewType(delegate3));
+  }
+
+  @Test public void numberOverflow() {
+    AdapterDelegatesManager<List> manager = new AdapterDelegatesManager<>();
+    SpyableAdapterDelegate<List> delegate1 = new SpyableAdapterDelegate<>(0);
+
+    manager.addDelegate(Integer.MAX_VALUE + 1, delegate1);
+    Assert.assertEquals(Integer.MAX_VALUE + 1, manager.getViewType(delegate1));
   }
 }

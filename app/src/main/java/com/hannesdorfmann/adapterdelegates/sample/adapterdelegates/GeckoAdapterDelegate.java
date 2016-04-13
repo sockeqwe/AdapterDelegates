@@ -23,7 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.hannesdorfmann.adapterdelegates.AbsAdapterDelegate;
+import com.hannesdorfmann.adapterdelegates.AdapterDelegate;
 import com.hannesdorfmann.adapterdelegates.sample.R;
 import com.hannesdorfmann.adapterdelegates.sample.model.DisplayableItem;
 import com.hannesdorfmann.adapterdelegates.sample.model.Gecko;
@@ -32,12 +32,11 @@ import java.util.List;
 /**
  * @author Hannes Dorfmann
  */
-public class GeckoAdapterDelegate extends AbsAdapterDelegate<List<DisplayableItem>> {
+public class GeckoAdapterDelegate implements AdapterDelegate<List<DisplayableItem>> {
 
   private LayoutInflater inflater;
 
-  public GeckoAdapterDelegate(Activity activity, int viewType) {
-    super(viewType);
+  public GeckoAdapterDelegate(Activity activity) {
     inflater = activity.getLayoutInflater();
   }
 

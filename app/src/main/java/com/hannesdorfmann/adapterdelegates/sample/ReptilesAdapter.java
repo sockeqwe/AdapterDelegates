@@ -32,8 +32,8 @@ public class ReptilesAdapter extends ListDelegationAdapter<List<DisplayableItem>
   public ReptilesAdapter(Activity activity, List<DisplayableItem> items) {
 
     // Delegates
-    this.delegatesManager.addDelegate(new GeckoAdapterDelegate(activity, 0));
-    this.delegatesManager.addDelegate(new SnakeListItemAdapterDelegate(activity, 1));
+    this.delegatesManager.addDelegate(new GeckoAdapterDelegate(activity));
+    this.delegatesManager.addDelegate(new SnakeListItemAdapterDelegate(activity));
     this.delegatesManager.setFallbackDelegate(new ReptilesFallbackDelegate(activity));
 
     setItems(items);

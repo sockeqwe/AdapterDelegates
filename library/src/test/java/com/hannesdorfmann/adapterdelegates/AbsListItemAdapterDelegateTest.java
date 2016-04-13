@@ -51,10 +51,6 @@ public class AbsListItemAdapterDelegateTest {
     public boolean onCreateViewHolderCalled = false;
     public boolean onBindViewHolderCalled = false;
 
-    public CatAbsListItemAdapterDelegate() {
-      super(0);
-    }
-
     @Override
     protected boolean isForViewType(@NonNull Animal item, List<Animal> items, int position) {
       isForViewTypeCalled = true;

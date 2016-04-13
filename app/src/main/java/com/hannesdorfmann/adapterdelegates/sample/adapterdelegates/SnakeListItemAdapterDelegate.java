@@ -21,8 +21,7 @@ public class SnakeListItemAdapterDelegate extends
 
   private LayoutInflater inflater;
 
-  public SnakeListItemAdapterDelegate(Activity activity, int viewType) {
-    super(viewType);
+  public SnakeListItemAdapterDelegate(Activity activity) {
     inflater = activity.getLayoutInflater();
   }
 

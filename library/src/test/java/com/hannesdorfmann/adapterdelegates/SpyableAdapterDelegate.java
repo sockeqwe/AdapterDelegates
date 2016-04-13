@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 /**
  * @author Hannes Dorfmann
  */
-public class SpyableAdapterDelegate<T> extends AbsAdapterDelegate<T> {
+public class SpyableAdapterDelegate<T> implements AdapterDelegate<T> {
 
   public boolean isForViewTypeReturnedYes = false;
   public boolean onCreateViewHolderCalled = false;
@@ -16,10 +16,10 @@ public class SpyableAdapterDelegate<T> extends AbsAdapterDelegate<T> {
 
   public int onBindViewHolderPosition = -1;
   public RecyclerView.ViewHolder viewHolder;
+  public int viewType;
 
   public SpyableAdapterDelegate(int viewType) {
-    super(viewType);
-
+    this.viewType = viewType;
     viewHolder = new RecyclerView.ViewHolder(new View(null)) {
     };
 

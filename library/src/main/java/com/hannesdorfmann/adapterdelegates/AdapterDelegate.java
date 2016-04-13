@@ -33,13 +33,6 @@ import android.view.ViewGroup;
 public interface AdapterDelegate<T> {
 
   /**
-   * Get the view type integer. Must be unique within every Adapter
-   *
-   * @return the integer representing the view type
-   */
-  public int getItemViewType();
-
-  /**
    * Called to determine whether this AdapterDelegate is the responsible for the given data
    * element.
    *

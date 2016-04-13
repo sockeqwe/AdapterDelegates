@@ -41,11 +41,11 @@ public class MainAdapter extends RecyclerView.Adapter {
 
     // Delegates
     delegatesManager = new AdapterDelegatesManager<>();
-    delegatesManager.addDelegate(new AdvertisementAdapterDelegate(activity, 0));
-    delegatesManager.addDelegate(new CatAdapterDelegate(activity, 1));
-    delegatesManager.addDelegate(new DogAdapterDelegate(activity, 2));
-    delegatesManager.addDelegate(new GeckoAdapterDelegate(activity, 3));
-    delegatesManager.addDelegate(new SnakeListItemAdapterDelegate(activity, 4));
+    delegatesManager.addDelegate(new AdvertisementAdapterDelegate(activity));
+    delegatesManager.addDelegate(new CatAdapterDelegate(activity));
+    delegatesManager.addDelegate(new DogAdapterDelegate(activity));
+    delegatesManager.addDelegate(new GeckoAdapterDelegate(activity));
+    delegatesManager.addDelegate(new SnakeListItemAdapterDelegate(activity));
 
   }
 
