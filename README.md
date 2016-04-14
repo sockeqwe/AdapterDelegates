@@ -8,6 +8,8 @@ This library is available on maven central:
 compile 'com.hannesdorfmann:adapterdelegates2:2.0.0'
 ```
 
+Please note that since 2.0 the group id has been changed to `adapterdelegates2`.
+
 [![Build Status](https://travis-ci.org/sockeqwe/AdapterDelegates.svg?branch=master)](https://travis-ci.org/sockeqwe/AdapterDelegates)
 
 ## Idea
