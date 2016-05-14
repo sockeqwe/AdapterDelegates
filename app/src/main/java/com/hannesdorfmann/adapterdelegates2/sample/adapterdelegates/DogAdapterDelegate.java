@@ -62,6 +62,17 @@ public class DogAdapterDelegate implements AdapterDelegate<List<DisplayableItem>
     Log.d("Scroll", "DogAdapterDelegate bind  "+position);
   }
 
+  @Override
+  public void onViewRecycled(RecyclerView.ViewHolder viewHolder) {
+    Log.d("AdapterDelegates", "ViewHolder got recycled.");
+  }
+
+  @Override
+  public boolean onFailedToRecycleView(RecyclerView.ViewHolder viewHolder) {
+    Log.w("AdapterDelegates", "Failed to recycle a ViewHolder.");
+    return false;
+  }
+
   static class DogViewHolder extends RecyclerView.ViewHolder {
 
     public TextView name;

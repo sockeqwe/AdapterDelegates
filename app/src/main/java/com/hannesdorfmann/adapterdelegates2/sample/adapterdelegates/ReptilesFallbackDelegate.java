@@ -3,6 +3,7 @@ package com.hannesdorfmann.adapterdelegates2.sample.adapterdelegates;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,17 @@ public class ReptilesFallbackDelegate extends AbsFallbackAdapterDelegate {
   @Override public void onBindViewHolder(@NonNull Object items, int position,
       @NonNull RecyclerView.ViewHolder holder) {
 
+  }
+
+  @Override
+  public void onViewRecycled(RecyclerView.ViewHolder viewHolder) {
+    Log.d("AdapterDelegates", "ViewHolder got recycled.");
+  }
+
+  @Override
+  public boolean onFailedToRecycleView(RecyclerView.ViewHolder viewHolder) {
+    Log.w("AdapterDelegates", "Failed to recycle a ViewHolder.");
+    return false;
   }
 
   class ReptileFallbackViewHolder extends RecyclerView.ViewHolder {
