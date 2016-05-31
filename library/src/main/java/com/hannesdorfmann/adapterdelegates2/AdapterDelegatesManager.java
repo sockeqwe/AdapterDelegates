@@ -242,7 +242,7 @@ public class AdapterDelegatesManager<T> {
       }
     }
 
-    RecyclerView.ViewHolder vh = delegate.onCreateViewHolder(parent);
+    RecyclerView.ViewHolder vh = delegate.onCreateViewHolder(parent, viewType);
     if (vh == null) {
       throw new NullPointerException("ViewHolder returned from AdapterDelegate "
           + delegate
