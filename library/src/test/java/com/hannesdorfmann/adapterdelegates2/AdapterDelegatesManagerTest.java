@@ -2,11 +2,14 @@ package com.hannesdorfmann.adapterdelegates2;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import junit.framework.Assert;
+
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import junit.framework.Assert;
-import org.junit.Test;
 
 /**
  * @author Hannes Dorfmann
@@ -356,5 +359,19 @@ public class AdapterDelegatesManagerTest {
 
     manager.addDelegate(Integer.MAX_VALUE + 1, delegate1);
     Assert.assertEquals(Integer.MAX_VALUE + 1, manager.getViewType(delegate1));
+  }
+
+  @Test public void delegateForViewType() {
+    AdapterDelegatesManager<List> manager = new AdapterDelegatesManager<>();
+    SpyableAdapterDelegate<List> delegate1 = new SpyableAdapterDelegate<>(0);
+    SpyableAdapterDelegate<List> delegate2 = new SpyableAdapterDelegate<>(1);
+
+    SpyableAdapterDelegate<List> fallbackDelegate = new SpyableAdapterDelegate<>(3);
+    manager.setFallbackDelegate(fallbackDelegate);
+    Assert.assertEquals(fallbackDelegate, manager.getDelegateForViewType(1));
+
+    manager.addDelegate(delegate1);
+    manager.addDelegate(delegate2);
+    Assert.assertEquals(delegate1, manager.getDelegateForViewType(0));
   }
 }

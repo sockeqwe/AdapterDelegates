@@ -265,18 +265,10 @@ public class AdapterDelegatesManager<T> {
   public void onBindViewHolder(@NonNull T items, int position,
       @NonNull RecyclerView.ViewHolder viewHolder) {
 
-    AdapterDelegate<T> delegate = delegates.get(viewHolder.getItemViewType());
-    if (delegate == null) {
-      if (fallbackDelegate == null) {
-        throw new NullPointerException(
-            "No AdapterDelegate added for ViewType " + viewHolder.getItemViewType());
-      } else {
-        delegate = fallbackDelegate;
-      }
-    }
-
-    delegate.onBindViewHolder(items, position, viewHolder);
+    getDelegateForViewType(viewHolder.getItemViewType())
+            .onBindViewHolder(items, position, viewHolder);
   }
+
 
   /**
    * Set a fallback delegate that should be used if no {@link AdapterDelegate} has been found that
@@ -309,5 +301,28 @@ public class AdapterDelegatesManager<T> {
       return -1;
     }
     return delegates.keyAt(index);
+  }
+
+  /**
+   * Get the {@link AdapterDelegate} associated with the given view type integer
+   * @param viewType The view type integer we want to retrieve the associated
+   *                 delegate for.
+   * @return The {@link AdapterDelegate} associated with the view type param if it exists,
+   * the fallback delegate otherwise if it is set.
+   * @throws NullPointerException if no delegates are associated with this view type
+   * and if no fallback delegate is set.
+   */
+  @NonNull public AdapterDelegate<T> getDelegateForViewType(int viewType) {
+    AdapterDelegate<T> delegate = delegates.get(viewType);
+    if (delegate == null) {
+      if (fallbackDelegate == null) {
+        throw new NullPointerException(
+                "No AdapterDelegate added for ViewType " + viewType);
+      } else {
+        delegate = fallbackDelegate;
+      }
+    }
+
+    return delegate;
   }
 }
