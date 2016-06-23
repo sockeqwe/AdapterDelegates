@@ -2,14 +2,11 @@ package com.hannesdorfmann.adapterdelegates2;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-
-import junit.framework.Assert;
-
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import junit.framework.Assert;
+import org.junit.Test;
 
 /**
  * @author Hannes Dorfmann
@@ -312,7 +309,8 @@ public class AdapterDelegatesManagerTest {
   @Test public void viewTypeInConflictWithFallbackDelegate() {
     try {
       AdapterDelegatesManager<List> manager = new AdapterDelegatesManager<>();
-      manager.addDelegate(AdapterDelegatesManager.FALLBACK_DELEGATE_VIEW_TYPE, new SpyableAdapterDelegate<List>(0));
+      manager.addDelegate(AdapterDelegatesManager.FALLBACK_DELEGATE_VIEW_TYPE,
+          new SpyableAdapterDelegate<List>(0));
       Assert.fail(
           "An exception should be thrown because view type integer is already reserved for fallback delegate");
     } catch (IllegalArgumentException e) {
@@ -373,5 +371,26 @@ public class AdapterDelegatesManagerTest {
     manager.addDelegate(delegate1);
     manager.addDelegate(delegate2);
     Assert.assertEquals(delegate1, manager.getDelegateForViewType(0));
+    Assert.assertEquals(delegate2, manager.getDelegateForViewType(1));
+  }
+
+  @Test public void delegateForViewTypeNoFallback() {
+    AdapterDelegatesManager<List> manager = new AdapterDelegatesManager<>();
+    SpyableAdapterDelegate<List> delegate1 = new SpyableAdapterDelegate<>(0);
+    SpyableAdapterDelegate<List> delegate2 = new SpyableAdapterDelegate<>(1);
+
+    manager.addDelegate(delegate1);
+    manager.addDelegate(delegate2);
+    Assert.assertEquals(delegate1, manager.getDelegateForViewType(0));
+    Assert.assertEquals(delegate2, manager.getDelegateForViewType(1));
+    Assert.assertNull(manager.getDelegateForViewType(2));
+  }
+
+  @Test public void setGetFallbackDelegate() {
+    AdapterDelegatesManager<List> manager = new AdapterDelegatesManager<>();
+    Assert.assertNull(manager.getFallbackDelegate());
+    SpyableAdapterDelegate<List> fallbackDelegate = new SpyableAdapterDelegate<>(3);
+    manager.setFallbackDelegate(fallbackDelegate);
+    Assert.assertEquals(fallbackDelegate, manager.getFallbackDelegate());
   }
 }

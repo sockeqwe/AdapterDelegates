@@ -5,7 +5,7 @@ Read the motivation for this project in [my blog post](http://hannesdorfmann.com
 This library is available on maven central:
 
 ```groovy
-compile 'com.hannesdorfmann:adapterdelegates2:2.0.0'
+compile 'com.hannesdorfmann:adapterdelegates2:2.0.1'
 ```
 
 Please note that since 2.0 the group id has been changed to `adapterdelegates2`.
