@@ -58,4 +58,19 @@ public interface AdapterDelegate<T> {
    * @param holder The {@link RecyclerView.ViewHolder} to bind
    */
   public void onBindViewHolder(@NonNull T items, int position, @NonNull RecyclerView.ViewHolder holder);
+
+  /**
+   * TODO: docs
+   *
+   * @param viewHolder
+     */
+  public void onViewRecycled(RecyclerView.ViewHolder viewHolder);
+
+  /**
+   * TODO: docs
+   *
+   * @param viewHolder
+   * @return
+     */
+  public boolean onFailedToRecycleView(RecyclerView.ViewHolder viewHolder);
 }

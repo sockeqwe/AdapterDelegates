@@ -81,6 +81,20 @@ public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
     return delegatesManager.getItemViewType(items, position);
   }
 
+  @Override
+  public void onViewRecycled(RecyclerView.ViewHolder viewHolder) {
+    super.onViewRecycled(viewHolder);
+
+    delegatesManager.onViewRecycled(viewHolder);
+  }
+
+  @Override
+  public boolean onFailedToRecycleView(RecyclerView.ViewHolder viewHolder) {
+    super.onFailedToRecycleView(viewHolder);
+
+    return delegatesManager.onFailedToRecycleView(viewHolder);
+  }
+
   /**
    * Get the items / data source of this adapter
    *

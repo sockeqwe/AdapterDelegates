@@ -272,6 +272,46 @@ public class AdapterDelegatesManager<T> {
   }
 
   /**
+   * TODO: docs
+   *
+   * @param viewHolder
+     */
+  public void onViewRecycled(RecyclerView.ViewHolder viewHolder) {
+    AdapterDelegate<T> delegate = delegates.get(viewHolder.getItemViewType());
+    if (delegate == null) {
+      if (fallbackDelegate == null) {
+        throw new NullPointerException(
+                "No AdapterDelegate added for ViewType " + viewHolder.getItemViewType());
+      } else {
+        delegate = fallbackDelegate;
+      }
+    }
+
+    delegate.onViewRecycled(viewHolder);
+  }
+
+  /**
+   * TODO: docs
+   *
+   * @param viewHolder
+   * @return
+     */
+  public boolean onFailedToRecycleView(RecyclerView.ViewHolder viewHolder) {
+    AdapterDelegate<T> delegate = delegates.get(viewHolder.getItemViewType());
+    if (delegate == null) {
+      if (fallbackDelegate == null) {
+        throw new NullPointerException(
+                "No AdapterDelegate added for ViewType " + viewHolder.getItemViewType());
+      } else {
+        delegate = fallbackDelegate;
+      }
+    }
+
+    return delegate.onFailedToRecycleView(viewHolder);
+  }
+
+
+  /**
    * Set a fallback delegate that should be used if no {@link AdapterDelegate} has been found that
    * can handle a certain view type.
    *

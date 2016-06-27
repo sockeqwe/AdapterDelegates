@@ -2,6 +2,7 @@ package com.hannesdorfmann.adapterdelegates2;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ViewGroup;
 import java.util.List;
 
@@ -78,4 +79,26 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
    * @param viewHolder The ViewHolder
    */
   protected abstract void onBindViewHolder(@NonNull I item, @NonNull VH viewHolder);
+
+  /**
+   * TODO: docs
+   *
+   * @param viewHolder
+   * @return
+     */
+  @Override
+  public boolean onFailedToRecycleView(RecyclerView.ViewHolder viewHolder) {
+    Log.w("AdapterDelegates", "Failed to recycle a ViewHolder.");
+    return false;
+  }
+
+  /**
+   * TODO: docs
+   *
+   * @param viewHolder
+     */
+  @Override
+  public void onViewRecycled(RecyclerView.ViewHolder viewHolder) {
+    Log.d("AdapterDelegates", "ViewHolder got recycled.");
+  }
 }
