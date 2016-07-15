@@ -18,6 +18,7 @@ package com.hannesdorfmann.adapterdelegates2.sample.adapterdelegates;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,10 +48,10 @@ public class AdvertisementAdapterDelegate implements AdapterDelegate<List<Displa
     return new AdvertisementViewHolder(inflater.inflate(R.layout.item_advertisement, parent, false));
   }
 
-  @Override public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position,
-      @NonNull RecyclerView.ViewHolder holder) {
-      // Notihing to bind in this example
-  }
+	@Override
+	public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
+		// Notihing to bind in this example
+	}
 
   /**
    * The ViewHolder

@@ -18,6 +18,7 @@ package com.hannesdorfmann.adapterdelegates2.sample.adapterdelegates;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,18 +51,17 @@ public class CatAdapterDelegate implements AdapterDelegate<List<DisplayableItem>
     return new CatViewHolder(inflater.inflate(R.layout.item_cat, parent, false));
   }
 
-  @Override public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position,
-      @NonNull RecyclerView.ViewHolder holder) {
+	@Override
+	public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
+		CatViewHolder vh = (CatViewHolder) holder;
+		Cat cat = (Cat) items.get(position);
 
-    CatViewHolder vh = (CatViewHolder) holder;
-    Cat cat = (Cat) items.get(position);
+		vh.name.setText(cat.getName());
+		Log.d("Scroll", "CatAdapterDelegate bind  "+position);
+	}
 
-    vh.name.setText(cat.getName());
-    Log.d("Scroll", "CatAdapterDelegate bind  "+position);
 
-  }
-
-  static class CatViewHolder extends RecyclerView.ViewHolder {
+	static class CatViewHolder extends RecyclerView.ViewHolder {
 
     public TextView name;
 

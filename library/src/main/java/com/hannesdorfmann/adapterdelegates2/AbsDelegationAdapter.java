@@ -20,6 +20,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 /**
  * An implementation of an Adapter that already uses a {@link AdapterDelegatesManager} and calls
  * the corresponding {@link AdapterDelegatesManager} methods from Adapter's method like {@link
@@ -74,10 +76,15 @@ public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
   }
 
   @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    delegatesManager.onBindViewHolder(items, position, holder);
+    delegatesManager.onBindViewHolder(items, position, holder, null);
   }
 
-  @Override public int getItemViewType(int position) {
+	@Override
+	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
+		delegatesManager.onBindViewHolder(items, position, holder, payloads);
+	}
+
+	@Override public int getItemViewType(int position) {
     return delegatesManager.getItemViewType(items, position);
   }
 

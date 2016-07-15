@@ -17,8 +17,11 @@
 package com.hannesdorfmann.adapterdelegates2;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 /**
  * This delegate provide method to hook in this delegate to {@link RecyclerView.Adapter} lifecycle.
@@ -56,6 +59,7 @@ public interface AdapterDelegate<T> {
    * @param items The data source
    * @param position The position in the datasource
    * @param holder The {@link RecyclerView.ViewHolder} to bind
+   * @param payloads A non-null list of merged payloads. Can be empty list if requires full update.
    */
-  public void onBindViewHolder(@NonNull T items, int position, @NonNull RecyclerView.ViewHolder holder);
+  public void onBindViewHolder(@NonNull T items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads);
 }

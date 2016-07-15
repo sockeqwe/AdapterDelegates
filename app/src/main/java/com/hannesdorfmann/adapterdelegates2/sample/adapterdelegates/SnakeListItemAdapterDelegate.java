@@ -2,6 +2,7 @@ package com.hannesdorfmann.adapterdelegates2.sample.adapterdelegates;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,8 +38,8 @@ public class SnakeListItemAdapterDelegate extends
         inflater.inflate(R.layout.item_snake, parent, false));
   }
 
-  @Override protected void onBindViewHolder(@NonNull Snake snake,
-      @NonNull SnakeListItemAdapterDelegate.SnakeViewHolder vh) {
+  @Override protected void onBindViewHolder(
+	  @NonNull Snake snake, @NonNull SnakeListItemAdapterDelegate.SnakeViewHolder vh, @Nullable List payloads) {
 
     vh.name.setText(snake.getName());
     vh.race.setText(snake.getRace());
