@@ -59,10 +59,10 @@ public class AdapterDelegatesManager<T> {
   static final int FALLBACK_DELEGATE_VIEW_TYPE = Integer.MAX_VALUE - 1;
 
   /**
-   * Map for ViewType to AdapterDeleage
+   * Map for ViewType to AdapterDelegate
    */
-  SparseArrayCompat<AdapterDelegate<T>> delegates = new SparseArrayCompat();
-  private AdapterDelegate<T> fallbackDelegate;
+  protected SparseArrayCompat<AdapterDelegate<T>> delegates = new SparseArrayCompat();
+  protected AdapterDelegate<T> fallbackDelegate;
 
   /**
    * Adds an {@link AdapterDelegate}.
