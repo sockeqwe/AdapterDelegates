@@ -2,13 +2,12 @@ language: android
 
 android:
   components:
-    - build-tools-23.0.1
-    - android-23
-    - platform-tools
-    - tools
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository
+      - platform-tools
+      - tools
+      - android-23
+      - build-tools-23.0.3
+      - extra-android-support
+      - extra-android-m2repository
 
   licenses:
      - 'android-sdk-license-.+'
