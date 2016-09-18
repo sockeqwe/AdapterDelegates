@@ -63,7 +63,7 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
    * @param position The items position in the dataset (list)
    * @return true if this AdapterDelegate is responsible for that, otherwise false
    */
-  protected abstract boolean isForViewType(@NonNull T item, List<T> items, int position);
+  protected abstract boolean isForViewType(@NonNull T item, @NonNull List<T> items, int position);
 
   /**
    * Creates the  {@link RecyclerView.ViewHolder} for the given data source item
