@@ -18,6 +18,7 @@ package com.hannesdorfmann.adapterdelegates2.sample.adapterdelegates;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,18 +52,17 @@ public class DogAdapterDelegate implements AdapterDelegate<List<DisplayableItem>
     return new DogViewHolder(inflater.inflate(R.layout.item_dog, parent, false));
   }
 
-  @Override public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position,
-      @NonNull RecyclerView.ViewHolder holder) {
+	@Override
+	public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
+		DogViewHolder vh = (DogViewHolder) holder;
+		Dog dog = (Dog) items.get(position);
 
-    DogViewHolder vh = (DogViewHolder) holder;
-    Dog dog = (Dog) items.get(position);
+		vh.name.setText(dog.getName());
 
-    vh.name.setText(dog.getName());
+		Log.d("Scroll", "DogAdapterDelegate bind  "+position);
+	}
 
-    Log.d("Scroll", "DogAdapterDelegate bind  "+position);
-  }
-
-  static class DogViewHolder extends RecyclerView.ViewHolder {
+	static class DogViewHolder extends RecyclerView.ViewHolder {
 
     public TextView name;
 

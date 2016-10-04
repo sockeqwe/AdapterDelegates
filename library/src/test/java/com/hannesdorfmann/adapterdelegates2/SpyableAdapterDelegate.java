@@ -1,9 +1,12 @@
 package com.hannesdorfmann.adapterdelegates2;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * @author Hannes Dorfmann
@@ -56,8 +59,10 @@ public class SpyableAdapterDelegate<T> implements AdapterDelegate<T> {
     return viewHolder;
   }
 
-  @Override public void onBindViewHolder(T items, int position, RecyclerView.ViewHolder holder) {
-    onBindViewHolderCalled = true;
-    onBindViewHolderPosition = position;
-  }
+	@Override
+	public void onBindViewHolder(@NonNull T items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
+		onBindViewHolderCalled = true;
+		onBindViewHolderPosition = position;
+	}
+
 }

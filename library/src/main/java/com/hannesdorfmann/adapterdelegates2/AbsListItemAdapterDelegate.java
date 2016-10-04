@@ -1,9 +1,11 @@
 package com.hannesdorfmann.adapterdelegates2;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simplified {@link AbsAdapterDelegate} when the underlying adapter's dataset is a  {@linkplain
@@ -51,8 +53,8 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
   }
 
   @Override public final void onBindViewHolder(@NonNull List<T> items, int position,
-      @NonNull RecyclerView.ViewHolder holder) {
-    onBindViewHolder((I) items.get(position), (VH) holder);
+      @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
+    onBindViewHolder((I) items.get(position), (VH) holder, payloads);
   }
 
   /**
@@ -76,6 +78,8 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
    * Called to bind the {@link RecyclerView.ViewHolder} to the item of the dataset
    * @param item The data item
    * @param viewHolder The ViewHolder
+   * @param viewHolder The payloads
    */
-  protected abstract void onBindViewHolder(@NonNull I item, @NonNull VH viewHolder);
+  protected abstract void onBindViewHolder(@NonNull I item, @NonNull VH viewHolder, @Nullable List payloads);
+
 }

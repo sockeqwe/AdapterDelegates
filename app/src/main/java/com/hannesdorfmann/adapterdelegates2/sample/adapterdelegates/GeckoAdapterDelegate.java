@@ -18,6 +18,7 @@ package com.hannesdorfmann.adapterdelegates2.sample.adapterdelegates;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,20 +52,19 @@ public class GeckoAdapterDelegate implements AdapterDelegate<List<DisplayableIte
     return new GeckoViewHolder(inflater.inflate(R.layout.item_gecko, parent, false));
   }
 
-  @Override public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position,
-      @NonNull RecyclerView.ViewHolder holder) {
+	@Override
+	public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
+		GeckoViewHolder vh = (GeckoViewHolder) holder;
+		Gecko gecko = (Gecko) items.get(position);
 
-    GeckoViewHolder vh = (GeckoViewHolder) holder;
-    Gecko gecko = (Gecko) items.get(position);
-
-    vh.name.setText(gecko.getName());
-    vh.race.setText(gecko.getRace());
+		vh.name.setText(gecko.getName());
+		vh.race.setText(gecko.getRace());
 
 
-    Log.d("Scroll", "GeckoAdapterDelegate bind  "+position);
-  }
+		Log.d("Scroll", "GeckoAdapterDelegate bind  "+position);
+	}
 
-  static class GeckoViewHolder extends RecyclerView.ViewHolder {
+	static class GeckoViewHolder extends RecyclerView.ViewHolder {
 
     public TextView name;
     public TextView race;

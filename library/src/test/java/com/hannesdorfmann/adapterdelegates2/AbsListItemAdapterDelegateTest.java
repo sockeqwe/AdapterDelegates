@@ -29,7 +29,7 @@ public class AbsListItemAdapterDelegateTest {
     CatViewHolder vh = delegate.onCreateViewHolder(parent);
     Assert.assertTrue(delegate.onCreateViewHolderCalled);
 
-    delegate.onBindViewHolder(items, 0, vh);
+    delegate.onBindViewHolder(items, 0, vh, new ArrayList<Object>());
     Assert.assertTrue(delegate.onBindViewHolderCalled);
   }
 
@@ -63,7 +63,7 @@ public class AbsListItemAdapterDelegateTest {
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull Cat item, @NonNull CatViewHolder viewHolder) {
+    protected void onBindViewHolder(@NonNull Cat item, @NonNull CatViewHolder viewHolder, List payloads) {
       onBindViewHolderCalled = true;
     }
   }

@@ -1,5 +1,7 @@
 package com.hannesdorfmann.adapterdelegates2;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import java.util.ArrayList;
@@ -24,10 +26,10 @@ public class AdapterDelegatesManagerTest {
         return null;
       }
 
-      @Override
-      public void onBindViewHolder(Object items, int position, RecyclerView.ViewHolder holder) {
+	    @Override
+	    public void onBindViewHolder(@NonNull Object items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
 
-      }
+	    }
     };
 
     AdapterDelegate d2 = new AdapterDelegate() {
@@ -39,10 +41,11 @@ public class AdapterDelegatesManagerTest {
         return null;
       }
 
-      @Override
-      public void onBindViewHolder(Object items, int position, RecyclerView.ViewHolder holder) {
+	    @Override
+	    public void onBindViewHolder(@NonNull Object items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
 
-      }
+	    }
+
     };
 
     AdapterDelegatesManager manager = new AdapterDelegatesManager();

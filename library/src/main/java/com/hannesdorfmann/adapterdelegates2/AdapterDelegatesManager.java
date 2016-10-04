@@ -22,6 +22,8 @@ import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 /**
  * This class is the element that ties {@link RecyclerView.Adapter} together with {@link
  * AdapterDelegate}.
@@ -250,16 +252,17 @@ public class AdapterDelegatesManager<T> {
   }
 
   /**
-   * Must be called from{@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)}
+   * Must be called from{@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int, List)}
    *
    * @param items Adapter's data source
    * @param position the position in data source
    * @param viewHolder the ViewHolder to bind
+   * @param payloads A non-null list of merged payloads. Can be empty list if requires full update.
    * @throws NullPointerException if no AdapterDelegate has been registered for ViewHolders
    * viewType
    */
   public void onBindViewHolder(@NonNull T items, int position,
-      @NonNull RecyclerView.ViewHolder viewHolder) {
+      @NonNull RecyclerView.ViewHolder viewHolder, @Nullable List payloads) {
 
     AdapterDelegate<T> delegate = getDelegateForViewType(viewHolder.getItemViewType());
     if (delegate == null) {
@@ -268,8 +271,22 @@ public class AdapterDelegatesManager<T> {
           + " for viewType = "
           + viewHolder.getItemViewType());
     }
-    delegate.onBindViewHolder(items, position, viewHolder);
+    delegate.onBindViewHolder(items, position, viewHolder, payloads);
   }
+
+	/**
+	 * Must be called from{@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int, List)}
+	 *
+	 * @param items Adapter's data source
+	 * @param position the position in data source
+	 * @param viewHolder the ViewHolder to bind
+	 * @throws NullPointerException if no AdapterDelegate has been registered for ViewHolders
+	 * viewType
+	 */
+	public void onBindViewHolder(
+		@NonNull T items, int position, @NonNull RecyclerView.ViewHolder viewHolder) {
+		onBindViewHolder(items, position, viewHolder, null);
+	}
 
   /**
    * Set a fallback delegate that should be used if no {@link AdapterDelegate} has been found that
