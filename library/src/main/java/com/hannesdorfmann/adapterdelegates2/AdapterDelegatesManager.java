@@ -21,7 +21,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-
 import java.util.List;
 
 /**
@@ -252,7 +251,8 @@ public class AdapterDelegatesManager<T> {
   }
 
   /**
-   * Must be called from{@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int, List)}
+   * Must be called from{@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int,
+   * List)}
    *
    * @param items Adapter's data source
    * @param position the position in data source
@@ -274,19 +274,99 @@ public class AdapterDelegatesManager<T> {
     delegate.onBindViewHolder(items, position, viewHolder, payloads);
   }
 
-	/**
-	 * Must be called from{@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int, List)}
-	 *
-	 * @param items Adapter's data source
-	 * @param position the position in data source
-	 * @param viewHolder the ViewHolder to bind
-	 * @throws NullPointerException if no AdapterDelegate has been registered for ViewHolders
-	 * viewType
-	 */
-	public void onBindViewHolder(
-		@NonNull T items, int position, @NonNull RecyclerView.ViewHolder viewHolder) {
-		onBindViewHolder(items, position, viewHolder, null);
-	}
+  /**
+   * Must be called from {@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int,
+   * List)}
+   *
+   * @param items Adapter's data source
+   * @param position the position in data source
+   * @param viewHolder the ViewHolder to bind
+   * @throws NullPointerException if no AdapterDelegate has been registered for ViewHolders
+   * viewType
+   */
+  public void onBindViewHolder(@NonNull T items, int position,
+      @NonNull RecyclerView.ViewHolder viewHolder) {
+    onBindViewHolder(items, position, viewHolder, null);
+  }
+
+  /**
+   * Must be called from {@link RecyclerView.Adapter#onViewRecycled(RecyclerView.ViewHolder)}
+   *
+   * @param viewHolder The ViewHolder for the view being recycled
+   */
+  public void onViewRecycled(@NonNull RecyclerView.ViewHolder viewHolder) {
+    AdapterDelegate<T> delegate = getDelegateForViewType(viewHolder.getItemViewType());
+    if (delegate == null) {
+      throw new NullPointerException("No delegate found for "
+          + viewHolder
+          + " for item at position = "
+          + viewHolder.getAdapterPosition()
+          + " for viewType = "
+          + viewHolder.getItemViewType());
+    }
+    delegate.onViewRecycled(viewHolder);
+  }
+
+  /**
+   * Must be called from {@link RecyclerView.Adapter#onFailedToRecycleView(RecyclerView.ViewHolder)}
+   *
+   * @param viewHolder The ViewHolder containing the View that could not be recycled due to its
+   * transient state.
+   * @return True if the View should be recycled, false otherwise. Note that if this method
+   * returns <code>true</code>, RecyclerView <em>will ignore</em> the transient state of
+   * the View and recycle it regardless. If this method returns <code>false</code>,
+   * RecyclerView will check the View's transient state again before giving a final decision.
+   * Default implementation returns false.
+   */
+  public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder viewHolder) {
+    AdapterDelegate<T> delegate = getDelegateForViewType(viewHolder.getItemViewType());
+    if (delegate == null) {
+      throw new NullPointerException("No delegate found for "
+          + viewHolder
+          + " for item at position = "
+          + viewHolder.getAdapterPosition()
+          + " for viewType = "
+          + viewHolder.getItemViewType());
+    }
+    return delegate.onFailedToRecycleView(viewHolder);
+  }
+
+  /**
+   * Must be called from {@link RecyclerView.Adapter#onViewAttachedToWindow(RecyclerView.ViewHolder)}
+   *
+   * @param viewHolder Holder of the view being attached
+   */
+  public void onViewAttachedToWindow(RecyclerView.ViewHolder viewHolder) {
+    AdapterDelegate<T> delegate = getDelegateForViewType(viewHolder.getItemViewType());
+    if (delegate == null) {
+      throw new NullPointerException("No delegate found for "
+          + viewHolder
+          + " for item at position = "
+          + viewHolder.getAdapterPosition()
+          + " for viewType = "
+          + viewHolder.getItemViewType());
+    }
+    delegate.onViewAttachedToWindow(viewHolder);
+  }
+
+  /**
+   * Must be called from {@link RecyclerView.Adapter#onViewDetachedFromWindow(RecyclerView.ViewHolder)}
+   *
+   * @param viewHolder Holder of the view being attached
+   */
+  public void onViewDetachedFromWindow(RecyclerView.ViewHolder viewHolder) {
+    AdapterDelegate<T> delegate = getDelegateForViewType(viewHolder.getItemViewType());
+    if (delegate == null) {
+      throw new NullPointerException("No delegate found for "
+          + viewHolder
+          + " for item at position = "
+          + viewHolder.getAdapterPosition()
+          + " for viewType = "
+          + viewHolder.getItemViewType());
+    }
+    delegate.onViewAttachedToWindow(viewHolder);
+  }
+
 
   /**
    * Set a fallback delegate that should be used if no {@link AdapterDelegate} has been found that

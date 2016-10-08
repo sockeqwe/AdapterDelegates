@@ -19,7 +19,6 @@ package com.hannesdorfmann.adapterdelegates2;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-
 import java.util.List;
 
 /**
@@ -79,13 +78,29 @@ public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
     delegatesManager.onBindViewHolder(items, position, holder, null);
   }
 
-	@Override
-	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
-		delegatesManager.onBindViewHolder(items, position, holder, payloads);
-	}
+  @Override
+  public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
+    delegatesManager.onBindViewHolder(items, position, holder, payloads);
+  }
 
-	@Override public int getItemViewType(int position) {
+  @Override public int getItemViewType(int position) {
     return delegatesManager.getItemViewType(items, position);
+  }
+
+  @Override public void onViewRecycled(RecyclerView.ViewHolder holder) {
+    delegatesManager.onViewRecycled(holder);
+  }
+
+  @Override public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
+    return delegatesManager.onFailedToRecycleView(holder);
+  }
+
+  @Override public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+    delegatesManager.onViewAttachedToWindow(holder);
+  }
+
+  @Override public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+    delegatesManager.onViewDetachedFromWindow(holder);
   }
 
   /**
