@@ -78,6 +78,10 @@ public class CatAdapterDelegate extends AdapterDelegate<List<Animal>> {
 }
 ```
 
+Please note that `onBindViewHolder()` last parameter `payloads` is null unless you use from `adpater.notify`.  There are more methods like `onViewRecycled(ViewHolder)`, `onFailedToRecycleView(ViewHolder)`,
+`onViewAttachedToWindow(ViewHolder)` and `onViewDetachedFromWindow(ViewHolder)` you can override in your `AdapterDelegate` class.
+
+
 Then an `AnimalAdapter` could look like this:
 
 ```java

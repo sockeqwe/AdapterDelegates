@@ -17,7 +17,6 @@
 package com.hannesdorfmann.adapterdelegates3;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import java.util.List;
@@ -61,7 +60,7 @@ public abstract class AdapterDelegate<T> {
    * @param payloads A non-null list of merged payloads. Can be empty list if requires full update.
    */
   protected abstract void onBindViewHolder(@NonNull T items, int position,
-      @NonNull RecyclerView.ViewHolder holder, @Nullable List<Object> payloads);
+      @NonNull RecyclerView.ViewHolder holder, @NonNull List<Object> payloads);
 
   /**
    * Called when a view created by this adapter has been recycled.

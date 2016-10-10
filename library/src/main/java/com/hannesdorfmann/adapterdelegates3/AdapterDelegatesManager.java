@@ -21,6 +21,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -58,6 +59,7 @@ public class AdapterDelegatesManager<T> {
    * This id is used internally to claim that the {@link}
    */
   static final int FALLBACK_DELEGATE_VIEW_TYPE = Integer.MAX_VALUE - 1;
+  private static final List<Object> PAYLOADS_EMPTY_LIST = Collections.emptyList();
 
   /**
    * Map for ViewType to AdapterDelegate
@@ -286,7 +288,7 @@ public class AdapterDelegatesManager<T> {
    */
   public void onBindViewHolder(@NonNull T items, int position,
       @NonNull RecyclerView.ViewHolder viewHolder) {
-    onBindViewHolder(items, position, viewHolder, null);
+    onBindViewHolder(items, position, viewHolder, PAYLOADS_EMPTY_LIST);
   }
 
   /**
