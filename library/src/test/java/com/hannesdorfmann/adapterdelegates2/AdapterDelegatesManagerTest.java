@@ -409,6 +409,48 @@ public class AdapterDelegatesManagerTest {
         }
       }
 
+      // Test onViewAtachedToWindow
+      manager.onViewAttachedToWindow(vh);
+      for (SpyableAdapterDelegate d : delegates) {
+        if (d == expectedDelegate) {
+          Assert.assertTrue(d.onViewAtachedToWindowCalled);
+        } else {
+          Assert.assertFalse(d.onViewAtachedToWindowCalled);
+        }
+      }
+
+
+      // Test onViewDetachedFromWindow
+      manager.onViewDetachedFromWindow(vh);
+      for (SpyableAdapterDelegate d : delegates) {
+        if (d == expectedDelegate) {
+          Assert.assertTrue(d.onViewDetachedFromWindowCalled);
+        } else {
+          Assert.assertFalse(d.onViewDetachedFromWindowCalled);
+        }
+      }
+
+
+      // Test onViewRecycled
+      manager.onViewRecycled(vh);
+      for (SpyableAdapterDelegate d : delegates) {
+        if (d == expectedDelegate) {
+          Assert.assertTrue(d.onViewRecycledCalled);
+        } else {
+          Assert.assertFalse(d.onViewRecycledCalled);
+        }
+      }
+
+      // Test onViewRecycled
+      manager.onFailedToRecycleView(vh);
+      for (SpyableAdapterDelegate d : delegates) {
+        if (d == expectedDelegate) {
+          Assert.assertTrue(d.onFailedToRecycleViewCalled);
+        } else {
+          Assert.assertFalse(d.onFailedToRecycleViewCalled);
+        }
+      }
+
       resetDelegates(delegates);
     }
   }
