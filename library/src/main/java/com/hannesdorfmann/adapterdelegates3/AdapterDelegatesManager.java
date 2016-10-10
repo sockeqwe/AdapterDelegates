@@ -59,6 +59,11 @@ public class AdapterDelegatesManager<T> {
    * This id is used internally to claim that the {@link}
    */
   static final int FALLBACK_DELEGATE_VIEW_TYPE = Integer.MAX_VALUE - 1;
+
+  /**
+   * Used internally for {@link #onBindViewHolder(Object, int, RecyclerView.ViewHolder)} as empty
+   * payload parameter
+   */
   private static final List<Object> PAYLOADS_EMPTY_LIST = Collections.emptyList();
 
   /**
@@ -368,7 +373,6 @@ public class AdapterDelegatesManager<T> {
     }
     delegate.onViewDetachedFromWindow(viewHolder);
   }
-
 
   /**
    * Set a fallback delegate that should be used if no {@link AdapterDelegate} has been found that
