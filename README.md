@@ -5,16 +5,16 @@ Read the motivation for this project in [my blog post](http://hannesdorfmann.com
 This library is available on maven central:
 
 ```groovy
-compile 'com.hannesdorfmann:adapterdelegates2:2.0.1'
+compile 'com.hannesdorfmann:adapterdelegates3:3.0.0'
 ```
 [![Build Status](https://travis-ci.org/sockeqwe/AdapterDelegates.svg?branch=master)](https://travis-ci.org/sockeqwe/AdapterDelegates)
 
-Please note that since 2.0 the group id has been changed to `adapterdelegates2`.
+Please note that since 3.0 the group id has been changed to `adapterdelegates3`.
 
 ### Snapshot
 
 ```groovy
-compile 'com.hannesdorfmann:adapterdelegates2:2.0.2-SNAPSHOT'
+compile 'com.hannesdorfmann:adapterdelegates3:3.0.1-SNAPSHOT'
 ```
 
 You also have to add the url to the snapshot repository:
@@ -39,7 +39,7 @@ An `AdapterDelegate` get added to an `AdapterDelegatesManager`. This manager is 
 
 For example:
 ```java
-public class CatAdapterDelegate implements AdapterDelegate<List<Animal>> {
+public class CatAdapterDelegate extends AdapterDelegate<List<Animal>> {
 
   private LayoutInflater inflater;
 
@@ -56,7 +56,7 @@ public class CatAdapterDelegate implements AdapterDelegate<List<Animal>> {
   }
 
   @Override public void onBindViewHolder(@NonNull List<Animal> items, int position,
-      @NonNull RecyclerView.ViewHolder holder) {
+      @NonNull RecyclerView.ViewHolder holder, @Nullable List<Object> payloads) {
 
     CatViewHolder vh = (CatViewHolder) holder;
     Cat cat = (Cat) items.get(position);

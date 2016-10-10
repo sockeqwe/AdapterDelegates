@@ -42,7 +42,7 @@ public class CatAdapterDelegate extends AdapterDelegate<List<DisplayableItem>> {
     inflater = activity.getLayoutInflater();
   }
 
-  @Override public boolean isForViewType(@NonNull List<DisplayableItem> items, int position) {
+  @Override protected boolean isForViewType(@NonNull List<DisplayableItem> items, int position) {
     return items.get(position) instanceof Cat;
   }
 
@@ -52,7 +52,7 @@ public class CatAdapterDelegate extends AdapterDelegate<List<DisplayableItem>> {
   }
 
   @Override public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position,
-      @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
+      @NonNull RecyclerView.ViewHolder holder, @Nullable List<Object> payloads) {
     CatViewHolder vh = (CatViewHolder) holder;
     Cat cat = (Cat) items.get(position);
 

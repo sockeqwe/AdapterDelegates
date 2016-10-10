@@ -49,7 +49,7 @@ public class AdvertisementAdapterDelegate extends AdapterDelegate<List<Displayab
   }
 
 	@Override
-	public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
+	public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List<Object> payloads) {
 		// Notihing to bind in this example
 	}
 

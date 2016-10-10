@@ -53,7 +53,7 @@ public class DogAdapterDelegate extends AdapterDelegate<List<DisplayableItem>> {
   }
 
   @Override public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position,
-      @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
+      @NonNull RecyclerView.ViewHolder holder, @Nullable List<Object> payloads) {
     DogViewHolder vh = (DogViewHolder) holder;
     Dog dog = (Dog) items.get(position);
 

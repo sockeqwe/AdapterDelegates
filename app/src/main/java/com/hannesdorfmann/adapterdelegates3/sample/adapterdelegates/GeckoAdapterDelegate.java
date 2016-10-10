@@ -53,7 +53,7 @@ public class GeckoAdapterDelegate extends AdapterDelegate<List<DisplayableItem>>
   }
 
   @Override public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position,
-      @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
+      @NonNull RecyclerView.ViewHolder holder, @Nullable List<Object> payloads) {
     GeckoViewHolder vh = (GeckoViewHolder) holder;
     Gecko gecko = (Gecko) items.get(position);
 
