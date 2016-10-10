@@ -33,7 +33,7 @@ import java.util.List;
  * @author Hannes Dorfmann
  * @since 1.0
  */
-public interface AdapterDelegate<T> {
+public abstract class AdapterDelegate<T> {
 
   /**
    * Called to determine whether this AdapterDelegate is the responsible for the given data
@@ -43,7 +43,7 @@ public interface AdapterDelegate<T> {
    * @param position The position in the datasource
    * @return true, if this item is responsible,  otherwise false
    */
-  public boolean isForViewType(@NonNull T items, int position);
+  public abstract boolean isForViewType(@NonNull T items, int position);
 
   /**
    * Creates the  {@link RecyclerView.ViewHolder} for the given data source item
@@ -51,7 +51,7 @@ public interface AdapterDelegate<T> {
    * @param parent The ViewGroup parent of the given datasource
    * @return The new instantiated {@link RecyclerView.ViewHolder}
    */
-  @NonNull public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent);
+  @NonNull abstract public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent);
 
   /**
    * Called to bind the {@link RecyclerView.ViewHolder} to the item of the datas source set
@@ -61,7 +61,7 @@ public interface AdapterDelegate<T> {
    * @param holder The {@link RecyclerView.ViewHolder} to bind
    * @param payloads A non-null list of merged payloads. Can be empty list if requires full update.
    */
-  public void onBindViewHolder(@NonNull T items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads);
+  public abstract void onBindViewHolder(@NonNull T items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads);
 
   /**
    * Called when a view created by this adapter has been recycled.
@@ -80,7 +80,8 @@ public interface AdapterDelegate<T> {
    *
    * @param viewHolder The ViewHolder for the view being recycled
    */
-  public void onViewRecycled(@NonNull RecyclerView.ViewHolder viewHolder);
+  public void onViewRecycled(@NonNull RecyclerView.ViewHolder viewHolder){
+  }
 
 
   /**
@@ -117,7 +118,9 @@ public interface AdapterDelegate<T> {
    * RecyclerView will check the View's transient state again before giving a final decision.
    * Default implementation returns false.
    */
-  public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder);
+  public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder){
+    return false;
+  }
 
 
   /**
@@ -130,7 +133,8 @@ public interface AdapterDelegate<T> {
    *
    * @param holder Holder of the view being attached
    */
-  public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder);
+  public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder){
+  }
 
 
   /**
@@ -142,5 +146,6 @@ public interface AdapterDelegate<T> {
    *
    * @param holder Holder of the view being detached
    */
-  public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder);
+  public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder){
+  }
 }

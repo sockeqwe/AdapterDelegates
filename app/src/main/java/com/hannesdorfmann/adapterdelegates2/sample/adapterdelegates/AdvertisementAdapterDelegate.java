@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author Hannes Dorfmann
  */
-public class AdvertisementAdapterDelegate implements AdapterDelegate<List<DisplayableItem>> {
+public class AdvertisementAdapterDelegate extends AdapterDelegate<List<DisplayableItem>> {
 
   LayoutInflater inflater;
 

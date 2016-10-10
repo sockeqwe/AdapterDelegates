@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Hannes Dorfmann
  */
-public class SpyableAdapterDelegate<T> implements AdapterDelegate<T> {
+public class SpyableAdapterDelegate<T> extends AdapterDelegate<T> {
 
   public boolean isForViewTypeReturnedYes = false;
   public boolean onCreateViewHolderCalled = false;

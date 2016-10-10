@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * @author Hannes Dorfmann
  */
-public class DogAdapterDelegate implements AdapterDelegate<List<DisplayableItem>> {
+public class DogAdapterDelegate extends AdapterDelegate<List<DisplayableItem>> {
 
   private LayoutInflater inflater;
 

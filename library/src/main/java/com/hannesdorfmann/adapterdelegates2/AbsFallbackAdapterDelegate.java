@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
  * @author Hannes Dorfmann
  * @since 1.1.0
  */
-public abstract class AbsFallbackAdapterDelegate<T> implements AdapterDelegate<T> {
+public abstract class AbsFallbackAdapterDelegate<T> extends AdapterDelegate<T> {
 
   /**
    * Not needed, because never called for fallback adapter delegates.

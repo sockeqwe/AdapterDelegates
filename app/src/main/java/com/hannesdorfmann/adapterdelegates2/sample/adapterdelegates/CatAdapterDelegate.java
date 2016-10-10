@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * @author Hannes Dorfmann
  */
-public class CatAdapterDelegate implements AdapterDelegate<List<DisplayableItem>> {
+public class CatAdapterDelegate extends AdapterDelegate<List<DisplayableItem>> {
 
   private LayoutInflater inflater;
 

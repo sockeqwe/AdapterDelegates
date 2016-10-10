@@ -46,7 +46,7 @@ import java.util.Objects;
  * @since 1.2
  */
 public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends RecyclerView.ViewHolder>
-    implements AdapterDelegate<List<T>> {
+    extends AdapterDelegate<List<T>> {
 
   @Override public final boolean isForViewType(@NonNull List<T> items, int position) {
     return isForViewType(items.get(position), items, position);

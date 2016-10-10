@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * @author Hannes Dorfmann
  */
-public class GeckoAdapterDelegate implements AdapterDelegate<List<DisplayableItem>> {
+public class GeckoAdapterDelegate extends AdapterDelegate<List<DisplayableItem>> {
 
   private LayoutInflater inflater;
 
@@ -52,19 +52,18 @@ public class GeckoAdapterDelegate implements AdapterDelegate<List<DisplayableIte
     return new GeckoViewHolder(inflater.inflate(R.layout.item_gecko, parent, false));
   }
 
-	@Override
-	public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
-		GeckoViewHolder vh = (GeckoViewHolder) holder;
-		Gecko gecko = (Gecko) items.get(position);
+  @Override public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position,
+      @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
+    GeckoViewHolder vh = (GeckoViewHolder) holder;
+    Gecko gecko = (Gecko) items.get(position);
 
-		vh.name.setText(gecko.getName());
-		vh.race.setText(gecko.getRace());
+    vh.name.setText(gecko.getName());
+    vh.race.setText(gecko.getRace());
 
+    Log.d("Scroll", "GeckoAdapterDelegate bind  " + position);
+  }
 
-		Log.d("Scroll", "GeckoAdapterDelegate bind  "+position);
-	}
-
-	static class GeckoViewHolder extends RecyclerView.ViewHolder {
+  static class GeckoViewHolder extends RecyclerView.ViewHolder {
 
     public TextView name;
     public TextView race;
