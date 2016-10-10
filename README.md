@@ -28,6 +28,8 @@ allprojects {
 }
 ```
 
+### Changelog
+See [releases section](https://github.com/sockeqwe/AdapterDelegates/releases)
 
 ## Idea
 The idea of this library is to build your adapters by composing reusable components.
@@ -160,7 +162,7 @@ public class CatListItemAdapterDelegate extends AbsListItemAdapterDelegate<Cat, 
     return new CatViewHolder(inflater.inflate(R.layout.item_cat, parent, false));
   }
 
-  @Override public void onBindViewHolder(Cat item, CatViewHolder vh) {
+  @Override public void onBindViewHolder(Cat item, CatViewHolder vh, @Nullable List<Object> payloads) {
     vh.name.setText(item.getName());
   }
 
@@ -188,9 +190,11 @@ adapterDelegateManager.setFallbackDelegate( fallbackDelegate );
 Note also that boolean return type of `isForViewType()` of a fallback delegate will be ignored (will not be take into account). So it doesn't matter if you return true or false. You can use `AbsFallbackAdapterDelegate` that already implements `isForViewType()` so that you only have to override `onCreateViewHolder()` and `onBindViewHolder()` for your fallback adapter delegate.
 
 
-## Migrating from `1.x` to `2.0`
-In contrast to `1.x` in `2.0` `AdapterDelegatesManager` internally assigns view type integers automatically for you (you can also explicitly assign view type if you want to). That means that `AdapterDelegates.getItemViewType()` is no longer needed and has been removed. Therefore, `AbsAdapterDelegate` is also no longer needed and has been removed too.
-To keep version 2.0 backward compatible with project that are already using `1.x` the package has been renamed to `com.hannesdorfmann.adapterdelegates2` and also the atrifact id has been renamed to `adapterdelegates2`.
+## Migrating from `2.x` to `3.0`
+In contrast to `2.x` in `3.0` `AdapterDelegate` is no longer a interface, but rather an abstract class.
+To keep version backward compatible with project that are already using `1.x` or `2.x` the package has been renamed to `com.hannesdorfmann.adapterdelegates3` and also the artifact id has been renamed to `adapterdelegates3`.
+
+See the [releases section](https://github.com/sockeqwe/AdapterDelegates/releases) for more information about changes.
 
 ## License
 
