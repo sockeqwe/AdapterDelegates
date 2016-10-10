@@ -100,7 +100,7 @@ public class AbsDelegationAdapterTest {
     Assert.assertFalse(delegate2.onViewDetachedFromWindowCalled);
 
     // failed to recycle view holder
-    adapter.onFailedToRecycleView(delegate1.viewHolder);
+    Assert.assertFalse(adapter.onFailedToRecycleView(delegate1.viewHolder));
     Assert.assertTrue(delegate1.onFailedToRecycleViewCalled);
     Assert.assertFalse(delegate2.onFailedToRecycleViewCalled);
 
