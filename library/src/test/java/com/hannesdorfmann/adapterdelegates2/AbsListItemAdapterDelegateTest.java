@@ -31,6 +31,8 @@ public class AbsListItemAdapterDelegateTest {
 
     delegate.onBindViewHolder(items, 0, vh, new ArrayList<Object>());
     Assert.assertTrue(delegate.onBindViewHolderCalled);
+
+
   }
 
   interface Animal {
@@ -50,6 +52,8 @@ public class AbsListItemAdapterDelegateTest {
     public boolean isForViewTypeCalled = false;
     public boolean onCreateViewHolderCalled = false;
     public boolean onBindViewHolderCalled = false;
+    public boolean onViewDetachedFromWindow = false;
+
 
     @Override
     protected boolean isForViewType(@NonNull Animal item, List<Animal> items, int position) {
@@ -65,6 +69,11 @@ public class AbsListItemAdapterDelegateTest {
     @Override
     protected void onBindViewHolder(@NonNull Cat item, @NonNull CatViewHolder viewHolder, List payloads) {
       onBindViewHolderCalled = true;
+    }
+
+    @Override public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+      super.onViewDetachedFromWindow(holder);
+      onViewDetachedFromWindow = true;
     }
   }
 }

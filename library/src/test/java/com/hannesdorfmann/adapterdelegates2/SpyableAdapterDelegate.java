@@ -16,6 +16,10 @@ public class SpyableAdapterDelegate<T> extends AdapterDelegate<T> {
   public boolean isForViewTypeReturnedYes = false;
   public boolean onCreateViewHolderCalled = false;
   public boolean onBindViewHolderCalled = false;
+  public boolean onViewDetachedFromWindowCalled = false;
+  public boolean onViewAtachedToWindowCalled = false;
+  public boolean onViewRecycledCalled = false;
+  public boolean onFailedToRecycleViewCalled = false;
 
   public int onBindViewHolderPosition = -1;
   public RecyclerView.ViewHolder viewHolder;
@@ -41,6 +45,10 @@ public class SpyableAdapterDelegate<T> extends AdapterDelegate<T> {
     isForViewTypeReturnedYes = false;
     onCreateViewHolderCalled = false;
     onBindViewHolderCalled = false;
+    onViewDetachedFromWindowCalled = false;
+    onViewAtachedToWindowCalled = false;
+    onViewRecycledCalled = false;
+    onFailedToRecycleViewCalled = false;
     onBindViewHolderPosition = -1;
   }
 
@@ -59,10 +67,29 @@ public class SpyableAdapterDelegate<T> extends AdapterDelegate<T> {
     return viewHolder;
   }
 
-	@Override
-	public void onBindViewHolder(@NonNull T items, int position, @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
-		onBindViewHolderCalled = true;
-		onBindViewHolderPosition = position;
-	}
+  @Override public void onBindViewHolder(@NonNull T items, int position,
+      @NonNull RecyclerView.ViewHolder holder, @Nullable List payloads) {
+    onBindViewHolderCalled = true;
+    onBindViewHolderPosition = position;
+  }
 
+  @Override public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+    super.onViewDetachedFromWindow(holder);
+    onViewDetachedFromWindowCalled = true;
+  }
+
+  @Override public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
+    super.onViewAttachedToWindow(holder);
+    onViewAtachedToWindowCalled = true;
+  }
+
+  @Override public void onViewRecycled(@NonNull RecyclerView.ViewHolder viewHolder) {
+    super.onViewRecycled(viewHolder);
+    onViewRecycledCalled = true;
+  }
+
+  @Override public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder) {
+    onFailedToRecycleViewCalled = true;
+    return super.onFailedToRecycleView(holder);
+  }
 }

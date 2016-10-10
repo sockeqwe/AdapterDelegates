@@ -364,7 +364,7 @@ public class AdapterDelegatesManager<T> {
           + " for viewType = "
           + viewHolder.getItemViewType());
     }
-    delegate.onViewAttachedToWindow(viewHolder);
+    delegate.onViewDetachedFromWindow(viewHolder);
   }
 
 

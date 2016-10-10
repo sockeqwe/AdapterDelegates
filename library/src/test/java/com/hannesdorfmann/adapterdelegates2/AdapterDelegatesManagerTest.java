@@ -198,6 +198,163 @@ public class AdapterDelegatesManagerTest {
     resetDelegates(d0, d1, d2);
   }
 
+  @Test public void onViewDetachedFromWindow(){
+
+
+    // 3 elements and each element has it's own viewtype and hence own delegate
+    List<Object> items = Arrays.asList(new Object(), new Object(), new Object());
+    SpyableAdapterDelegate<List<Object>> d0 = new SpyableAdapterDelegate<>(0);
+    SpyableAdapterDelegate<List<Object>> d1 = new SpyableAdapterDelegate<>(1);
+    SpyableAdapterDelegate<List<Object>> d2 = new SpyableAdapterDelegate<>(2);
+
+    AdapterDelegatesManager<List<Object>> manager = new AdapterDelegatesManager<>();
+    manager.addDelegate(d0);
+    manager.addDelegate(d1);
+    manager.addDelegate(d2);
+
+    // Test first item
+    manager.onViewDetachedFromWindow(d0.viewHolder);
+    Assert.assertTrue(d0.onViewDetachedFromWindowCalled);
+    Assert.assertFalse(d1.onViewDetachedFromWindowCalled);
+    Assert.assertFalse(d2.onViewDetachedFromWindowCalled);
+
+    resetDelegates(d0, d1, d2);
+
+    // Test second item
+    manager.onViewDetachedFromWindow(d1.viewHolder);
+    Assert.assertTrue(d1.onViewDetachedFromWindowCalled);
+    Assert.assertFalse(d0.onViewDetachedFromWindowCalled);
+    Assert.assertFalse(d2.onViewDetachedFromWindowCalled);
+
+    resetDelegates(d0, d1, d2);
+
+    // Test third item
+    manager.onViewDetachedFromWindow(d2.viewHolder);
+    Assert.assertTrue(d2.onViewDetachedFromWindowCalled);
+    Assert.assertFalse(d1.onViewDetachedFromWindowCalled);
+    Assert.assertFalse(d0.onViewDetachedFromWindowCalled);
+
+    resetDelegates(d0, d1, d2);
+  }
+
+
+  @Test public void onViewAttachedToWindow(){
+
+
+    // 3 elements and each element has it's own viewtype and hence own delegate
+    List<Object> items = Arrays.asList(new Object(), new Object(), new Object());
+    SpyableAdapterDelegate<List<Object>> d0 = new SpyableAdapterDelegate<>(0);
+    SpyableAdapterDelegate<List<Object>> d1 = new SpyableAdapterDelegate<>(1);
+    SpyableAdapterDelegate<List<Object>> d2 = new SpyableAdapterDelegate<>(2);
+
+    AdapterDelegatesManager<List<Object>> manager = new AdapterDelegatesManager<>();
+    manager.addDelegate(d0);
+    manager.addDelegate(d1);
+    manager.addDelegate(d2);
+
+    // Test first item
+    manager.onViewAttachedToWindow(d0.viewHolder);
+    Assert.assertTrue(d0.onViewAtachedToWindowCalled);
+    Assert.assertFalse(d1.onViewAtachedToWindowCalled);
+    Assert.assertFalse(d2.onViewAtachedToWindowCalled);
+
+    resetDelegates(d0, d1, d2);
+
+    // Test second item
+    manager.onViewAttachedToWindow(d1.viewHolder);
+    Assert.assertTrue(d1.onViewAtachedToWindowCalled);
+    Assert.assertFalse(d0.onViewAtachedToWindowCalled);
+    Assert.assertFalse(d2.onViewAtachedToWindowCalled);
+
+    resetDelegates(d0, d1, d2);
+
+    // Test third item
+    manager.onViewAttachedToWindow(d2.viewHolder);
+    Assert.assertTrue(d2.onViewAtachedToWindowCalled);
+    Assert.assertFalse(d1.onViewAtachedToWindowCalled);
+    Assert.assertFalse(d0.onViewAtachedToWindowCalled);
+
+    resetDelegates(d0, d1, d2);
+  }
+
+  @Test public void onViewRecycled(){
+
+
+    // 3 elements and each element has it's own viewtype and hence own delegate
+    List<Object> items = Arrays.asList(new Object(), new Object(), new Object());
+    SpyableAdapterDelegate<List<Object>> d0 = new SpyableAdapterDelegate<>(0);
+    SpyableAdapterDelegate<List<Object>> d1 = new SpyableAdapterDelegate<>(1);
+    SpyableAdapterDelegate<List<Object>> d2 = new SpyableAdapterDelegate<>(2);
+
+    AdapterDelegatesManager<List<Object>> manager = new AdapterDelegatesManager<>();
+    manager.addDelegate(d0);
+    manager.addDelegate(d1);
+    manager.addDelegate(d2);
+
+    // Test first item
+    manager.onViewRecycled(d0.viewHolder);
+    Assert.assertTrue(d0.onViewRecycledCalled);
+    Assert.assertFalse(d1.onViewRecycledCalled);
+    Assert.assertFalse(d2.onViewRecycledCalled);
+
+    resetDelegates(d0, d1, d2);
+
+    // Test second item
+    manager.onViewRecycled(d1.viewHolder);
+    Assert.assertTrue(d1.onViewRecycledCalled);
+    Assert.assertFalse(d0.onViewRecycledCalled);
+    Assert.assertFalse(d2.onViewRecycledCalled);
+
+    resetDelegates(d0, d1, d2);
+
+    // Test third item
+    manager.onViewRecycled(d2.viewHolder);
+    Assert.assertTrue(d2.onViewRecycledCalled);
+    Assert.assertFalse(d1.onViewRecycledCalled);
+    Assert.assertFalse(d0.onViewRecycledCalled);
+
+    resetDelegates(d0, d1, d2);
+  }
+
+  @Test public void onFailedToRecycleViewCalled(){
+
+
+    // 3 elements and each element has it's own viewtype and hence own delegate
+    List<Object> items = Arrays.asList(new Object(), new Object(), new Object());
+    SpyableAdapterDelegate<List<Object>> d0 = new SpyableAdapterDelegate<>(0);
+    SpyableAdapterDelegate<List<Object>> d1 = new SpyableAdapterDelegate<>(1);
+    SpyableAdapterDelegate<List<Object>> d2 = new SpyableAdapterDelegate<>(2);
+
+    AdapterDelegatesManager<List<Object>> manager = new AdapterDelegatesManager<>();
+    manager.addDelegate(d0);
+    manager.addDelegate(d1);
+    manager.addDelegate(d2);
+
+    // Test first item
+    manager.onFailedToRecycleView(d0.viewHolder);
+    Assert.assertTrue(d0.onFailedToRecycleViewCalled);
+    Assert.assertFalse(d1.onFailedToRecycleViewCalled);
+    Assert.assertFalse(d2.onFailedToRecycleViewCalled);
+
+    resetDelegates(d0, d1, d2);
+
+    // Test second item
+    manager.onFailedToRecycleView(d1.viewHolder);
+    Assert.assertTrue(d1.onFailedToRecycleViewCalled);
+    Assert.assertFalse(d0.onFailedToRecycleViewCalled);
+    Assert.assertFalse(d2.onFailedToRecycleViewCalled);
+
+    resetDelegates(d0, d1, d2);
+
+    // Test third item
+    manager.onFailedToRecycleView(d2.viewHolder);
+    Assert.assertTrue(d2.onFailedToRecycleViewCalled);
+    Assert.assertFalse(d1.onFailedToRecycleViewCalled);
+    Assert.assertFalse(d0.onFailedToRecycleViewCalled);
+
+    resetDelegates(d0, d1, d2);
+  }
+
   @Test public void allMethodsTest() {
 
     // 3 elements and each element has it's own viewtype and hence own delegate
