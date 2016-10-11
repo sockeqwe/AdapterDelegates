@@ -25,6 +25,7 @@ android {
 
   lintOptions {
     disable 'GoogleAppIndexingWarning'
+    abortOnError false
   }
 }
 
