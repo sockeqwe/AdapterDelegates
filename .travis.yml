@@ -36,3 +36,6 @@ env:
 
 after_success:
   - ./deploy_snapshot.sh
+  
+after_failure:  
+  cat /home/travis/build/sockeqwe/AdapterDelegates/library/build/outputs/lint-results-debug.xml
