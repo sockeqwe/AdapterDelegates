@@ -148,4 +148,8 @@ public abstract class AdapterDelegate<T> {
    */
   protected void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
   }
+
+  public  int getSpanCount(int spanCount){
+    return spanCount;
+  }
 }

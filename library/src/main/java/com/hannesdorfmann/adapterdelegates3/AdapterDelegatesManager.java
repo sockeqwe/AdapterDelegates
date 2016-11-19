@@ -210,25 +210,12 @@ public class AdapterDelegatesManager<T> {
    * @throws NullPointerException if items is null
    */
   public int getItemViewType(@NonNull T items, int position) {
+    AdapterDelegate<T> delegate = getDelegate(items, position);
 
-    if (items == null) {
-      throw new NullPointerException("Items datasource is null!");
-    }
-
-    int delegatesCount = delegates.size();
-    for (int i = 0; i < delegatesCount; i++) {
-      AdapterDelegate<T> delegate = delegates.valueAt(i);
-      if (delegate.isForViewType(items, position)) {
-        return delegates.keyAt(i);
-      }
-    }
-
-    if (fallbackDelegate != null) {
+    if (delegate == fallbackDelegate) {
       return FALLBACK_DELEGATE_VIEW_TYPE;
     }
-
-    throw new NullPointerException(
-        "No AdapterDelegate added that matches position=" + position + " in data source");
+    return delegates.indexOfValue(delegate);
   }
 
   /**
@@ -437,5 +424,31 @@ public class AdapterDelegatesManager<T> {
    */
   @Nullable public AdapterDelegate<T> getFallbackDelegate() {
     return fallbackDelegate;
+  }
+
+  public int getSpanSize(@NonNull T items, int position,int spanCount) {
+    return getDelegate(items, position).getSpanCount(spanCount);
+  }
+
+  public AdapterDelegate<T> getDelegate(@NonNull T items, int position){
+
+    if (items == null) {
+      throw new NullPointerException("Items datasource is null!");
+    }
+
+    int delegatesCount = delegates.size();
+    for (int i = 0; i < delegatesCount; i++) {
+      AdapterDelegate<T> delegate = delegates.valueAt(i);
+      if (delegate.isForViewType(items, position)) {
+        return delegate;
+      }
+    }
+
+    if (fallbackDelegate != null) {
+      return fallbackDelegate;
+    }
+
+    throw new NullPointerException(
+            "No AdapterDelegate added that matches position=" + position + " in data source");
   }
 }
