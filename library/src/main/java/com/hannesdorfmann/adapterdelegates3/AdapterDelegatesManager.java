@@ -218,6 +218,11 @@ public class AdapterDelegatesManager<T> {
     return delegates.indexOfValue(delegate);
   }
 
+  public long getItemId(@NonNull T items, int position) {
+    AdapterDelegate<T> delegate = getDelegate(items, position);
+    return delegate.getItemId(items, position);
+  }
+
   /**
    * This method must be called in {@link RecyclerView.Adapter#onCreateViewHolder(ViewGroup, int)}
    *

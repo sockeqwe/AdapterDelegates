@@ -152,4 +152,8 @@ public abstract class AdapterDelegate<T> {
   public  int getSpanCount(int spanCount){
     return spanCount;
   }
+
+  public long getItemId(T items, int position) {
+    return RecyclerView.NO_ID;
+  }
 }
