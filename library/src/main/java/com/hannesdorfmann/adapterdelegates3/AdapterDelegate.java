@@ -148,4 +148,12 @@ public abstract class AdapterDelegate<T> {
    */
   protected void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
   }
+
+  protected int getSpanCount(@NonNull T items, int position, int spanCount){
+    return spanCount;
+  }
+
+  protected long getItemId(@NonNull T items, int position) {
+    return RecyclerView.NO_ID;
+  }
 }
