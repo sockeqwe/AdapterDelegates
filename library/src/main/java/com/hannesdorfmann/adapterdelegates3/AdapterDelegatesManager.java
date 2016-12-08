@@ -432,7 +432,7 @@ public class AdapterDelegatesManager<T> {
   }
 
   public int getSpanSize(@NonNull T items, int position,int spanCount) {
-    return getDelegate(items, position).getSpanCount(spanCount);
+    return getDelegate(items, position).getSpanCount(items,position,spanCount);
   }
 
   public AdapterDelegate<T> getDelegate(@NonNull T items, int position){

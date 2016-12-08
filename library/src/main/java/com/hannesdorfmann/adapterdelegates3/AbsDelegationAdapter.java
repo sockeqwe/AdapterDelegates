@@ -17,6 +17,7 @@
 package com.hannesdorfmann.adapterdelegates3;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import java.util.List;
@@ -123,5 +124,14 @@ public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
    */
   public void setItems(T items) {
     this.items = items;
+  }
+
+  public GridLayoutManager.SpanSizeLookup getSpanSizeLookup(final int spanCount) {
+    return new GridLayoutManager.SpanSizeLookup() {
+      @Override
+      public int getSpanSize(int position) {
+        return delegatesManager.getSpanSize(items, position, spanCount);
+      }
+    };
   }
 }
