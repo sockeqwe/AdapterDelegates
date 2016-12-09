@@ -227,7 +227,7 @@ public class AdapterDelegatesManager<T> {
       return FALLBACK_DELEGATE_VIEW_TYPE;
     }
 
-    throw new NullPointerException(
+    throw new IllegalArgumentException(
         "No AdapterDelegate added that matches position=" + position + " in data source");
   }
 
