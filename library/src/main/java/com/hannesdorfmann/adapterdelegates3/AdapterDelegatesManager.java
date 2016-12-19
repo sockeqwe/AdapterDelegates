@@ -72,6 +72,20 @@ public class AdapterDelegatesManager<T> {
   protected SparseArrayCompat<AdapterDelegate<T>> delegates = new SparseArrayCompat();
   protected AdapterDelegate<T> fallbackDelegate;
 
+	private boolean hasHeader;
+
+	/**
+	 * Adds an {@link AdapterDelegate} with the specified view type as a header
+	 *
+	 * @param delegate the delegate to add
+	 * @return self
+	 * @see #addDelegate(AdapterDelegate)
+	 */
+	public AdapterDelegatesManager<T> addHeader(@NonNull AdapterDelegate delegate) {
+		hasHeader = true;
+		return addDelegate(delegate);
+	}
+
   /**
    * Adds an {@link AdapterDelegate}.
    * <b>This method automatically assign internally the view type integer by using the next
@@ -211,24 +225,25 @@ public class AdapterDelegatesManager<T> {
    */
   public int getItemViewType(@NonNull T items, int position) {
 
-    if (items == null) {
-      throw new NullPointerException("Items datasource is null!");
-    }
+	  if (items == null) {
+		  throw new NullPointerException("Items datasource is null!");
+	  }
 
-    int delegatesCount = delegates.size();
-    for (int i = 0; i < delegatesCount; i++) {
-      AdapterDelegate<T> delegate = delegates.valueAt(i);
-      if (delegate.isForViewType(items, position)) {
-        return delegates.keyAt(i);
-      }
-    }
+	  int delegatesCount = delegates.size();
+	  for (int i = 0; i < delegatesCount; i++) {
+		  AdapterDelegate<T> delegate = delegates.valueAt(i);
+		  // decrease position when header is present
+		  if (delegate.isForViewType(items, hasHeader ? position - 1 : position)) {
+			  return delegates.keyAt(i);
+		  }
+	  }
 
-    if (fallbackDelegate != null) {
-      return FALLBACK_DELEGATE_VIEW_TYPE;
-    }
+	  if (fallbackDelegate != null) {
+		  return FALLBACK_DELEGATE_VIEW_TYPE;
+	  }
 
-    throw new NullPointerException(
-        "No AdapterDelegate added that matches position=" + position + " in data source");
+	  throw new NullPointerException(
+			  "No AdapterDelegate added that matches position=" + position + " in data source");
   }
 
   /**
@@ -278,7 +293,7 @@ public class AdapterDelegatesManager<T> {
           + " for viewType = "
           + viewHolder.getItemViewType());
     }
-    delegate.onBindViewHolder(items, position, viewHolder, payloads);
+	  delegate.onBindViewHolder(items, hasHeader ? position - 1 : position, viewHolder, payloads);
   }
 
   /**
@@ -438,4 +453,14 @@ public class AdapterDelegatesManager<T> {
   @Nullable public AdapterDelegate<T> getFallbackDelegate() {
     return fallbackDelegate;
   }
+
+	/**
+	 * Get the amount of items in the list
+	 *
+	 * @param itemsCount the amount of items in the list
+	 * @return the amount of items in the list, +1 if header is shown
+	 */
+	public int getItemCount(int itemsCount) {
+		return hasHeader ? itemsCount + 1 : itemsCount;
+	}
 }
