@@ -1,7 +1,6 @@
 package com.hannesdorfmann.adapterdelegates3;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import java.util.List;
@@ -46,7 +45,7 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
   }
 
   @Override protected final void onBindViewHolder(@NonNull List<T> items, int position,
-      @NonNull RecyclerView.ViewHolder holder, @Nullable List<Object> payloads) {
+      @NonNull RecyclerView.ViewHolder holder, @NonNull List<Object> payloads) {
     onBindViewHolder((I) items.get(position), (VH) holder, payloads);
   }
 

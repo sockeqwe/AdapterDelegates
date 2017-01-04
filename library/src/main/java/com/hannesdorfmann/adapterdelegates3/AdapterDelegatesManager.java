@@ -204,7 +204,7 @@ public class AdapterDelegatesManager<T> {
    * @param position the position in adapters data source
    * @return the ViewType (integer). Returns {@link #FALLBACK_DELEGATE_VIEW_TYPE} in case that the
    * fallback adapter delegate should be used
-   * @throws IllegalArgumentException if no {@link AdapterDelegate} has been found that is
+   * @throws NullPointerException if no {@link AdapterDelegate} has been found that is
    * responsible for the given data element in data set (No {@link AdapterDelegate} for the given
    * ViewType)
    * @throws NullPointerException if items is null
@@ -269,7 +269,7 @@ public class AdapterDelegatesManager<T> {
    * viewType
    */
   public void onBindViewHolder(@NonNull T items, int position,
-      @NonNull RecyclerView.ViewHolder viewHolder, @Nullable List payloads) {
+      @NonNull RecyclerView.ViewHolder viewHolder, List payloads) {
 
     AdapterDelegate<T> delegate = getDelegateForViewType(viewHolder.getItemViewType());
     if (delegate == null) {
@@ -278,7 +278,8 @@ public class AdapterDelegatesManager<T> {
           + " for viewType = "
           + viewHolder.getItemViewType());
     }
-    delegate.onBindViewHolder(items, position, viewHolder, payloads);
+    delegate.onBindViewHolder(items, position, viewHolder,
+        payloads != null ? payloads : PAYLOADS_EMPTY_LIST);
   }
 
   /**
