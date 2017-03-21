@@ -74,7 +74,7 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
    *
    * @param item The data item
    * @param viewHolder The ViewHolder
-   * @param viewHolder The payloads
+   * @param payloads The payloads
    */
   protected abstract void onBindViewHolder(@NonNull I item, @NonNull VH viewHolder,
       @NonNull List<Object> payloads);
