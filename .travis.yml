@@ -39,3 +39,4 @@ after_success:
   
 after_failure:  
   cat /home/travis/build/sockeqwe/AdapterDelegates/library/build/outputs/lint-results-debug.xml
+  cat /home/travis/build/sockeqwe/AdapterDelegates/library/build/reports/lint-results.xml
