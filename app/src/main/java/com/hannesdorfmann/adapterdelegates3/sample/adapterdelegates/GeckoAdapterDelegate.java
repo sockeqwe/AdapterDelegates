@@ -46,7 +46,7 @@ public class GeckoAdapterDelegate extends AdapterDelegate<List<DisplayableItem>>
     return items.get(position) instanceof Gecko;
   }
 
-  @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
+  @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
 
     Log.d("Scroll", "GeckoAdapterDelegate create");
     return new GeckoViewHolder(inflater.inflate(R.layout.item_gecko, parent, false));

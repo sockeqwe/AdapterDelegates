@@ -46,7 +46,7 @@ public class DogAdapterDelegate extends AdapterDelegate<List<DisplayableItem>> {
     return items.get(position) instanceof Dog;
   }
 
-  @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
+  @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
 
     Log.d("Scroll", "DogAdapterDelegate create");
     return new DogViewHolder(inflater.inflate(R.layout.item_dog, parent, false));

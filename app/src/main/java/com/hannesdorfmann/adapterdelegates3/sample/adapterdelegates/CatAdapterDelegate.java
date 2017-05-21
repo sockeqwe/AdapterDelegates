@@ -46,7 +46,7 @@ public class CatAdapterDelegate extends AdapterDelegate<List<DisplayableItem>> {
     return items.get(position) instanceof Cat;
   }
 
-  @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
+  @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
     Log.d("Scroll", "CatAdapterDelegate createViewHolder ");
     return new CatViewHolder(inflater.inflate(R.layout.item_cat, parent, false));
   }

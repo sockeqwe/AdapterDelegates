@@ -61,7 +61,7 @@ public class SpyableAdapterDelegate<T> extends AdapterDelegate<T> {
     return isForThat;
   }
 
-  @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
+  @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
 
     onCreateViewHolderCalled = true;
     return viewHolder;
