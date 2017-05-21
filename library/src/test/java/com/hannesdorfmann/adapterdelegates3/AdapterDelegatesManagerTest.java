@@ -22,7 +22,7 @@ public class AdapterDelegatesManagerTest {
         return false;
       }
 
-      @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
+      @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
         return null;
       }
 
@@ -37,7 +37,7 @@ public class AdapterDelegatesManagerTest {
         return false;
       }
 
-      @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
+      @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
         return null;
       }
 

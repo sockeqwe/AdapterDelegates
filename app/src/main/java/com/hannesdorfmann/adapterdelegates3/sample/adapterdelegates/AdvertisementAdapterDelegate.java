@@ -44,7 +44,7 @@ public class AdvertisementAdapterDelegate extends AdapterDelegate<List<Displayab
     return items.get(position) instanceof Advertisement;
   }
 
-  @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
+  @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
     return new AdvertisementViewHolder(inflater.inflate(R.layout.item_advertisement, parent, false));
   }
 
