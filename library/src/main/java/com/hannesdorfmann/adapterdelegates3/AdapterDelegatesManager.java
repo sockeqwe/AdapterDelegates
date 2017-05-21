@@ -418,16 +418,7 @@ public class AdapterDelegatesManager<T> {
    * associated to this viewType (and no fallback has been set).
    */
   @Nullable public AdapterDelegate<T> getDelegateForViewType(int viewType) {
-    AdapterDelegate<T> delegate = delegates.get(viewType);
-    if (delegate == null) {
-      if (fallbackDelegate == null) {
-        return null;
-      } else {
-        return fallbackDelegate;
-      }
-    }
-
-    return delegate;
+    return delegates.get(viewType, fallbackDelegate);
   }
 
   /**
