@@ -33,6 +33,8 @@ import java.util.List;
  */
 public abstract class AdapterDelegate<T> {
 
+  protected abstract int viewholderLayout();
+
   /**
    * Called to determine whether this AdapterDelegate is the responsible for the given data
    * element.

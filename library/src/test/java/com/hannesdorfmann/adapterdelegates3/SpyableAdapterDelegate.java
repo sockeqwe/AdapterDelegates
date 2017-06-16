@@ -52,6 +52,11 @@ public class SpyableAdapterDelegate<T> extends AdapterDelegate<T> {
     onBindViewHolderPosition = -1;
   }
 
+  @Override
+  protected int viewholderLayout() {
+    return viewType;
+  }
+
   @Override public boolean isForViewType(T items, int position) {
 
     boolean isForThat = position == viewType;

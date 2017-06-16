@@ -42,13 +42,18 @@ public class CatAdapterDelegate extends AdapterDelegate<List<DisplayableItem>> {
     inflater = activity.getLayoutInflater();
   }
 
+  @Override
+  protected int viewholderLayout() {
+    return R.layout.item_cat;
+  }
+
   @Override protected boolean isForViewType(@NonNull List<DisplayableItem> items, int position) {
     return items.get(position) instanceof Cat;
   }
 
   @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
     Log.d("Scroll", "CatAdapterDelegate createViewHolder ");
-    return new CatViewHolder(inflater.inflate(R.layout.item_cat, parent, false));
+    return new CatViewHolder(inflater.inflate(viewholderLayout(), parent, false));
   }
 
   @Override public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position,

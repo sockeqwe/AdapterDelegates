@@ -42,6 +42,11 @@ public class GeckoAdapterDelegate extends AdapterDelegate<List<DisplayableItem>>
     inflater = activity.getLayoutInflater();
   }
 
+  @Override
+  protected int viewholderLayout() {
+    return R.layout.item_gecko;
+  }
+
   @Override public boolean isForViewType(@NonNull List<DisplayableItem> items, int position) {
     return items.get(position) instanceof Gecko;
   }
@@ -49,7 +54,7 @@ public class GeckoAdapterDelegate extends AdapterDelegate<List<DisplayableItem>>
   @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
 
     Log.d("Scroll", "GeckoAdapterDelegate create");
-    return new GeckoViewHolder(inflater.inflate(R.layout.item_gecko, parent, false));
+    return new GeckoViewHolder(inflater.inflate(viewholderLayout(), parent, false));
   }
 
   @Override public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position,

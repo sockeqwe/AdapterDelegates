@@ -32,10 +32,15 @@ public class SnakeListItemAdapterDelegate extends
     return item instanceof Snake;
   }
 
+  @Override
+  protected int viewholderLayout() {
+    return R.layout.item_snake;
+  }
+
   @NonNull @Override public SnakeListItemAdapterDelegate.SnakeViewHolder onCreateViewHolder(
       @NonNull ViewGroup parent) {
     return new SnakeListItemAdapterDelegate.SnakeViewHolder(
-        inflater.inflate(R.layout.item_snake, parent, false));
+        inflater.inflate(viewholderLayout(), parent, false));
   }
 
   @Override protected void onBindViewHolder(@NonNull Snake snake,
