@@ -4,11 +4,14 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import java.util.ArrayList;
-import java.util.List;
+
 import junit.framework.Assert;
+
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Hannes Dorfmann
@@ -59,6 +62,11 @@ public class AbsListItemAdapterDelegateTest {
     protected boolean isForViewType(@NonNull Animal item, List<Animal> items, int position) {
       isForViewTypeCalled = true;
       return false;
+    }
+
+    @Override
+    protected int viewholderLayout() {
+      return 100;
     }
 
     @NonNull @Override public CatViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {

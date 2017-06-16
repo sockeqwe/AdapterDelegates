@@ -4,11 +4,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import junit.framework.Assert;
+
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import junit.framework.Assert;
-import org.junit.Test;
 
 /**
  * @author Hannes Dorfmann
@@ -18,6 +21,11 @@ public class AdapterDelegatesManagerTest {
   @Test public void addRemove() {
 
     AdapterDelegate d1 = new AdapterDelegate() {
+      @Override
+      protected int viewholderLayout() {
+        return 100;
+      }
+
       @Override public boolean isForViewType(Object items, int position) {
         return false;
       }
@@ -33,6 +41,11 @@ public class AdapterDelegatesManagerTest {
     };
 
     AdapterDelegate d2 = new AdapterDelegate() {
+      @Override
+      protected int viewholderLayout() {
+        return 200;
+      }
+
       @Override public boolean isForViewType(Object items, int position) {
         return false;
       }
@@ -48,6 +61,7 @@ public class AdapterDelegatesManagerTest {
 
     };
 
+//    FIXME
     AdapterDelegatesManager manager = new AdapterDelegatesManager();
     manager.addDelegate(d1);
 
@@ -540,8 +554,8 @@ public class AdapterDelegatesManagerTest {
     manager.addDelegate(delegate1);
     manager.addDelegate(delegate2);
 
-    Assert.assertEquals(0, manager.getViewType(delegate1));
-    Assert.assertEquals(1, manager.getViewType(delegate2));
+    Assert.assertEquals(delegate1.viewholderLayout(), manager.getViewType(delegate1));
+    Assert.assertEquals(delegate2.viewholderLayout(), manager.getViewType(delegate2));
 
     SpyableAdapterDelegate<List> delegate3 = new SpyableAdapterDelegate<>(2);
     SpyableAdapterDelegate<List> delegate4 = new SpyableAdapterDelegate<>(3);
@@ -550,7 +564,7 @@ public class AdapterDelegatesManagerTest {
     Assert.assertEquals(4, manager.getViewType(delegate4));
 
     manager.addDelegate(delegate3);
-    Assert.assertEquals(3, manager.getViewType(delegate3));
+    Assert.assertEquals(delegate3.viewholderLayout(), manager.getViewType(delegate3));
   }
 
   @Test public void numberOverflow() {

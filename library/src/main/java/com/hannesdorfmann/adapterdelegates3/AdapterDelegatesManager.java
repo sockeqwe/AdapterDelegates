@@ -89,14 +89,13 @@ public class AdapterDelegatesManager<T> {
   public AdapterDelegatesManager<T> addDelegate(@NonNull AdapterDelegate<T> delegate) {
     // algorithm could be improved since there could be holes,
     // but it's very unlikely that we reach Integer.MAX_VALUE and run out of unused indexes
-    int viewType = delegates.size();
-    while (delegates.get(viewType) != null) {
-      viewType++;
-      if (viewType == FALLBACK_DELEGATE_VIEW_TYPE) {
+    int viewType = delegate.viewholderLayout();
+
+    if (viewType >= FALLBACK_DELEGATE_VIEW_TYPE) {
         throw new IllegalArgumentException(
             "Oops, we are very close to Integer.MAX_VALUE. It seems that there are no more free and unused view type integers left to add another AdapterDelegate.");
-      }
     }
+
     return addDelegate(viewType, false, delegate);
   }
 

@@ -40,12 +40,17 @@ public class AdvertisementAdapterDelegate extends AdapterDelegate<List<Displayab
     inflater = activity.getLayoutInflater();
   }
 
+  @Override
+  protected int viewholderLayout() {
+    return R.layout.item_advertisement;
+  }
+
   @Override public boolean isForViewType(@NonNull List<DisplayableItem> items, int position) {
     return items.get(position) instanceof Advertisement;
   }
 
   @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
-    return new AdvertisementViewHolder(inflater.inflate(R.layout.item_advertisement, parent, false));
+    return new AdvertisementViewHolder(inflater.inflate(viewholderLayout(), parent, false));
   }
 
 	@Override

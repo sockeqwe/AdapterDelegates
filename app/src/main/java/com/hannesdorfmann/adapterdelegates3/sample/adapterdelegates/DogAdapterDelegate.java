@@ -42,6 +42,11 @@ public class DogAdapterDelegate extends AdapterDelegate<List<DisplayableItem>> {
     inflater = activity.getLayoutInflater();
   }
 
+  @Override
+  protected int viewholderLayout() {
+    return R.layout.item_dog;
+  }
+
   @Override public boolean isForViewType(@NonNull List<DisplayableItem> items, int position) {
     return items.get(position) instanceof Dog;
   }
@@ -49,7 +54,7 @@ public class DogAdapterDelegate extends AdapterDelegate<List<DisplayableItem>> {
   @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
 
     Log.d("Scroll", "DogAdapterDelegate create");
-    return new DogViewHolder(inflater.inflate(R.layout.item_dog, parent, false));
+    return new DogViewHolder(inflater.inflate(viewholderLayout(), parent, false));
   }
 
   @Override public void onBindViewHolder(@NonNull List<DisplayableItem> items, int position,
