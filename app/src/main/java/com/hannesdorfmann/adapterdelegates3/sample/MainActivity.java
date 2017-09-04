@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import com.hannesdorfmann.adapterdelegates3.sample.animations.AnimationDiffUtilsActivity;
 import com.hannesdorfmann.adapterdelegates3.sample.model.Advertisement;
 import com.hannesdorfmann.adapterdelegates3.sample.model.Cat;
 import com.hannesdorfmann.adapterdelegates3.sample.model.DisplayableItem;
@@ -32,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
     findViewById(R.id.reptielsActivity).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         startActivity(new Intent(MainActivity.this, ReptilesActivity.class));
+      }
+    });
+
+    findViewById(R.id.animations).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        startActivity(new Intent(MainActivity.this, AnimationDiffUtilsActivity.class));
       }
     });
   }

@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:orientation="vertical"
+    tools:context=".MainActivity"
     >
 
   <android.support.v7.widget.RecyclerView
@@ -11,17 +11,33 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
+      android:clipToPadding="false"
       android:paddingBottom="8dp"
       android:paddingTop="8dp"
-      android:clipToPadding="false"
       />
 
 
-  <Button
-      android:id="@+id/reptielsActivity"
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="Reptiles without Advertisement"
-      />
+      android:orientation="horizontal"
+      >
+    <Button
+        android:id="@+id/reptielsActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="4dp"
+        android:text="Reptiles without Advertisement"
+        />
+    <Button
+        android:id="@+id/animations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:text="DiffUtils Animations"
+        />
+
+    />
+  </LinearLayout>
 
 </LinearLayout>
