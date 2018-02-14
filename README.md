@@ -78,7 +78,7 @@ public class CatAdapterDelegate extends AdapterDelegate<List<Animal>> {
 }
 ```
 
-Please note that `onBindViewHolder()` last parameter `payloads` is null unless you use from `adpater.notify`.  There are more methods like `onViewRecycled(ViewHolder)`, `onFailedToRecycleView(ViewHolder)`,
+Please note that `onBindViewHolder()` last parameter `payloads` is null unless you use from `adapter.notify`.  There are more methods like `onViewRecycled(ViewHolder)`, `onFailedToRecycleView(ViewHolder)`,
 `onViewAttachedToWindow(ViewHolder)` and `onViewDetachedFromWindow(ViewHolder)` you can override in your `AdapterDelegate` class.
 
 
@@ -123,7 +123,7 @@ public class AnimalAdapter extends RecyclerView.Adapter {
 ```
 
 ## Reducing boilerplate code
-As you have seen in the code snipped above this may require to write the same boiler plate code again and again to hook in `AdapterDelegatesManager` to `Adapter`.
+As you have seen in the code snippet above this may require to write the same boiler plate code again and again to hook in `AdapterDelegatesManager` to `Adapter`.
 This can be reduced by extending either from `ListDelegationAdapter` if the data source the adapter displays is `java.util.List<?>` or `AbsDelegationAdapter` which is a more general one (not limited to `java.util.List`)
 
 #### ListDelegationAdapter
