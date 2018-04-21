@@ -78,9 +78,9 @@ public abstract class AdapterDelegate<T> {
    * get
    * its adapter position.
    *
-   * @param viewHolder The ViewHolder for the view being recycled
+   * @param holder The ViewHolder for the view being recycled
    */
-  protected void onViewRecycled(@NonNull RecyclerView.ViewHolder viewHolder) {
+  protected void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
   }
 
   /**

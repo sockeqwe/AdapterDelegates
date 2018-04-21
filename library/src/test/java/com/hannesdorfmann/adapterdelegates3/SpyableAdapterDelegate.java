@@ -83,8 +83,8 @@ public class SpyableAdapterDelegate<T> extends AdapterDelegate<T> {
     onViewAtachedToWindowCalled = true;
   }
 
-  @Override public void onViewRecycled(@NonNull RecyclerView.ViewHolder viewHolder) {
-    super.onViewRecycled(viewHolder);
+  @Override public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+    super.onViewRecycled(holder);
     onViewRecycledCalled = true;
   }
 

@@ -263,22 +263,22 @@ public class AdapterDelegatesManager<T> {
    *
    * @param items Adapter's data source
    * @param position the position in data source
-   * @param viewHolder the ViewHolder to bind
+   * @param holder the ViewHolder to bind
    * @param payloads A non-null list of merged payloads. Can be empty list if requires full update.
    * @throws NullPointerException if no AdapterDelegate has been registered for ViewHolders
    * viewType
    */
   public void onBindViewHolder(@NonNull T items, int position,
-      @NonNull RecyclerView.ViewHolder viewHolder, List payloads) {
+      @NonNull RecyclerView.ViewHolder holder, List payloads) {
 
-    AdapterDelegate<T> delegate = getDelegateForViewType(viewHolder.getItemViewType());
+    AdapterDelegate<T> delegate = getDelegateForViewType(holder.getItemViewType());
     if (delegate == null) {
       throw new NullPointerException("No delegate found for item at position = "
           + position
           + " for viewType = "
-          + viewHolder.getItemViewType());
+          + holder.getItemViewType());
     }
-    delegate.onBindViewHolder(items, position, viewHolder,
+    delegate.onBindViewHolder(items, position, holder,
         payloads != null ? payloads : PAYLOADS_EMPTY_LIST);
   }
 
@@ -288,37 +288,37 @@ public class AdapterDelegatesManager<T> {
    *
    * @param items Adapter's data source
    * @param position the position in data source
-   * @param viewHolder the ViewHolder to bind
+   * @param holder the ViewHolder to bind
    * @throws NullPointerException if no AdapterDelegate has been registered for ViewHolders
    * viewType
    */
   public void onBindViewHolder(@NonNull T items, int position,
-      @NonNull RecyclerView.ViewHolder viewHolder) {
-    onBindViewHolder(items, position, viewHolder, PAYLOADS_EMPTY_LIST);
+      @NonNull RecyclerView.ViewHolder holder) {
+    onBindViewHolder(items, position, holder, PAYLOADS_EMPTY_LIST);
   }
 
   /**
    * Must be called from {@link RecyclerView.Adapter#onViewRecycled(RecyclerView.ViewHolder)}
    *
-   * @param viewHolder The ViewHolder for the view being recycled
+   * @param holder The ViewHolder for the view being recycled
    */
-  public void onViewRecycled(@NonNull RecyclerView.ViewHolder viewHolder) {
-    AdapterDelegate<T> delegate = getDelegateForViewType(viewHolder.getItemViewType());
+  public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+    AdapterDelegate<T> delegate = getDelegateForViewType(holder.getItemViewType());
     if (delegate == null) {
       throw new NullPointerException("No delegate found for "
-          + viewHolder
+          + holder
           + " for item at position = "
-          + viewHolder.getAdapterPosition()
+          + holder.getAdapterPosition()
           + " for viewType = "
-          + viewHolder.getItemViewType());
+          + holder.getItemViewType());
     }
-    delegate.onViewRecycled(viewHolder);
+    delegate.onViewRecycled(holder);
   }
 
   /**
    * Must be called from {@link RecyclerView.Adapter#onFailedToRecycleView(RecyclerView.ViewHolder)}
    *
-   * @param viewHolder The ViewHolder containing the View that could not be recycled due to its
+   * @param holder The ViewHolder containing the View that could not be recycled due to its
    * transient state.
    * @return True if the View should be recycled, false otherwise. Note that if this method
    * returns <code>true</code>, RecyclerView <em>will ignore</em> the transient state of
@@ -326,53 +326,53 @@ public class AdapterDelegatesManager<T> {
    * RecyclerView will check the View's transient state again before giving a final decision.
    * Default implementation returns false.
    */
-  public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder viewHolder) {
-    AdapterDelegate<T> delegate = getDelegateForViewType(viewHolder.getItemViewType());
+  public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder) {
+    AdapterDelegate<T> delegate = getDelegateForViewType(holder.getItemViewType());
     if (delegate == null) {
       throw new NullPointerException("No delegate found for "
-          + viewHolder
+          + holder
           + " for item at position = "
-          + viewHolder.getAdapterPosition()
+          + holder.getAdapterPosition()
           + " for viewType = "
-          + viewHolder.getItemViewType());
+          + holder.getItemViewType());
     }
-    return delegate.onFailedToRecycleView(viewHolder);
+    return delegate.onFailedToRecycleView(holder);
   }
 
   /**
    * Must be called from {@link RecyclerView.Adapter#onViewAttachedToWindow(RecyclerView.ViewHolder)}
    *
-   * @param viewHolder Holder of the view being attached
+   * @param holder Holder of the view being attached
    */
-  public void onViewAttachedToWindow(RecyclerView.ViewHolder viewHolder) {
-    AdapterDelegate<T> delegate = getDelegateForViewType(viewHolder.getItemViewType());
+  public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+    AdapterDelegate<T> delegate = getDelegateForViewType(holder.getItemViewType());
     if (delegate == null) {
       throw new NullPointerException("No delegate found for "
-          + viewHolder
+          + holder
           + " for item at position = "
-          + viewHolder.getAdapterPosition()
+          + holder.getAdapterPosition()
           + " for viewType = "
-          + viewHolder.getItemViewType());
+          + holder.getItemViewType());
     }
-    delegate.onViewAttachedToWindow(viewHolder);
+    delegate.onViewAttachedToWindow(holder);
   }
 
   /**
    * Must be called from {@link RecyclerView.Adapter#onViewDetachedFromWindow(RecyclerView.ViewHolder)}
    *
-   * @param viewHolder Holder of the view being attached
+   * @param holder Holder of the view being attached
    */
-  public void onViewDetachedFromWindow(RecyclerView.ViewHolder viewHolder) {
-    AdapterDelegate<T> delegate = getDelegateForViewType(viewHolder.getItemViewType());
+  public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+    AdapterDelegate<T> delegate = getDelegateForViewType(holder.getItemViewType());
     if (delegate == null) {
       throw new NullPointerException("No delegate found for "
-          + viewHolder
+          + holder
           + " for item at position = "
-          + viewHolder.getAdapterPosition()
+          + holder.getAdapterPosition()
           + " for viewType = "
-          + viewHolder.getItemViewType());
+          + holder.getItemViewType());
     }
-    delegate.onViewDetachedFromWindow(viewHolder);
+    delegate.onViewDetachedFromWindow(holder);
   }
 
   /**

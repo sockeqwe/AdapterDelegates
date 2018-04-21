@@ -33,13 +33,13 @@ public class ItemAdapterDelegate
     return new ItemViewHolder(inflater.inflate(R.layout.item_animation, parent, false));
   }
 
-  @Override protected void onBindViewHolder(@NonNull Item item, @NonNull ItemViewHolder viewHolder,
+  @Override protected void onBindViewHolder(@NonNull Item item, @NonNull ItemViewHolder holder,
       @NonNull List<Object> payloads) {
 
     Log.d("ItemAdapterDelegate", "Change Payload: " + payloads);
 
-    viewHolder.textView.setText(item.text);
-    viewHolder.textView.setBackgroundColor(item.color);
+    holder.textView.setText(item.text);
+    holder.textView.setBackgroundColor(item.color);
   }
 
   class ItemViewHolder extends RecyclerView.ViewHolder {

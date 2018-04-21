@@ -27,8 +27,8 @@ import java.util.List;
  * @Override public CatViewHolder onCreateViewHolder(ViewGroup parent){
  * return new CatViewHolder(inflater.inflate(R.layout.item_cat, parent, false));
  * }
- * @Override protected void onBindViewHolder(Cat item, CatViewHolder viewHolder);
- * viewHolder.setName(cat.getName());
+ * @Override protected void onBindViewHolder(Cat item, CatViewHolder holder);
+ * holder.setName(cat.getName());
  * ...
  * }
  * }
@@ -73,9 +73,9 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
    * Called to bind the {@link RecyclerView.ViewHolder} to the item of the dataset
    *
    * @param item The data item
-   * @param viewHolder The ViewHolder
+   * @param holder The ViewHolder
    * @param payloads The payloads
    */
-  protected abstract void onBindViewHolder(@NonNull I item, @NonNull VH viewHolder,
+  protected abstract void onBindViewHolder(@NonNull I item, @NonNull VH holder,
       @NonNull List<Object> payloads);
 }
