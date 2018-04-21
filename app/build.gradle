@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-  compileSdkVersion 25
-  buildToolsVersion rootProject.ext.buildTools
+  compileSdkVersion 27
 
   defaultConfig {
     applicationId "com.hannesdorfmann.adapterdelegates.sample"
     minSdkVersion 14
-    targetSdkVersion 25
+    targetSdkVersion 27
     versionCode 1
     versionName "1.0"
   }
@@ -31,9 +30,8 @@ android {
 
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile rootProject.ext.appCompat
-  compile rootProject.ext.recyclerView
+  implementation rootProject.ext.appCompat
+  implementation rootProject.ext.recyclerView
 
-  compile project(':library')
+  implementation project(':library')
 }
