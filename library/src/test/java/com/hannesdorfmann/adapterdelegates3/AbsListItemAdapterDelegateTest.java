@@ -67,7 +67,7 @@ public class AbsListItemAdapterDelegateTest {
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull Cat item, @NonNull CatViewHolder viewHolder, List payloads) {
+    protected void onBindViewHolder(@NonNull Cat item, @NonNull CatViewHolder holder, List payloads) {
       onBindViewHolderCalled = true;
     }
 
