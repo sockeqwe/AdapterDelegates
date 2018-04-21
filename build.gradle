@@ -2,10 +2,11 @@
 
 buildscript {
   repositories {
+    google()
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.3.3'
+    classpath 'com.android.tools.build:gradle:3.1.1'
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
@@ -14,18 +15,16 @@ buildscript {
 
 allprojects {
   repositories {
+    google()
     jcenter()
-    maven{ url "http://maven.google.com"}
   }
 }
 
 
 ext {
-  recyclerView = 'com.android.support:recyclerview-v7:25.3.1'
-  appCompat = 'com.android.support:appcompat-v7:25.3.1'
+  recyclerView = 'com.android.support:recyclerview-v7:27.1.1'
+  appCompat = 'com.android.support:appcompat-v7:27.1.1'
 
   javaSourceCompatibility = JavaVersion.VERSION_1_7
   javaTargetCompatibility = JavaVersion.VERSION_1_7
-
-  buildTools = '25.0.3'
 }
