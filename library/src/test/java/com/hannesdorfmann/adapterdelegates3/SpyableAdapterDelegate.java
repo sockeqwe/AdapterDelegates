@@ -52,7 +52,7 @@ public class SpyableAdapterDelegate<T> extends AdapterDelegate<T> {
     onBindViewHolderPosition = -1;
   }
 
-  @Override public boolean isForViewType(T items, int position) {
+  @Override public boolean isForViewType(@NonNull T items, int position) {
 
     boolean isForThat = position == viewType;
     if (isForThat) {
@@ -61,7 +61,7 @@ public class SpyableAdapterDelegate<T> extends AdapterDelegate<T> {
     return isForThat;
   }
 
-  @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
+  @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
 
     onCreateViewHolderCalled = true;
     return viewHolder;

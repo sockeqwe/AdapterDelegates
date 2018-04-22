@@ -56,7 +56,7 @@ public class AbsListItemAdapterDelegateTest {
 
 
     @Override
-    protected boolean isForViewType(@NonNull Animal item, List<Animal> items, int position) {
+    protected boolean isForViewType(@NonNull Animal item, @NonNull List<Animal> items, int position) {
       isForViewTypeCalled = true;
       return false;
     }
@@ -67,7 +67,7 @@ public class AbsListItemAdapterDelegateTest {
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull Cat item, @NonNull CatViewHolder holder, List payloads) {
+    protected void onBindViewHolder(@NonNull Cat item, @NonNull CatViewHolder holder, @NonNull List payloads) {
       onBindViewHolderCalled = true;
     }
 

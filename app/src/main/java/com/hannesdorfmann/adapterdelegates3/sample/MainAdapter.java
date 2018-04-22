@@ -17,6 +17,7 @@
 package com.hannesdorfmann.adapterdelegates3.sample;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegatesManager;
@@ -53,17 +54,16 @@ public class MainAdapter extends RecyclerView.Adapter {
     return delegatesManager.getItemViewType(items, position);
   }
 
-  @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     return delegatesManager.onCreateViewHolder(parent, viewType);
   }
 
-	@Override
-	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-		delegatesManager.onBindViewHolder(items, position, holder);
-	}
+  @Override public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    delegatesManager.onBindViewHolder(items, position, holder);
+  }
 
-	@Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
-	  delegatesManager.onBindViewHolder(items, position, holder, payloads);
+  @Override public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List payloads) {
+    delegatesManager.onBindViewHolder(items, position, holder, payloads);
   }
 
   @Override public int getItemCount() {
