@@ -146,6 +146,6 @@ public abstract class AdapterDelegate<T> {
    *
    * @param holder Holder of the view being detached
    */
-  protected void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+  protected void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
   }
 }

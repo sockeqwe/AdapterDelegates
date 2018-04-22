@@ -73,7 +73,7 @@ public class SpyableAdapterDelegate<T> extends AdapterDelegate<T> {
     onBindViewHolderPosition = position;
   }
 
-  @Override public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+  @Override public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
     super.onViewDetachedFromWindow(holder);
     onViewDetachedFromWindowCalled = true;
   }

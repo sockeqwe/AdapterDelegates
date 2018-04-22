@@ -240,7 +240,7 @@ public class AdapterDelegatesManager<T> {
    * @throws NullPointerException if no AdapterDelegate has been registered for ViewHolders
    * viewType
    */
-  @NonNull public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  @NonNull public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     AdapterDelegate<T> delegate = getDelegateForViewType(viewType);
     if (delegate == null) {
       throw new NullPointerException("No AdapterDelegate added for ViewType " + viewType);
@@ -344,7 +344,7 @@ public class AdapterDelegatesManager<T> {
    *
    * @param holder Holder of the view being attached
    */
-  public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+  public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
     AdapterDelegate<T> delegate = getDelegateForViewType(holder.getItemViewType());
     if (delegate == null) {
       throw new NullPointerException("No delegate found for "
@@ -362,7 +362,7 @@ public class AdapterDelegatesManager<T> {
    *
    * @param holder Holder of the view being attached
    */
-  public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+  public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
     AdapterDelegate<T> delegate = getDelegateForViewType(holder.getItemViewType());
     if (delegate == null) {
       throw new NullPointerException("No delegate found for "

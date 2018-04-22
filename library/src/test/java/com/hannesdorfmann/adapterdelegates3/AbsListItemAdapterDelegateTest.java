@@ -71,7 +71,7 @@ public class AbsListItemAdapterDelegateTest {
       onBindViewHolderCalled = true;
     }
 
-    @Override public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+    @Override public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
       super.onViewDetachedFromWindow(holder);
       onViewDetachedFromWindow = true;
     }
