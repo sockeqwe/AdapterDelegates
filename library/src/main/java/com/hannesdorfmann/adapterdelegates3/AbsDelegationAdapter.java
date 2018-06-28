@@ -31,7 +31,7 @@ import java.util.List;
  * <pre>
  * {@code
  *    class MyAdapter extends AbsDelegationAdapter<MyDataSourceType>{
- *        public MyAdaper(){
+ *        public MyAdapter(){
  *            this.delegatesManager.add(new FooAdapterDelegate());
  *            this.delegatesManager.add(new BarAdapterDelegate());
  *        }
