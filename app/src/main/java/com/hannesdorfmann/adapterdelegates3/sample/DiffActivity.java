@@ -60,6 +60,13 @@ public class DiffActivity extends AppCompatActivity {
                 addItems();
             }
         });
+
+        findViewById(R.id.btn_shuffle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shuffleItems();
+            }
+        });
     }
 
     private List<DiffItem> getItems() {
@@ -123,6 +130,13 @@ public class DiffActivity extends AppCompatActivity {
         List<DiffItem> items = new ArrayList<>(currentItems);
         items.add(0, new DiffCat(items.size() + 1, "NewCat"));
         items.add(items.size(), new DiffDog(items.size() + 1, "AnotherNewDog", 17));
+        currentItems = items;
+        adapter.setItems(currentItems);
+    }
+
+    private void shuffleItems() {
+        List<DiffItem> items = new ArrayList<>(currentItems);
+        Collections.shuffle(items);
         currentItems = items;
         adapter.setItems(currentItems);
     }
