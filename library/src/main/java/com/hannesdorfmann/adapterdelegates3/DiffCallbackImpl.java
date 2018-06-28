@@ -3,9 +3,13 @@ package com.hannesdorfmann.adapterdelegates3;
 import android.support.v7.util.DiffUtil;
 
 /**
- * Created by six_hundreds on 15.06.18.
+ * Implementation of {@link DiffUtil.ItemCallback} that ready to go. It using in
+ * {@link DiffDelegationAdapter} for reducing boilerplate and in most cases all you need
+ * it's provide type of your items as parameter.
+ *
+ * @param <T> The type of the items
+ * @author Sergey Opivalov
  */
-
 public class DiffCallbackImpl<T extends DiffItem> extends DiffUtil.ItemCallback<T> {
 
     @Override
