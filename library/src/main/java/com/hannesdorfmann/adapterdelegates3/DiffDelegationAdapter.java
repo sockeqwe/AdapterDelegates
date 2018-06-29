@@ -1,5 +1,8 @@
 package com.hannesdorfmann.adapterdelegates3;
 
+import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
+
 import java.util.List;
 
 /**
@@ -26,6 +29,10 @@ public class DiffDelegationAdapter<T extends DiffItem> extends AbsDiffDelegation
 
     public DiffDelegationAdapter() {
         super(new DiffCallbackImpl<T>());
+    }
+
+    public DiffDelegationAdapter(@NonNull DiffUtil.ItemCallback<T> itemCallback) {
+        super(itemCallback);
     }
 
     @Override

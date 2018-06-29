@@ -35,7 +35,7 @@ import java.util.List;
 public abstract class AbsDiffDelegationAdapter<T extends DiffItem> extends RecyclerView.Adapter {
 
     protected final AdapterDelegatesManager<List<T>> delegatesManager;
-    private final AsyncListDiffer<T> differ;
+    protected final AsyncListDiffer<T> differ;
 
     public AbsDiffDelegationAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback) {
         this.differ = new AsyncListDiffer<>(this, diffCallback);
