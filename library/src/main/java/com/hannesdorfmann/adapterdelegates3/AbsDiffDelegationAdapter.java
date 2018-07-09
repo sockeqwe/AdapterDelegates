@@ -11,16 +11,16 @@ import java.util.List;
 /**
  * An implementation of an Adapter that already uses a {@link AdapterDelegatesManager} pretty same as
  * {@link AbsDelegationAdapter} but also uses {@link AsyncListDiffer} from support library 27.0.1 for
- * calculating diffs between old and new collections of items and doing it on background thread.
- * That's means that now you should not carry about {@link RecyclerView.Adapter#notifyItemChanged(int)}
- * and other methods of adapter, all that you need - submit a new list for adapter, and all diffs will be
+ * calculating diffs between old and new collections of items and does this on background thread.
+ * That means that now you should not carry about {@link RecyclerView.Adapter#notifyItemChanged(int)}
+ * and other methods of adapter, all you need to do is to submit a new list into adapter and all diffs will be
  * calculated for you.
  * You just have to add the {@link AdapterDelegate}s i.e. in the constructor of a subclass that inheritance from this
  * class:
  * <pre>
  * {@code
- *    class MyAdapter extends AbsDiffDelegationAdapter<MyDataSourceType>{
- *        public MyAdapter(){
+ *    class MyAdapter extends AbsDiffDelegationAdapter<MyDataSourceType> {
+ *        public MyAdapter() {
  *            this.delegatesManager.add(new FooAdapterDelegate());
  *            this.delegatesManager.add(new BarAdapterDelegate());
  *        }

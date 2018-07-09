@@ -3,9 +3,9 @@ package com.hannesdorfmann.adapterdelegates3;
 import android.support.v7.util.DiffUtil;
 
 /**
- * Implementation of {@link DiffUtil.ItemCallback} that ready to go. It using in
- * {@link DiffDelegationAdapter} for reducing boilerplate and in most cases all you need
- * it's provide type of your items as parameter.
+ * Implementation of {@link DiffUtil.ItemCallback} that ready to go. It used in
+ * {@link DiffDelegationAdapter} for reducing boilerplate and in most cases all you need to do
+ * is to provide type of your items as parameter.
  *
  * @param <T> The type of the items
  * @author Sergey Opivalov
