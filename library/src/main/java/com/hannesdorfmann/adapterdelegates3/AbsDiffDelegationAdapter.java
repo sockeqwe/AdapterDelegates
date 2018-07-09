@@ -48,18 +48,19 @@ public abstract class AbsDiffDelegationAdapter<T extends DiffItem> extends Recyc
         this.delegatesManager = delegatesManager;
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return delegatesManager.onCreateViewHolder(parent, viewType);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         delegatesManager.onBindViewHolder(differ.getCurrentList(), position, holder, null);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List payloads) {
         delegatesManager.onBindViewHolder(differ.getCurrentList(), position, holder, payloads);
     }
 
@@ -69,22 +70,22 @@ public abstract class AbsDiffDelegationAdapter<T extends DiffItem> extends Recyc
     }
 
     @Override
-    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
         delegatesManager.onViewRecycled(holder);
     }
 
     @Override
-    public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
+    public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder) {
         return delegatesManager.onFailedToRecycleView(holder);
     }
 
     @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         delegatesManager.onViewAttachedToWindow(holder);
     }
 
     @Override
-    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         delegatesManager.onViewDetachedFromWindow(holder);
     }
 
