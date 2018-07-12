@@ -18,11 +18,11 @@ public class AdapterDelegatesManagerTest {
   @Test public void addRemove() {
 
     AdapterDelegate d1 = new AdapterDelegate() {
-      @Override public boolean isForViewType(Object items, int position) {
+      @Override public boolean isForViewType(@NonNull Object items, int position) {
         return false;
       }
 
-      @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
+      @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
         return null;
       }
 
@@ -33,11 +33,11 @@ public class AdapterDelegatesManagerTest {
     };
 
     AdapterDelegate d2 = new AdapterDelegate() {
-      @Override public boolean isForViewType(Object items, int position) {
+      @Override public boolean isForViewType(@NonNull Object items, int position) {
         return false;
       }
 
-      @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
+      @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
         return null;
       }
 

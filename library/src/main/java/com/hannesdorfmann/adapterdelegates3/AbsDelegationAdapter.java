@@ -70,16 +70,16 @@ public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
     this.delegatesManager = delegatesManager;
   }
 
-  @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  @NonNull @Override public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     return delegatesManager.onCreateViewHolder(parent, viewType);
   }
 
-  @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+  @Override public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
     delegatesManager.onBindViewHolder(items, position, holder, null);
   }
 
   @Override
-  public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
+  public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List payloads) {
     delegatesManager.onBindViewHolder(items, position, holder, payloads);
   }
 
@@ -87,19 +87,19 @@ public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
     return delegatesManager.getItemViewType(items, position);
   }
 
-  @Override public void onViewRecycled(RecyclerView.ViewHolder holder) {
+  @Override public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
     delegatesManager.onViewRecycled(holder);
   }
 
-  @Override public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
+  @Override public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder) {
     return delegatesManager.onFailedToRecycleView(holder);
   }
 
-  @Override public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+  @Override public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
     delegatesManager.onViewAttachedToWindow(holder);
   }
 
-  @Override public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+  @Override public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
     delegatesManager.onViewDetachedFromWindow(holder);
   }
 
