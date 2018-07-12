@@ -20,6 +20,10 @@ android {
     sourceCompatibility rootProject.ext.javaSourceCompatibility
     targetCompatibility rootProject.ext.javaTargetCompatibility
   }
+
+  libraryVariants.all {
+    it.generateBuildConfig.enabled = false
+  }
 }
 
 dependencies {
