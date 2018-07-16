@@ -11,16 +11,16 @@ import java.util.List;
 /**
  * An implementation of an Adapter that already uses a {@link AdapterDelegatesManager} pretty same as
  * {@link AbsDelegationAdapter} but also uses {@link AsyncListDiffer} from support library 27.0.1 for
- * calculating diffs between old and new collections of items and doing it on background thread.
- * That's means that now you should not carry about {@link RecyclerView.Adapter#notifyItemChanged(int)}
- * and other methods of adapter, all that you need - submit a new list for adapter, and all diffs will be
+ * calculating diffs between old and new collections of items and does this on background thread.
+ * That means that now you should not carry about {@link RecyclerView.Adapter#notifyItemChanged(int)}
+ * and other methods of adapter, all you need to do is to submit a new list into adapter and all diffs will be
  * calculated for you.
  * You just have to add the {@link AdapterDelegate}s i.e. in the constructor of a subclass that inheritance from this
  * class:
  * <pre>
  * {@code
- *    class MyAdapter extends AbsDiffDelegationAdapter<MyDataSourceType>{
- *        public MyAdapter(){
+ *    class MyAdapter extends AbsDiffDelegationAdapter<MyDataSourceType> {
+ *        public MyAdapter() {
  *            this.delegatesManager.add(new FooAdapterDelegate());
  *            this.delegatesManager.add(new BarAdapterDelegate());
  *        }
@@ -48,18 +48,19 @@ public abstract class AbsDiffDelegationAdapter<T extends DiffItem> extends Recyc
         this.delegatesManager = delegatesManager;
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return delegatesManager.onCreateViewHolder(parent, viewType);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         delegatesManager.onBindViewHolder(differ.getCurrentList(), position, holder, null);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List payloads) {
         delegatesManager.onBindViewHolder(differ.getCurrentList(), position, holder, payloads);
     }
 
@@ -69,22 +70,22 @@ public abstract class AbsDiffDelegationAdapter<T extends DiffItem> extends Recyc
     }
 
     @Override
-    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
         delegatesManager.onViewRecycled(holder);
     }
 
     @Override
-    public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
+    public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder) {
         return delegatesManager.onFailedToRecycleView(holder);
     }
 
     @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         delegatesManager.onViewAttachedToWindow(holder);
     }
 
     @Override
-    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         delegatesManager.onViewDetachedFromWindow(holder);
     }
 
