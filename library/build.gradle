@@ -27,7 +27,6 @@ dependencies {
 
   testImplementation 'junit:junit:4.12'
   testImplementation 'org.mockito:mockito-core:2.18.3'
-  testImplementation "org.robolectric:robolectric:3.8"
 }
 
 apply from: 'https://raw.github.com/sockeqwe/gradle-mvn-push/master/gradle-mvn-push.gradle'
