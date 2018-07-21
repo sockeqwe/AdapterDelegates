@@ -186,6 +186,7 @@ As you see, instead of writing code that casts list item to Cat we can use `AbsL
 
 ## DiffUtil & ListAdapter
 Support library 27.0.1 introduced `ListAdapter` - the new extension of `RecyclerView.Adapter` that uses `AsyncListDiffer` internally. It does calculating diff in the background thread by default and does all particular animations for you items collection. Hence you don't need carry about `notify*` methods, `AsyncListDiffer` does all the job for you. And AdapterDelegates supports it too. 
+
 You have a `DiffItem` interface, that should be implemented by your items. It declares methods for resolving items by some unique ID and by the content. It makes using of `DiffUtil.ItemCallback` super easy.
 
 ```java
