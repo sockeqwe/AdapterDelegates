@@ -230,7 +230,7 @@ public class DiffAdapter extends DiffDelegationAdapter<DiffItem> {
 }
 ```
 
-And provide data to it through `setItems()` method. No more carry about which items was deleted, inserted or etc. `AsyncListDiffer` will do all the job for you and will apply all particular animations to your list.
+You must set data by calling setItems(). Internally AsyncListDiffer computes and applies all item animations for you.
 
 ## Fallback AdapterDelegate
 What if your adapter's data source contains a certain element you don't have registered an `AdapterDelegate` for? In this case the `AdapterDelegateManager` will throw an exception at runtime. However, this is not always what you want. You can specify a fallback `AdapterDelegate` that will be used if no other `AdapterDelegate` has been found to handle a certain view type.

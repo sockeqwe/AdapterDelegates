@@ -14,10 +14,6 @@ import com.hannesdorfmann.adapterdelegates3.sample.model.DiffCat;
 
 import java.util.List;
 
-/**
- * Created by six_hundreds on 15.06.18.
- */
-
 public class DiffCatAdapterDelegate extends AbsListItemAdapterDelegate<DiffCat, DiffItem, DiffCatAdapterDelegate.ViewHolder> {
 
     @Override

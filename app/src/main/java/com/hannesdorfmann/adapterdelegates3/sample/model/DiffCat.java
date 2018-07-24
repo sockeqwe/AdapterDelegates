@@ -2,10 +2,6 @@ package com.hannesdorfmann.adapterdelegates3.sample.model;
 
 import com.hannesdorfmann.adapterdelegates3.DiffItem;
 
-/**
- * Created by six_hundreds on 15.06.18.
- */
-
 public class DiffCat implements DiffItem {
 
     private int id;

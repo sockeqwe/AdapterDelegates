@@ -17,10 +17,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by six_hundreds on 15.06.18.
- */
-
 public class DiffActivity extends AppCompatActivity {
 
     private DiffAdapter adapter;

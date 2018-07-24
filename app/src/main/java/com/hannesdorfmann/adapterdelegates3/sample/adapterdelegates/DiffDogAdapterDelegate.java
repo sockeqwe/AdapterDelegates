@@ -14,10 +14,6 @@ import com.hannesdorfmann.adapterdelegates3.sample.model.DiffDog;
 
 import java.util.List;
 
-/**
- * Created by six_hundreds on 15.06.18.
- */
-
 public class DiffDogAdapterDelegate extends AbsListItemAdapterDelegate<DiffDog, DiffItem, DiffDogAdapterDelegate.ViewHolder> {
 
     @Override

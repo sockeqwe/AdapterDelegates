@@ -22,7 +22,7 @@ import java.util.List;
  *    class MyAdapter extends AbsDiffDelegationAdapter<MyDataSourceType> {
  *        public MyAdapter() {
  *            this.delegatesManager.add(new FooAdapterDelegate());
- *            this.delegatesManager.add(new BarAdapterDelegate());
+ *                                 .add(new BarAdapterDelegate());
  *        }
  *    }
  * }
