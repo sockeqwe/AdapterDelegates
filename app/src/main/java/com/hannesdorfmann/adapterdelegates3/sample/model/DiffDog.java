@@ -1,5 +1,9 @@
 package com.hannesdorfmann.adapterdelegates3.sample.model;
 
+/**
+ * @author Sergey Opivalov
+ */
+
 public class DiffDog implements DiffItem {
 
     private int id;

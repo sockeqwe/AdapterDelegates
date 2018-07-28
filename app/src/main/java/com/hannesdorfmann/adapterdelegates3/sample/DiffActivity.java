@@ -11,10 +11,15 @@ import android.widget.Toast;
 import com.hannesdorfmann.adapterdelegates.sample.R;
 import com.hannesdorfmann.adapterdelegates3.sample.model.DiffCat;
 import com.hannesdorfmann.adapterdelegates3.sample.model.DiffDog;
+import com.hannesdorfmann.adapterdelegates3.sample.model.DiffItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+/**
+ * @author Sergey Opivalov
+ */
 
 public class DiffActivity extends AppCompatActivity {
 

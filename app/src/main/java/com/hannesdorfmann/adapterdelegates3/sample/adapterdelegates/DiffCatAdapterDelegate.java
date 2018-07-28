@@ -10,8 +10,13 @@ import android.widget.TextView;
 import com.hannesdorfmann.adapterdelegates.sample.R;
 import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates3.sample.model.DiffCat;
+import com.hannesdorfmann.adapterdelegates3.sample.model.DiffItem;
 
 import java.util.List;
+
+/**
+ * @author Sergey Opivalov
+ */
 
 public class DiffCatAdapterDelegate extends AbsListItemAdapterDelegate<DiffCat, DiffItem, DiffCatAdapterDelegate.ViewHolder> {
 
