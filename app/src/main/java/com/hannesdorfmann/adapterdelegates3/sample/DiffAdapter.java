@@ -1,7 +1,6 @@
 package com.hannesdorfmann.adapterdelegates3.sample;
 
 import com.hannesdorfmann.adapterdelegates3.DiffDelegationAdapter;
-import com.hannesdorfmann.adapterdelegates3.DiffItem;
 import com.hannesdorfmann.adapterdelegates3.sample.adapterdelegates.DiffCatAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates3.sample.adapterdelegates.DiffDogAdapterDelegate;
 

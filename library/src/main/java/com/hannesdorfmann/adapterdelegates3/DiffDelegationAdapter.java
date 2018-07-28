@@ -14,22 +14,18 @@ import java.util.List;
  * {@code
  *    class MyAdapter extends DiffDelegationAdapter<List<Foo>> {
  *        public MyAdapter() {
- *            this.delegatesManager.add(new FooAdapterDelegate());
- *            this.delegatesManager.add(new BarAdapterDelegate());
+ *            this.delegatesManager.add(new FooAdapterDelegate())
+ *                                 .add(new BarAdapterDelegate());
  *        }
  *    }
  * }
  * </pre>
  *
- * @param <T> The type of the items. Must implement {@link DiffItem}
+ * @param <T> The type of the datasource / items
  * @author Sergey Opivalov
  */
 
-public class DiffDelegationAdapter<T extends DiffItem> extends AbsDiffDelegationAdapter<T> {
-
-    public DiffDelegationAdapter() {
-        super(new DiffCallbackImpl<T>());
-    }
+public class DiffDelegationAdapter<T> extends AbsDiffDelegationAdapter<T> {
 
     public DiffDelegationAdapter(@NonNull DiffUtil.ItemCallback<T> itemCallback) {
         super(itemCallback);

@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.hannesdorfmann.adapterdelegates.sample.R;
-import com.hannesdorfmann.adapterdelegates3.DiffItem;
 import com.hannesdorfmann.adapterdelegates3.sample.model.DiffCat;
 import com.hannesdorfmann.adapterdelegates3.sample.model.DiffDog;
 

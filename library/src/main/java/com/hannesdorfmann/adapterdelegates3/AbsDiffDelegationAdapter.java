@@ -21,25 +21,24 @@ import java.util.List;
  * {@code
  *    class MyAdapter extends AbsDiffDelegationAdapter<MyDataSourceType> {
  *        public MyAdapter() {
- *            this.delegatesManager.add(new FooAdapterDelegate());
+ *            this.delegatesManager.add(new FooAdapterDelegate())
  *                                 .add(new BarAdapterDelegate());
  *        }
  *    }
  * }
  * </pre>
  *
- * @param <T> The type of the item, must implement {@link DiffItem}
+ * @param <T> The type of the datasource / items
  * @author Sergey Opivalov
  */
 
-public abstract class AbsDiffDelegationAdapter<T extends DiffItem> extends RecyclerView.Adapter {
+public abstract class AbsDiffDelegationAdapter<T> extends RecyclerView.Adapter {
 
     protected final AdapterDelegatesManager<List<T>> delegatesManager;
     protected final AsyncListDiffer<T> differ;
 
     public AbsDiffDelegationAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback) {
-        this.differ = new AsyncListDiffer<>(this, diffCallback);
-        this.delegatesManager = new AdapterDelegatesManager<>();
+        this(diffCallback, new AdapterDelegatesManager<List<T>>());
     }
 
     public AbsDiffDelegationAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback,

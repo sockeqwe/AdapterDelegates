@@ -50,7 +50,7 @@ import java.util.List;
  * }
  * </pre>
  *
- * @param <T> The type of the datasoure / items
+ * @param <T> The type of the datasource / items
  * @author Hannes Dorfmann
  */
 public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {

@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.hannesdorfmann.adapterdelegates.sample.R;
 import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate;
-import com.hannesdorfmann.adapterdelegates3.DiffItem;
 import com.hannesdorfmann.adapterdelegates3.sample.model.DiffDog;
 
 import java.util.List;
