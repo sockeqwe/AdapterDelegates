@@ -33,7 +33,7 @@ public class ItemAdapterDelegate
     return new ItemViewHolder(inflater.inflate(R.layout.item_animation, parent, false));
   }
 
-  @Override protected void onBindViewHolder(@NonNull Item item, @NonNull ItemViewHolder holder,
+  @Override protected void onBindViewHolder(int position, @NonNull Item item, @NonNull ItemViewHolder holder,
       @NonNull List<Object> payloads) {
 
     Log.d("ItemAdapterDelegate", "Change Payload: " + payloads);
