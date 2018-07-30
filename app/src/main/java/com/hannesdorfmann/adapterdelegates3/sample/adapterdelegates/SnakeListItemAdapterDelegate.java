@@ -38,7 +38,7 @@ public class SnakeListItemAdapterDelegate extends
         inflater.inflate(R.layout.item_snake, parent, false));
   }
 
-  @Override protected void onBindViewHolder(@NonNull Snake snake,
+  @Override protected void onBindViewHolder(int position, @NonNull Snake snake,
       @NonNull SnakeListItemAdapterDelegate.SnakeViewHolder vh, @Nullable List payloads) {
 
     vh.name.setText(snake.getName());

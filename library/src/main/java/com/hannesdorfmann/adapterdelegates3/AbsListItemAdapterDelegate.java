@@ -46,7 +46,7 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
 
   @Override protected final void onBindViewHolder(@NonNull List<T> items, int position,
       @NonNull RecyclerView.ViewHolder holder, @NonNull List<Object> payloads) {
-    onBindViewHolder((I) items.get(position), (VH) holder, payloads);
+    onBindViewHolder(position, (I) items.get(position), (VH) holder, payloads);
   }
 
   /**
@@ -72,10 +72,11 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
   /**
    * Called to bind the {@link RecyclerView.ViewHolder} to the item of the dataset
    *
+   * @param position the item position in the dataset (list)
    * @param item The data item
    * @param holder The ViewHolder
    * @param payloads The payloads
    */
-  protected abstract void onBindViewHolder(@NonNull I item, @NonNull VH holder,
+  protected abstract void onBindViewHolder(int position, @NonNull I item, @NonNull VH holder,
       @NonNull List<Object> payloads);
 }
