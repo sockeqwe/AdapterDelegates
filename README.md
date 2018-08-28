@@ -184,6 +184,56 @@ public class CatListItemAdapterDelegate extends AbsListItemAdapterDelegate<Cat, 
 
 As you see, instead of writing code that casts list item to Cat we can use `AbsListItemAdapterDelegate` to do the same job (by declaring generic types).
 
+## DiffUtil & ListAdapter
+Support library 27.0.1 introduced `ListAdapter` - the new extension of `RecyclerView.Adapter` that uses `AsyncListDiffer` internally. It does calculating diff in the background thread by default and does all particular animations for you items collection. Hence you don't need carry about `notify*` methods, `AsyncListDiffer` does all the job for you. And AdapterDelegates supports it too. 
+
+You have a `DiffDelegationAdapter` which is ready to go implementation of `AbsDiffDelegationAdapter` with API rather similar to `ListDelegationAdapter`. 
+
+```java
+public class DiffAdapter extends DiffDelegationAdapter<DiffItem> {
+
+    public DiffAdapter() {
+        delegatesManager.addDelegate(new DiffDogAdapterDelegate());
+        delegatesManager.addDelegate(new DiffCatAdapterDelegate());
+    }
+}
+```
+
+You must set data by calling setItems(). Internally AsyncListDiffer computes and applies all item animations for you.
+
+To make it works, obviously you have to define some kind of abstraction over your items. It should provide API for resolving equity of items and content. You can take a look at sample to take some ideas.
+
+```java
+public interface DiffItem {
+
+    long getItemId();
+
+    int getItemHash();
+}
+```
+
+ `getItemHash()` is supposed to be implemented through calculation of Object's `hashCode()`. This approach allows us to resolve if content of items has been changed or not. But feel free to make your own implementation
+
+ `getItemId()` is pretty clear and you can use IDs of your items. Obviously it has to be unique. But sometimes when you have some adapter items that don't have any ID (for example footers, headers or section dividers) I suggesting you to use item layout ID. It will look like this:
+
+```java
+class MyFooterItem implements DiffItem {
+    @Override
+    long getItemId() {
+        return (long)R.layout.item_footer
+    }
+ 
+    @Override
+    int getItemHash() {
+        return hashCode()
+    }
+}
+```
+
+If you are using Kotlin you are actually have nothing to do. Kotlin `data class` already has `hashCode()` implementation. It case of Java you will need to generate `equals()` and `hashCode()` methods.
+
+So that's one of possible approaches but feel free to make your own implementation.
+
 ## Fallback AdapterDelegate
 What if your adapter's data source contains a certain element you don't have registered an `AdapterDelegate` for? In this case the `AdapterDelegateManager` will throw an exception at runtime. However, this is not always what you want. You can specify a fallback `AdapterDelegate` that will be used if no other `AdapterDelegate` has been found to handle a certain view type.
 

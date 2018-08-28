@@ -19,8 +19,8 @@
     <activity
         android:name="com.hannesdorfmann.adapterdelegates3.sample.ReptilesActivity"
         android:label="Reptiels"/>
-    <activity android:name="com.hannesdorfmann.adapterdelegates3.sample.animations.AnimationDiffUtilsActivity">
-    </activity>
+    <activity android:name="com.hannesdorfmann.adapterdelegates3.sample.animations.AnimationDiffUtilsActivity"/>
+    <activity android:name="com.hannesdorfmann.adapterdelegates3.sample.DiffActivity"/>
   </application>
 
 </manifest>
