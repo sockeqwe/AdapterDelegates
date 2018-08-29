@@ -23,7 +23,7 @@ import java.util.List;
 
 public class DiffActivity extends AppCompatActivity {
 
-    private DiffAdapter adapter;
+    private AsyncListDifferAdapter adapter;
 
     private List<DiffItem> currentItems;
 
@@ -32,7 +32,7 @@ public class DiffActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diff);
 
-        adapter = new DiffAdapter();
+        adapter = new AsyncListDifferAdapter();
 
         RecyclerView list = findViewById(R.id.list);
         list.setAdapter(adapter);

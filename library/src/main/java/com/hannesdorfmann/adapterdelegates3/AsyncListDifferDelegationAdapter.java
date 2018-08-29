@@ -1,7 +1,9 @@
 package com.hannesdorfmann.adapterdelegates3;
 
 import android.support.annotation.NonNull;
+import android.support.v7.recyclerview.extensions.AsyncDifferConfig;
 import android.support.v7.recyclerview.extensions.AsyncListDiffer;
+import android.support.v7.util.AdapterListUpdateCallback;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -19,7 +21,7 @@ import java.util.List;
  * class:
  * <pre>
  * {@code
- *    class MyAdapter extends AbsDiffDelegationAdapter<MyDataSourceType> {
+ *    class MyAdapter extends AsyncListDifferDelegationAdapter<MyDataSourceType> {
  *        public MyAdapter() {
  *            this.delegatesManager.add(new FooAdapterDelegate())
  *                                 .add(new BarAdapterDelegate());
@@ -28,22 +30,48 @@ import java.util.List;
  * }
  * </pre>
  *
- * @param <T> The type of the datasource / items
+ * @param <T> The type of the datasource / items. Internally we will use List&lt;T&gt; but you only have
+ *            to provide T (and not List&lt;T&gt;). Its safe to use this with
+ *            {@link AbsListItemAdapterDelegate}.
  * @author Sergey Opivalov
+ * @author Hannes Dorfmann
  */
 
-public abstract class AbsDiffDelegationAdapter<T> extends RecyclerView.Adapter {
+public class AsyncListDifferDelegationAdapter<T> extends RecyclerView.Adapter {
 
     protected final AdapterDelegatesManager<List<T>> delegatesManager;
     protected final AsyncListDiffer<T> differ;
 
-    public AbsDiffDelegationAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback) {
+    public AsyncListDifferDelegationAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback) {
         this(diffCallback, new AdapterDelegatesManager<List<T>>());
     }
 
-    public AbsDiffDelegationAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback,
-                                    @NonNull AdapterDelegatesManager<List<T>> delegatesManager) {
-        this.differ = new AsyncListDiffer<>(this, diffCallback);
+    public AsyncListDifferDelegationAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback,
+                                            @NonNull AdapterDelegatesManager<List<T>> delegatesManager) {
+
+        if (diffCallback == null) {
+            throw new NullPointerException("ItemCallback is null");
+        }
+
+        if (delegatesManager == null) {
+            throw new NullPointerException("AdapterDelegatesManager is null");
+        }
+        this.differ = new AsyncListDiffer<T>(this, diffCallback);
+        this.delegatesManager = delegatesManager;
+    }
+
+    public AsyncListDifferDelegationAdapter(@NonNull AsyncDifferConfig differConfig,
+                                            @NonNull AdapterDelegatesManager<List<T>> delegatesManager) {
+
+        if (differConfig == null) {
+            throw new NullPointerException("AsyncDifferConfig is null");
+        }
+
+        if (delegatesManager == null) {
+            throw new NullPointerException("AdapterDelegatesManager is null");
+        }
+
+        this.differ = new AsyncListDiffer<T>(new AdapterListUpdateCallback(this), differConfig);
         this.delegatesManager = delegatesManager;
     }
 
@@ -104,5 +132,11 @@ public abstract class AbsDiffDelegationAdapter<T> extends RecyclerView.Adapter {
      */
     public void setItems(List<T> items) {
         differ.submitList(items);
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return differ.getCurrentList().size();
     }
 }

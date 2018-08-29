@@ -2,7 +2,7 @@ package com.hannesdorfmann.adapterdelegates3.sample;
 
 import android.support.v7.util.DiffUtil;
 
-import com.hannesdorfmann.adapterdelegates3.DiffDelegationAdapter;
+import com.hannesdorfmann.adapterdelegates3.AsyncListDifferDelegationAdapter;
 import com.hannesdorfmann.adapterdelegates3.sample.adapterdelegates.DiffCatAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates3.sample.adapterdelegates.DiffDogAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates3.sample.model.DiffItem;
@@ -11,9 +11,9 @@ import com.hannesdorfmann.adapterdelegates3.sample.model.DiffItem;
  * @author Sergey Opivalov
  */
 
-public class DiffAdapter extends DiffDelegationAdapter<DiffItem> {
+public class AsyncListDifferAdapter extends AsyncListDifferDelegationAdapter<DiffItem> {
 
-    public DiffAdapter() {
+    public AsyncListDifferAdapter() {
         super(DIFF_CALLBACK);
         delegatesManager
                 .addDelegate(new DiffDogAdapterDelegate())
