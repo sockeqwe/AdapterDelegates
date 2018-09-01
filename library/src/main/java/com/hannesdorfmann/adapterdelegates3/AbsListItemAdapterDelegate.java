@@ -28,7 +28,7 @@ import java.util.List;
  * return new CatViewHolder(inflater.inflate(R.layout.item_cat, parent, false));
  * }
  * @Override protected void onBindViewHolder(Cat item, CatViewHolder holder);
- * holder.setName(cat.getName());
+ * holder.setName(item.getName());
  * ...
  * }
  * }
