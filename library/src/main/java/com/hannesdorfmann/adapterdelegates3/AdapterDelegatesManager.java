@@ -107,7 +107,7 @@ public class AdapterDelegatesManager<T> {
    * allowReplacingDelegate = false as parameter.
    *
    * @param viewType the view type integer if you want to assign manually the view type. Otherwise
-   * use {@link #addDelegate(AdapterDelegate)} where a viewtype will be assigned manually.
+   * use {@link #addDelegate(AdapterDelegate)} where a viewtype will be assigned automatically.
    * @param delegate the delegate to add
    * @return self
    * @throws NullPointerException if passed delegate is null
