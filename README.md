@@ -184,6 +184,21 @@ public class CatListItemAdapterDelegate extends AbsListItemAdapterDelegate<Cat, 
 
 As you see, instead of writing code that casts list item to Cat we can use `AbsListItemAdapterDelegate` to do the same job (by declaring generic types).
 
+## DiffUtil & ListAdapter = AsyncListDifferDelegationAdapter
+Support library 27.0.1 introduced `ListAdapter` - the new extension of `RecyclerView.Adapter` that uses `AsyncListDiffer` internally. It does calculating diff in the background thread by default and does all particular animations for you items collection. Hence you don't need carry about `notify*` methods, `AsyncListDiffer` does all the job for you. And AdapterDelegates supports it too. 
+
+This library offers the equivalent to `ListAdapter` which is called `AsyncListDifferDelegationAdapter` that can be used together with any regular `AdapterDelegate`.
+
+```java
+public class DiffAdapter extends AsyncListDifferDelegationAdapter<DiffItem> {
+    public DiffAdapter() {
+        delegatesManager
+            .addDelegate(new DogAdapterDelegate());
+            .addDelegate(new CatAdapterDelegate());
+    }
+}
+```
+
 ## Fallback AdapterDelegate
 What if your adapter's data source contains a certain element you don't have registered an `AdapterDelegate` for? In this case the `AdapterDelegateManager` will throw an exception at runtime. However, this is not always what you want. You can specify a fallback `AdapterDelegate` that will be used if no other `AdapterDelegate` has been found to handle a certain view type.
 

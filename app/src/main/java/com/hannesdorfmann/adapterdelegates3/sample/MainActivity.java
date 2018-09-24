@@ -41,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, AnimationDiffUtilsActivity.class));
       }
     });
+
+    findViewById(R.id.diffActivity).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        startActivity(new Intent(MainActivity.this, DiffActivity.class));
+      }
+    });
   }
 
   private List<DisplayableItem> getAnimals() {

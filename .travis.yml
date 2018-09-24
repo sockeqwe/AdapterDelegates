@@ -4,12 +4,15 @@ android:
   components:
   - platform-tools
   - tools
-  - android-27
+  - android-28
   - build-tools-27.0.3
   - extra-android-support
   - extra-android-m2repository
   licenses:
   - android-sdk-license-.+
+
+before_install:
+  - yes | sdkmanager "platforms;android-28"
 
 jdk:
 - oraclejdk8

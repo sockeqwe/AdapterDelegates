@@ -26,8 +26,8 @@ import java.util.List;
  *
  *  <pre>
  * {@code
- *    class MyAdaper extends AbsDelegationAdapter<List<Foo>>{
- *        public MyAdaper(){
+ *    class MyAdapter extends AbsDelegationAdapter<List<Foo>>{
+ *        public MyAdapter(){
  *            this.delegatesManager.add(new FooAdapterDelegate());
  *            this.delegatesManager.add(new BarAdapterDelegate());
  *        }

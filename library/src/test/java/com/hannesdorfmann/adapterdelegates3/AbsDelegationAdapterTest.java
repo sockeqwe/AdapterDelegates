@@ -109,6 +109,5 @@ public class AbsDelegationAdapterTest {
     adapter.onViewRecycled(delegate1.viewHolder);
     Assert.assertTrue(delegate1.onViewRecycledCalled);
     Assert.assertFalse(delegate2.onViewRecycledCalled);
-
   }
 }
