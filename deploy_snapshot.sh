@@ -7,7 +7,7 @@
 
 SLUG="sockeqwe/AdapterDelegates"
 JDK="oraclejdk8"
-BRANCH="master"
+BRANCH="travisPublish"
 
 set -e
 
@@ -21,6 +21,8 @@ elif [ "$TRAVIS_BRANCH" != "$BRANCH" ]; then
   echo "Skipping snapshot deployment: wrong branch. Expected '$BRANCH' but was '$TRAVIS_BRANCH'."
 else
   echo "Deploying snapshot..."
+  gpg --import .travis/key
+  gpg --list-keys
   ./gradlew clean uploadArchives
   echo "Snapshot deployed!"
 fi

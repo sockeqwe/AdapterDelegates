@@ -1,5 +1,4 @@
 language: android
-
 android:
   components:
   - platform-tools
@@ -10,36 +9,29 @@ android:
   - extra-android-m2repository
   licenses:
   - android-sdk-license-.+
-
 before_install:
-  - yes | sdkmanager "platforms;android-28"
-
+- openssl aes-256-cbc -K $encrypted_a046bd9bf3a5_key -iv $encrypted_a046bd9bf3a5_iv
+  -in .travis/key.enc -out .travis/key -d
+- yes | sdkmanager "platforms;android-28"
 jdk:
 - oraclejdk8
-
 branches:
   except:
   - gh-pages
-
 notifications:
   email: false
-
 sudo: false
-
 script: "./gradlew build test"
-
 cache:
   directories:
   - "$HOME/.gradle"
-
 env:
   global:
   - secure: BwRluyeCngSqNkuHwvO+SN9o1gsO28EbfGkqXosbzxi67OVAXS4J6/Xji6ZMvJ2TU3mjnVCnzlgk7t4JtyB0Qlgc3vpIbQfWkICat/Zf1QXBaMUW9b5uv9cmmwO7HJtzCqGgwOYqDwsrUDt2tUpiFr/LQUKTbIs+kn5I8ejVC+LCGyUhmAQqWomwL+lVfXwgGiTmLFl5XmVUL++ohWxp245xRHbsfp5TQ55V6dGzIE2xGjaa99ruiURdExVqpAgImAu0QMZzfF1FfiWC2dCuvAVhjbMiR2dtBtyVQg5/XtIYqN7ZCgQ7zOfzCVN+9v6KnN4ZvT8SGri2smW4OeDCiQp3Fw5fXc432hKvn3/UKNHZKF4EoswXMZY8ib4GpOuh83GJ5hCV9+fqc1gCn6fWvjVQIYzYom51tiDTETJAYP6GgiJgPJjG0QtS27ybni6mTtchGxMjvsLAPulbZyx1CVD6oImmyW04c9Ddts3kA2VPydC1akFZ6Ad9OPaRT2fHRRUGYd8+dfLqzJ4QhuqayMXFQ9HPdUbQY+UaWv7IkdvjWGQ+mU43fS+pFJF9BeKW3l8Qi8CHP4h6iJxjDSzUd/kWhZ2zCJq0muA+wX/MTa9JddCIWNAW1WVVgzU8z9qdEkj2MIgW4nc+vRiTk3hrQcsePqcYjvjjpwoUFbpr1X0=
   - secure: KUqRhjXJCq1HFFeYGJZ40w18UyDOwdmm+mekco8nDCFMGpLxzzPoiYfn3/2TT7ZQ2a4kCu43TZq2y+EsHBb4jGui8qKP0jSnOBnX0SAS8SLWqCH4YltEs2JJHPyUxcxdpBm7uGdaDzl/txNvorVjkACuMzqe1aKIbVQD6H6pYLQsSaFTa0VMuBNo2g9gC3k9sSLqTGRTyrzaXqJaZiTrXGYPXYlsrIXBtaAU9+3eWqcDJ8TpH+/Pkrh5i8On+Hz8t8lr5lRThWXz8T2OqYJfw9BbJMlOpf0u0YuxtTRyP2RR3XRWgqSoPY0Ic78JIiXOM6s2GLaGIX6OBcxh411VcgzBfgKFYb/+lrUzDVz1Wtu0Ptwj4GgxmcWEleR+y1o/iXkuXwshOWSe5gn1fKB7fILA2ueZRN8nEzuDC61WRswcLcQlz2rRXvK3y7Ez46IHI6QGMrIEa+oOte+rCAXyw4+CK4XtFZS5CP2T2UqoNL9DQ+h9lVMdlpN5Y7rZ+cnyVijA5Ja72yQwP7tnO2qAxAO1BBZQ2hmJGI+DxlZ8uNyM8nphy33J5PDCdZvJdkkf6qNvW6JNWcrYDmxtB8hPiNy/gdebcViYiKLI5U9+DBqXmUQugylYIp4oN/ulMRk7Yi8X6fTT6nLPnwwVrxgHE8xMIvAVobDTcZD1BC8/tT4=
-
+  - secure: BZ7PSGt4hWHscrTEp1OKtuHCkVVjpbaRtTcnm3iY3YSXd5vj8Lq52rZyP0+py0vxVji/Vz0dOlovsfyeOiFe9npy4JqqbtlgHNdMwYd4Muzg/QBtKde9w0QUZfBUxqVuLDEft+DZNXblhmnAlXBvpBufIOpk/FfRYRuB1f0TdZCSJSrVdRVmEthzZ4P1xanQtCfoArN0UztsFSu5ycfPRz22akPEIKeJPQKuhFyGaq/INBk1Y0h42Cs+oWJN5aaXG/IxmCTT/670AV30ooLk4i7pmM2rBAXW6dmprIGVdjXTP5SOMeIbnXUJrtqiO8lZGYU+0dGwQHWAUGuqJrVc+V9j4o8isxD9QFZwydPxifdQq7/ml/vV3nQTR+Qxm5glsWh0NylW1jgYPuda2YsREXuUN0zx9Z+ljdkBlcYkdE+lEXcUtpTVoDnEwh6xFmKsg1uVyDjhK8lgK6DcXNXBE6wadRRYOs6pRxdh8+vKh70ESVI2iE/6fcif5WWbLNbpKFtKlsFHvoxFUWF6A9qy97FXtCnveEZ8gJPUSIOwF/E/zZUotvychWWFRlN702cBzVglVFz8DJsWm4UnpywvHipJRpeuFbeHbrpqFHavP4KNO0Tfscc1pYlYmeKPPdpJt060giTMjn062eZ7y4SGnSRYdYr1Jt3j5Ox25MeT6Cc=
+  - secure: 1OfMY9XZoUx87/HwO56Zas+4BjiDF04CRZrVVM9n+Pe/S40v+A2CH7ZYhojL3ZLsy5irBq6yRVGtFA4iwrCkuS4PgynNmccRTW1rLEHFVFV6l+3IOFDMQ6q4yYipIDXGvIeqRR1+7ovnh3zmmxVYTFRZwHRnsAah6Us8kOaCEGtWmQs1U6YWcok0oXCx68nV/GDSlg1Ok+mDuY1CTPwl8XgNpIlMHL9/+Op92JzK8NHHZINx3CuXa5JxSSSanJx0vKVz2uYaKMTQB9oWLn5k+ySEWwl1nKOX/6HSg0nVGHMxukkNZEvewguyKWfJXJSZg6fGaz5YwWdJNux132IuhaWoJLDInip4hwJp70VW5oteC41yw+O6S9PRx3DrGKGElKkLJRVOhZfiGBlezfGdPDHjUkw75yST/wLXBAbyhUDAjq04mU683XxZrhGwUhZ9pI9cXGC5I3dC7mrFoo1cg76xfzBMnOMFy2FcJyDAELYEIYF9HwC5AEbYMIJ+v25Ax49kVUpeKg7VJlZCkJ7Y3A744R1PxspX4OKFN21CidFkB748SAw5C84zw+kJlQTNw2paWfk/AXYqGVVk6eVWNSsKvXPbG2hFNKJBHSQcbjl7ajzfqCm6VZTzeDGXH0Ll+Oj/bUo9lGlPjiJfIJ3XGjEE9Z19xw6UDPTM/7tepQY=
 after_success:
-  - ./deploy_snapshot.sh
-  
-after_failure:  
-  cat /home/travis/build/sockeqwe/AdapterDelegates/library/build/outputs/lint-results-debug.xml
+- "./deploy_snapshot.sh"
+after_failure: cat /home/travis/build/sockeqwe/AdapterDelegates/library/build/outputs/lint-results-debug.xml
   cat /home/travis/build/sockeqwe/AdapterDelegates/library/build/reports/lint-results.xml
