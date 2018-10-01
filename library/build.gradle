@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: "com.vanniktech.maven.publish"
 
 android {
   compileSdkVersion 28
@@ -33,6 +34,11 @@ dependencies {
   testImplementation 'org.mockito:mockito-inline:2.21.0'
 }
 
-apply from: 'https://raw.github.com/sockeqwe/gradle-mvn-push/master/gradle-mvn-push.gradle'
+// apply from: 'https://raw.github.com/sockeqwe/gradle-mvn-push/master/gradle-mvn-push.gradle'
 apply from: 'https://raw.githubusercontent.com/Tickaroo/findbugs-script/master/findbugs.gradle'
 
+
+mavenPublish {
+  releaseRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+  snapshotRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+}
