@@ -11,8 +11,6 @@ android:
   - android-sdk-license-.+
 before_install:
 - yes | sdkmanager "platforms;android-28"
-- openssl aes-256-cbc -K $encrypted_a046bd9bf3a5_key -iv $encrypted_a046bd9bf3a5_iv
-  -in .travis/key.enc -out .travis/key -d
 jdk:
 - oraclejdk8
 branches:

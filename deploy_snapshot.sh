@@ -21,6 +21,7 @@ elif [ "$TRAVIS_BRANCH" != "$BRANCH" ]; then
   echo "Skipping snapshot deployment: wrong branch. Expected '$BRANCH' but was '$TRAVIS_BRANCH'."
 else
   echo "Deploying snapshot..."
+  openssl aes-256-cbc -K $encrypted_a046bd9bf3a5_key -iv $encrypted_a046bd9bf3a5_iv -in .travis/key.enc -out .travis/key -d
   gpg --import .travis/key
   gpg --list-keys
   ./gradlew clean uploadArchives
