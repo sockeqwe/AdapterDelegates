@@ -5,7 +5,7 @@ Read the motivation for this project in [my blog post](http://hannesdorfmann.com
 This library is available on maven central:
 
 ```groovy
-compile 'com.hannesdorfmann:adapterdelegates3:3.0.1'
+compile 'com.hannesdorfmann:adapterdelegates3:3.1.0'
 ```
 [![Build Status](https://travis-ci.org/sockeqwe/AdapterDelegates.svg?branch=master)](https://travis-ci.org/sockeqwe/AdapterDelegates)
 
@@ -14,7 +14,7 @@ Please note that since 3.0 the group id has been changed to `adapterdelegates3`.
 ### Snapshot
 
 ```groovy
-compile 'com.hannesdorfmann:adapterdelegates3:3.0.2-SNAPSHOT'
+compile 'com.hannesdorfmann:adapterdelegates3:3.1.1-SNAPSHOT'
 ```
 
 You also have to add the url to the snapshot repository:
