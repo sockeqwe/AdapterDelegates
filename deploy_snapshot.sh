@@ -22,7 +22,7 @@ elif [ "$TRAVIS_BRANCH" != "$BRANCH" ]; then
 else
   echo "Deploying snapshot..."
   openssl aes-256-cbc -K $encrypted_a046bd9bf3a5_key -iv $encrypted_a046bd9bf3a5_iv -in .travis/key.enc -out key.gpg -d
-  gpg --import .travis/key.gpg
+  gpg --import key.gpg
   echo "signing.keyId=E508C045" >> library/gradle.properties
   echo "signing.password=$PGP_KEY" >> library/gradle.properties
   echo "signing.secretKeyRingFile=$PWD/key.gpg" >> library/gradle.properties
