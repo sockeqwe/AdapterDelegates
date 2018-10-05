@@ -23,13 +23,11 @@ else
   echo "Deploying snapshot..."
   openssl aes-256-cbc -K $encrypted_a046bd9bf3a5_key -iv $encrypted_a046bd9bf3a5_iv -in .travis/key.enc -out .travis/key -d
   gpg --import .travis/key
-  gpg --list-keys
   echo "signing.keyId=E508C045" >> library/gradle.properties
   echo "signing.password=$PGP_KEY" >> library/gradle.properties
   echo "signing.secretKeyRingFile=$PWD/.travis/key" >> library/gradle.properties
   echo "org.gradle.parallel=false" >> gradle.properties
   echo "org.gradle.configureondemand=false" >> gradle.properties
-  ./gradlew stop
   ./gradlew  --no-daemon :library:uploadArchives -Dorg.gradle.parallel=false -Dorg.gradle.configureondemand=false
   rm .travis/key
   git reset --hard
