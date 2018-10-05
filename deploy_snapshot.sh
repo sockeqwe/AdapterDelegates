@@ -7,7 +7,7 @@
 
 SLUG="sockeqwe/AdapterDelegates"
 JDK="oraclejdk8"
-BRANCH="travisPublish"
+BRANCH="master"
 
 set -e
 
