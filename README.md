@@ -9,7 +9,7 @@ compile 'com.hannesdorfmann:adapterdelegates4:4.0.0'
 ```
 [![Build Status](https://travis-ci.org/sockeqwe/AdapterDelegates.svg?branch=master)](https://travis-ci.org/sockeqwe/AdapterDelegates)
 
-Please note that since 3.0 the group id has been changed to `adapterdelegates3`.
+Please note that since 4.0 the group id has been changed to `adapterdelegates4`.
 
 ### Snapshot
 
