@@ -1,32 +1,33 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-  repositories {
-    google()
-    jcenter()
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:3.2.0'
-    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.6.0'
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.6.0'
 
-
-    // NOTE: Do not place your application dependencies here; they belong
-    // in the individual module build.gradle files
-  }
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
 }
 
 allprojects {
-  repositories {
-    google()
-    jcenter()
-  }
+    repositories {
+        google()
+        jcenter()
+    }
 }
 
 
 ext {
-  recyclerView = 'com.android.support:recyclerview-v7:27.1.1'
-  appCompat = 'com.android.support:appcompat-v7:27.1.1'
+    recyclerView = 'androidx.recyclerview:recyclerview:1.0.0'
+    appCompat = 'androidx.appcompat:appcompat:1.0.0'
+    androidAnnotations = 'androidx.annotation:annotation:1.0.0'
+    core = 'androidx.core:core:1.0.0'
 
-  javaSourceCompatibility = JavaVersion.VERSION_1_7
-  javaTargetCompatibility = JavaVersion.VERSION_1_7
+    javaSourceCompatibility = JavaVersion.VERSION_1_7
+    javaTargetCompatibility = JavaVersion.VERSION_1_7
 }

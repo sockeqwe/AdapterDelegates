@@ -5,7 +5,7 @@ Read the motivation for this project in [my blog post](http://hannesdorfmann.com
 This library is available on maven central:
 
 ```groovy
-compile 'com.hannesdorfmann:adapterdelegates3:3.1.0'
+compile 'com.hannesdorfmann:adapterdelegates4:4.0.0'
 ```
 [![Build Status](https://travis-ci.org/sockeqwe/AdapterDelegates.svg?branch=master)](https://travis-ci.org/sockeqwe/AdapterDelegates)
 
@@ -14,7 +14,7 @@ Please note that since 3.0 the group id has been changed to `adapterdelegates3`.
 ### Snapshot
 
 ```groovy
-compile 'com.hannesdorfmann:adapterdelegates3:3.1.1-SNAPSHOT'
+compile 'com.hannesdorfmann:adapterdelegates4:4.0.1-SNAPSHOT'
 ```
 
 You also have to add the url to the snapshot repository:
@@ -192,6 +192,7 @@ This library offers the equivalent to `ListAdapter` which is called `AsyncListDi
 ```java
 public class DiffAdapter extends AsyncListDifferDelegationAdapter<DiffItem> {
     public DiffAdapter() {
+        super(DIFF_CALLBACK) // Your diff callback for diff utils
         delegatesManager
             .addDelegate(new DogAdapterDelegate());
             .addDelegate(new CatAdapterDelegate());
@@ -214,6 +215,14 @@ In contrast to `2.x` in `3.0` `AdapterDelegate` is no longer a interface, but ra
 To keep version backward compatible with project that are already using `1.x` or `2.x` the package has been renamed to `com.hannesdorfmann.adapterdelegates3` and also the artifact id has been renamed to `adapterdelegates3`.
 
 See the [releases section](https://github.com/sockeqwe/AdapterDelegates/releases) for more information about changes.
+
+## Version 3.x to 4.0 migration
+`AdapterDelegates3` uses `com.android.support:recyclerview-v7:x.y.z` whereas `AdapterDelegates4` uses
+`androidx.recyclerview:recyclerview:1.0.0`.
+Migration should be easy. Just use IntelliJ IDE or Android Studio 'Replace in Path' (can be found inside `Edit` main menu then `Find` submenu):
+Replace `com.hannesdorfmann.adapterdelegates3` with `com.hannesdorfmann.adapterdelegates4`.
+You might also have to replace `android.support.v7.widget.RecyclerView` with `androidx.recyclerview.widget.RecyclerView` and
+`android.support.annotation.NonNull` with `androidx.annotation.NonNull`.
 
 ## License
 

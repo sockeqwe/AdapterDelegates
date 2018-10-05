@@ -4,7 +4,7 @@ android {
   compileSdkVersion 28
 
   defaultConfig {
-    applicationId "com.hannesdorfmann.adapterdelegates.sample"
+    applicationId "com.hannesdorfmann.adapterdelegates4.sample"
     minSdkVersion 14
     targetSdkVersion 28
     versionCode 1
@@ -32,6 +32,7 @@ android {
 dependencies {
   implementation rootProject.ext.appCompat
   implementation rootProject.ext.recyclerView
+  implementation rootProject.ext.core
 
   implementation project(':library')
 }

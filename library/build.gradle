@@ -39,6 +39,7 @@ android {
 
 dependencies {
     api rootProject.ext.recyclerView
+    api rootProject.ext.androidAnnotations
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-inline:2.21.0'

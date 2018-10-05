@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hannesdorfmann.adapterdelegates.sample">
+    package="com.hannesdorfmann.adapterdelegates4.sample">
 
   <application
       android:allowBackup="false"
@@ -8,7 +8,7 @@
       android:label="@string/app_name"
       android:theme="@style/AppTheme">
     <activity
-        android:name="com.hannesdorfmann.adapterdelegates3.sample.MainActivity"
+        android:name="com.hannesdorfmann.adapterdelegates4.sample.MainActivity"
         android:label="@string/app_name">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -17,10 +17,10 @@
       </intent-filter>
     </activity>
     <activity
-        android:name="com.hannesdorfmann.adapterdelegates3.sample.ReptilesActivity"
+        android:name="com.hannesdorfmann.adapterdelegates4.sample.ReptilesActivity"
         android:label="Reptiels"/>
-    <activity android:name="com.hannesdorfmann.adapterdelegates3.sample.animations.AnimationDiffUtilsActivity"/>
-    <activity android:name="com.hannesdorfmann.adapterdelegates3.sample.DiffActivity"/>
+    <activity android:name="com.hannesdorfmann.adapterdelegates4.sample.animations.AnimationDiffUtilsActivity"/>
+    <activity android:name="com.hannesdorfmann.adapterdelegates4.sample.DiffActivity"/>
   </application>
 
 </manifest>

@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.hannesdorfmann.adapterdelegates3.sample.animations.AnimationDiffUtilsActivity"
+    tools:context="com.hannesdorfmann.adapterdelegates4.sample.animations.AnimationDiffUtilsActivity"
     >
 
 
-  <android.support.v7.widget.RecyclerView
+  <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recyclerView"
       android:layout_width="match_parent"
       android:layout_height="0dp"
