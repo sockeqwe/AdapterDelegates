@@ -209,13 +209,6 @@ adapterDelegateManager.setFallbackDelegate( fallbackDelegate );
 ```
 Note also that boolean return type of `isForViewType()` of a fallback delegate will be ignored (will not be take into account). So it doesn't matter if you return true or false. You can use `AbsFallbackAdapterDelegate` that already implements `isForViewType()` so that you only have to override `onCreateViewHolder()` and `onBindViewHolder()` for your fallback adapter delegate.
 
-
-## Migrating from `2.x` to `3.0`
-In contrast to `2.x` in `3.0` `AdapterDelegate` is no longer a interface, but rather an abstract class.
-To keep version backward compatible with project that are already using `1.x` or `2.x` the package has been renamed to `com.hannesdorfmann.adapterdelegates3` and also the artifact id has been renamed to `adapterdelegates3`.
-
-See the [releases section](https://github.com/sockeqwe/AdapterDelegates/releases) for more information about changes.
-
 ## Version 3.x to 4.0 migration
 `AdapterDelegates3` uses `com.android.support:recyclerview-v7:x.y.z` whereas `AdapterDelegates4` uses
 `androidx.recyclerview:recyclerview:1.0.0`.
