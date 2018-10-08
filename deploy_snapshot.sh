@@ -21,6 +21,7 @@ elif [ "$TRAVIS_BRANCH" != "$BRANCH" ]; then
   echo "Skipping snapshot deployment: wrong branch. Expected '$BRANCH' but was '$TRAVIS_BRANCH'."
 else
   echo "Deploying snapshot..."
+  find / -name secring.gpg
   openssl aes-256-cbc -K $encrypted_a046bd9bf3a5_key -iv $encrypted_a046bd9bf3a5_iv -in .travis/key.enc -out key.gpg -d
   gpg --import key.gpg
   echo "signing.keyId=E508C045" >> library/gradle.properties
