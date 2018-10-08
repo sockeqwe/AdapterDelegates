@@ -26,7 +26,7 @@ else
   gpg --import key.gpg
   echo "signing.keyId=E508C045" >> library/gradle.properties
   echo "signing.password=$PGP_KEY" >> library/gradle.properties
-  echo "signing.secretKeyRingFile=$PWD/key.gpg" >> library/gradle.properties
+  echo "signing.secretKeyRingFile=/home/travis/.gnupg/secring.gpg" >> library/gradle.properties
   echo "org.gradle.parallel=false" >> gradle.properties
   echo "org.gradle.configureondemand=false" >> gradle.properties
   ./gradlew  --no-daemon :library:uploadArchives -Dorg.gradle.parallel=false -Dorg.gradle.configureondemand=false
