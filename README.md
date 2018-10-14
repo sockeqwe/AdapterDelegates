@@ -190,7 +190,7 @@ Support library 27.0.1 introduced `ListAdapter` - the new extension of `Recycler
 This library offers the equivalent to `ListAdapter` which is called `AsyncListDifferDelegationAdapter` that can be used together with any regular `AdapterDelegate`.
 
 ```java
-public class DiffAdapter extends AsyncListDifferDelegationAdapter<DiffItem> {
+public class DiffAdapter extends AsyncListDifferDelegationAdapter<Animal> {
     public DiffAdapter() {
         super(DIFF_CALLBACK) // Your diff callback for diff utils
         delegatesManager
