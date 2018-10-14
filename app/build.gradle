@@ -1,38 +1,40 @@
 apply plugin: 'com.android.application'
 
 android {
-  compileSdkVersion 28
+    compileSdkVersion rootProject.ext.compileSdk
 
-  defaultConfig {
-    applicationId "com.hannesdorfmann.adapterdelegates4.sample"
-    minSdkVersion 14
-    targetSdkVersion 28
-    versionCode 1
-    versionName "1.0"
-  }
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    defaultConfig {
+        applicationId "com.hannesdorfmann.adapterdelegates4.sample"
+        minSdkVersion 14
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
     }
-  }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 
-  compileOptions {
-    sourceCompatibility rootProject.ext.javaSourceCompatibility
-    targetCompatibility rootProject.ext.javaTargetCompatibility
-  }
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaSourceCompatibility
+        targetCompatibility rootProject.ext.javaTargetCompatibility
+    }
 
-  lintOptions {
-    disable 'GoogleAppIndexingWarning'
-    abortOnError false
-  }
+    lintOptions {
+        disable 'GoogleAppIndexingWarning'
+        abortOnError false
+    }
 }
 
 
 dependencies {
-  implementation rootProject.ext.appCompat
-  implementation rootProject.ext.recyclerView
-  implementation rootProject.ext.core
+    implementation rootProject.ext.appCompat
+    implementation rootProject.ext.recyclerView
+    implementation rootProject.ext.core
 
-  implementation project(':library')
+    implementation project(':library')
+    implementation project(':paging')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

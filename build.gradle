@@ -27,6 +27,8 @@ ext {
     appCompat = 'androidx.appcompat:appcompat:1.0.0'
     androidAnnotations = 'androidx.annotation:annotation:1.0.0'
     core = 'androidx.core:core:1.0.0'
+    paging = "androidx.paging:paging-runtime:2.0.0"
+    compileSdk = 28
 
     javaSourceCompatibility = JavaVersion.VERSION_1_7
     javaTargetCompatibility = JavaVersion.VERSION_1_7
