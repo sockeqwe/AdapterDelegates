@@ -4,7 +4,6 @@ import android.view.ViewGroup;
 
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegatesManager;
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter;
-import com.hannesdorfmann.adapterdelegates4.SpyableAdapterDelegate;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -14,11 +13,8 @@ import org.mockito.Mockito;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.paging.PagedList;
 import androidx.recyclerview.widget.AsyncDifferConfig;
 import androidx.recyclerview.widget.DiffUtil;
-
-import static org.junit.Assert.*;
 
 public class PagedListDelegationAdapterTest {
 
@@ -69,9 +65,9 @@ public class PagedListDelegationAdapterTest {
     @Ignore("Why does Mockito can't mock the final class anymore?")
     public void checkDelegatesManagerInstance() {
 
-        final AdapterDelegatesManager<PagedObject> manager = new AdapterDelegatesManager<>();
+        final AdapterDelegatesManager<List<Object>> manager = new AdapterDelegatesManager<>();
         AsyncDifferConfig<Object> config = Mockito.mock(AsyncDifferConfig.class);
-        PagedListDelegationAdapter<Object> adapter = new PagedListDelegationAdapter<Object>(config, manager) {
+        PagedListDelegationAdapter<Object> adapter = new PagedListDelegationAdapter<Object>(manager, config) {
             @Override
             public int getItemCount() {
                 // Hacky but does the job
