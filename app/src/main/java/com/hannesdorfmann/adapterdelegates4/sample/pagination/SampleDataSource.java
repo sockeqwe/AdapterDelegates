@@ -2,9 +2,11 @@ package com.hannesdorfmann.adapterdelegates4.sample.pagination;
 
 import android.util.Log;
 
+import com.hannesdorfmann.adapterdelegates4.sample.model.Advertisement;
 import com.hannesdorfmann.adapterdelegates4.sample.model.Cat;
 import com.hannesdorfmann.adapterdelegates4.sample.model.DisplayableItem;
 import com.hannesdorfmann.adapterdelegates4.sample.model.Dog;
+import com.hannesdorfmann.adapterdelegates4.sample.model.Gecko;
 import com.hannesdorfmann.adapterdelegates4.sample.model.Snake;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class SampleDataSource extends PositionalDataSource<DisplayableItem> {
         List<DisplayableItem> result = new ArrayList<>();
         for (int i = 0; i < size; i++) {
 
-            int itemType = random.nextInt(3);
+            int itemType = random.nextInt(5);
             switch (itemType) {
                 case 0:
                     result.add(new Cat("Cat"));
@@ -36,6 +38,15 @@ public class SampleDataSource extends PositionalDataSource<DisplayableItem> {
                 case 2:
                     result.add(new Snake("Snake", "Viper"));
                     break;
+
+                case 3:
+                    result.add(new Gecko("Snake", "Viper"));
+                    break;
+
+                case 4:
+                    result.add(new Advertisement());
+                    break;
+
 
                 default:
                     throw new IllegalStateException("Random returned " + itemType);
