@@ -58,9 +58,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class AdapterDelegatesManager<T> {
 
     /**
-     * This id is used internally to claim that the {@link}
+     * ViewType for the fallback delegate
      */
-    static final int FALLBACK_DELEGATE_VIEW_TYPE = Integer.MAX_VALUE - 1;
+    public static final int FALLBACK_DELEGATE_VIEW_TYPE = Integer.MAX_VALUE - 1;
 
     /**
      * Used internally for {@link #onBindViewHolder(Object, int, RecyclerView.ViewHolder)} as empty
