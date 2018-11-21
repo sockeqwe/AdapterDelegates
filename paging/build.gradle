@@ -1,5 +1,16 @@
 apply plugin: 'com.android.library'
 
+gradle.ext.isCiServer = System.getenv().containsKey("CI")
+logger.warn("Running on CI: ${gradle.ext.isCiServer}")
+
+if (gradle.ext.isCiServer) {
+    apply plugin: "com.vanniktech.maven.publish"
+    mavenPublish {
+        releaseRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        snapshotRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdk
 
