@@ -28,7 +28,7 @@ public class PagedListDelegationAdapter<T> extends PagedListAdapter<T, RecyclerV
     }
 
     public PagedListDelegationAdapter(@NonNull AdapterDelegatesManager<List<T>> delegatesManager,
-                                         @NonNull DiffUtil.ItemCallback<T> diffCallback) {
+                                      @NonNull DiffUtil.ItemCallback<T> diffCallback) {
         super(diffCallback);
         if (diffCallback == null) {
             throw new NullPointerException("ItemCallback is null");
@@ -45,7 +45,7 @@ public class PagedListDelegationAdapter<T> extends PagedListAdapter<T, RecyclerV
     }
 
     public PagedListDelegationAdapter(@NonNull AdapterDelegatesManager<List<T>> delegatesManager,
-                                         @NonNull AsyncDifferConfig<T> config) {
+                                      @NonNull AsyncDifferConfig<T> config) {
         super(config);
         if (config == null) {
             throw new NullPointerException("AsyncDifferConfig is null");
@@ -64,12 +64,14 @@ public class PagedListDelegationAdapter<T> extends PagedListAdapter<T, RecyclerV
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        getItem(position); // Internally triggers loading items around items around the given position
         delegatesManager.onBindViewHolder(getCurrentList(), position, holder, null);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position,
                                  @NonNull List payloads) {
+        getItem(position); // Internally triggers loading items around items around the given position
         delegatesManager.onBindViewHolder(getCurrentList(), position, holder, payloads);
     }
 
