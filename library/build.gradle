@@ -46,4 +46,4 @@ dependencies {
 }
 
 // apply from: 'https://raw.github.com/sockeqwe/gradle-mvn-push/master/gradle-mvn-push.gradle'
-apply from: 'https://raw.githubusercontent.com/Tickaroo/findbugs-script/master/findbugs.gradle'
+// apply from: 'https://raw.githubusercontent.com/Tickaroo/findbugs-script/master/findbugs.gradle'
