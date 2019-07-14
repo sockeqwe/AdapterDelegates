@@ -16,18 +16,26 @@
 
 package com.hannesdorfmann.adapterdelegates4.sample.model;
 
+import androidx.annotation.NonNull;
+
 /**
  * @author Hannes Dorfmann
  */
 public class Animal implements DisplayableItem {
 
-  private String name;
+    private String name;
 
-  public Animal(String name) {
-    this.name = name;
-  }
+    public Animal(String name) {
+        this.name = name;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name + " " + super.toString();
+    }
 }
