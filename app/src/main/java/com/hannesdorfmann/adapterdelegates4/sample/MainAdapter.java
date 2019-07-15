@@ -46,7 +46,7 @@ public class MainAdapter extends RecyclerView.Adapter {
         // Delegates
         delegatesManager = new AdapterDelegatesManager<>();
         delegatesManager.addDelegate(new AdvertisementAdapterDelegate(activity));
-        delegatesManager.addDelegate(DslSampleKt.catDelegate());
+        delegatesManager.addDelegate(DslSampleKt.fooDelegate());
         //delegatesManager.addDelegate(new CatAdapterDelegate(activity));
         delegatesManager.addDelegate(new DogAdapterDelegate(activity));
         delegatesManager.addDelegate(new GeckoAdapterDelegate(activity));

@@ -8,11 +8,13 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
+import kotlinx.android.extensions.LayoutContainer
 import java.lang.IllegalStateException
 import kotlin.IllegalArgumentException
 
 /**
  * Simple DSL builder to create an [AdapterDelegate] that is backed by a [List] as dataset.
+ * This DSL builds on top of [LayoutContainer] so that no findViewById is needed anymore.
  *
  * @param layout The android xml layout resource that contains the layout for this adapter delegate.
  * @param on The check that should be run if the AdapterDelegate is for the corresponding Item in the datasource.
@@ -22,31 +24,31 @@ import kotlin.IllegalArgumentException
  * what to do once the ViewHolder binds to the data by specifying a bind block for
  * @since 4.1.0
  */
-inline fun <reified I : T, T> adapterDelegate(
+inline fun <reified I : T, T> adapterDelegateLayoutContainer(
     @LayoutRes layout: Int,
     noinline on: (item: T, items: List<T>, position: Int) -> Boolean = { item, _, _ -> item is I },
-    noinline block: AdapterDelegateViewHolder<I>.() -> Unit
+    noinline block: AdapterDelegateLayoutContainerViewHolder<I>.() -> Unit
 ): AdapterDelegate<List<T>> {
 
-    return DslListAdapterDelegate(
+    return DslLayoutContainerListAdapterDelegate(
         layout = layout,
         on = on,
         intializerBlock = block
     )
 }
 
-class DslListAdapterDelegate<I : T, T>(
+class DslLayoutContainerListAdapterDelegate<I : T, T>(
     @LayoutRes private val layout: Int,
     private val on: (item: T, items: List<T>, position: Int) -> Boolean,
-    private val intializerBlock: AdapterDelegateViewHolder<I>.() -> Unit
-) : AbsListItemAdapterDelegate<I, T, AdapterDelegateViewHolder<I>>() {
+    private val intializerBlock: AdapterDelegateLayoutContainerViewHolder<I>.() -> Unit
+) : AbsListItemAdapterDelegate<I, T, AdapterDelegateLayoutContainerViewHolder<I>>() {
 
     override fun isForViewType(item: T, items: MutableList<T>, position: Int): Boolean = on(
         item, items, position
     )
 
-    override fun onCreateViewHolder(parent: ViewGroup): AdapterDelegateViewHolder<I> =
-        AdapterDelegateViewHolder<I>(
+    override fun onCreateViewHolder(parent: ViewGroup): AdapterDelegateLayoutContainerViewHolder<I> =
+        AdapterDelegateLayoutContainerViewHolder<I>(
             LayoutInflater.from(parent.context).inflate(
                 layout,
                 parent,
@@ -58,7 +60,7 @@ class DslListAdapterDelegate<I : T, T>(
 
     override fun onBindViewHolder(
         item: I,
-        holder: AdapterDelegateViewHolder<I>,
+        holder: AdapterDelegateLayoutContainerViewHolder<I>,
         payloads: MutableList<Any>
     ) {
         holder._item = item as Any
@@ -69,7 +71,9 @@ class DslListAdapterDelegate<I : T, T>(
 /**
  * ViewHolder that is used internally if you use [adapterDelegate] DSL to create your Adapter
  */
-open class AdapterDelegateViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {
+open class AdapterDelegateLayoutContainerViewHolder<T>(
+    override val containerView: View
+) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
     // TODO private?
     internal object Uninitialized
