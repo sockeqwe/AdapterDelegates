@@ -21,13 +21,10 @@ import android.view.ViewGroup;
 
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegatesManager;
 import com.hannesdorfmann.adapterdelegates4.sample.adapterdelegates.AdvertisementAdapterDelegate;
-import com.hannesdorfmann.adapterdelegates4.sample.adapterdelegates.CatAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates4.sample.adapterdelegates.DogAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates4.sample.adapterdelegates.GeckoAdapterDelegate;
 import com.hannesdorfmann.adapterdelegates4.sample.adapterdelegates.SnakeListItemAdapterDelegate;
-import com.hannesdorfmann.adapterdelegates4.sample.dsl.ListAdapterDelegateBuilder;
-import com.hannesdorfmann.adapterdelegates4.sample.dsl.ListAdapterDelegateBuilderKt;
-import com.hannesdorfmann.adapterdelegates4.sample.dsl.ListAdapterDelegateDslKt;
+import com.hannesdorfmann.adapterdelegates4.sample.dsl.DslSampleKt;
 import com.hannesdorfmann.adapterdelegates4.sample.model.DisplayableItem;
 
 import java.util.List;
@@ -49,7 +46,7 @@ public class MainAdapter extends RecyclerView.Adapter {
         // Delegates
         delegatesManager = new AdapterDelegatesManager<>();
         delegatesManager.addDelegate(new AdvertisementAdapterDelegate(activity));
-        delegatesManager.addDelegate(ListAdapterDelegateDslKt.getFcatDelegate());
+        delegatesManager.addDelegate(DslSampleKt.catDelegate());
         //delegatesManager.addDelegate(new CatAdapterDelegate(activity));
         delegatesManager.addDelegate(new DogAdapterDelegate(activity));
         delegatesManager.addDelegate(new GeckoAdapterDelegate(activity));

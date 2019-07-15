@@ -1,26 +1,28 @@
 package com.hannesdorfmann.adapterdelegates4.sample.dsl
 
-import android.system.Os.bind
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
-import com.hannesdorfmann.adapterdelegates4.sample.R
-import com.hannesdorfmann.adapterdelegates4.sample.model.Cat
-import com.hannesdorfmann.adapterdelegates4.sample.model.DisplayableItem
-import kotlinx.android.synthetic.main.item_cat.*
+import java.lang.IllegalStateException
 import kotlin.IllegalArgumentException
 
 /**
  * Simple DSL builder to create an [AdapterDelegate] that is backed by a [List] as dataset.
+ *
+ * @param layout The android xml layout resource that contains the layout for this adapter delegate.
+ * @param on The check that should be run if the AdapterDelegate is for the corresponding Item in the datasource.
+ * In other words its the implementation of [AdapterDelegate.isForViewType].
+ * @param block The DSL block. Specify here what to do when the ViewHolder gets created. Think of it as some kind of
+ * initializer block. For example, you would setup a click listener on a Ui widget in that block followed by specifying
+ * what to do once the ViewHolder binds to the data by specifying a bind block for
+ * @since 4.1.0
  */
-inline fun <reified I : T, T> delegate(
+inline fun <reified I : T, T> adapterDelegate(
     @LayoutRes layout: Int,
     noinline on: (item: T, items: List<T>, position: Int) -> Boolean = { item, _, _ -> item is I },
     noinline block: AdapterDelegateViewHolder<I>.() -> Unit
@@ -60,12 +62,16 @@ class DslListAdapterDelegate<I : T, T>(
         payloads: MutableList<Any>
     ) {
         holder._item = item as Any
-        holder._bindingBlock!!(payloads)
+        holder._bindingBlock?.invoke(payloads) // It's ok to have an AdapterDelegate without binding block (i.e. static content)
     }
 }
 
-class AdapterDelegateViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {
+/**
+ * ViewHolder that is used internally if you use [adapterDelegate] DSL to create your Adapter
+ */
+open class AdapterDelegateViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {
 
+    // TODO private?
     internal object Uninitialized
 
     /**
@@ -77,6 +83,9 @@ class AdapterDelegateViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {
      */
     internal var _item: Any = Uninitialized
 
+    /**
+     * Get the current bound item.
+     */
     val item: T
         get() = if (_item === Uninitialized) {
             throw IllegalArgumentException(
@@ -89,28 +98,25 @@ class AdapterDelegateViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {
         }
 
     /**
-     * This should never be called.
+     * This should never be called directly.
      * Use [bind] instead which internally sets this field.
      */
     internal var _bindingBlock: ((payloads: List<Any>) -> Unit)? = null
 
+    /**
+     * Define here the block that should be run whenever the viewholder get binded.
+     * You can access the current bound item with [item]. In case you need the position of the bound item inside the
+     * adapters dataset use [getAdapterPosition].
+     */
     fun bind(bindingBlock: (payloads: List<Any>) -> Unit) {
+        if (_bindingBlock != null) {
+            throw IllegalStateException("bind { ... } is already defined. Only one bind block is allowed.")
+        }
         this._bindingBlock = bindingBlock
     }
 
-    fun <V : View> findViewById(@IdRes id: Int): V =
-        itemView.findViewById(id) as V
-}
-
-// Example
-val fcatDelegate = delegate<Cat, DisplayableItem>(R.layout.item_cat) {
-
-    val name = findViewById<TextView>(R.id.name)
-    name.setOnClickListener {
-        Log.d("Click", "Click on $item")
-    }
-
-    bind {
-        name.text = item.name
-    }
+    /**
+     * Convenience method find a given view with the given id inside the layout
+     */
+    fun <V : View> findViewById(@IdRes id: Int): V = itemView.findViewById(id) as V
 }

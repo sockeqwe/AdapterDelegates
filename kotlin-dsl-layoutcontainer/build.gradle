@@ -1,0 +1,55 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+androidExtensions {
+    experimental = true
+}
+
+gradle.ext.isCiServer = System.getenv().containsKey("CI")
+logger.warn("Running on CI: ${gradle.ext.isCiServer}")
+
+if (gradle.ext.isCiServer) {
+    apply plugin: "com.vanniktech.maven.publish"
+    mavenPublish {
+        releaseRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        snapshotRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdk
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 28
+        versionCode 2
+        versionName "4.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaSourceCompatibility
+        targetCompatibility rootProject.ext.javaTargetCompatibility
+    }
+
+    libraryVariants.all {
+        it.generateBuildConfig.enabled = false
+    }
+}
+
+dependencies {
+    api project(":library")
+    api project(":kotlin-dsl")
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testImplementation 'junit:junit:4.12'
+}
+
+// apply from: 'https://raw.github.com/sockeqwe/gradle-mvn-push/master/gradle-mvn-push.gradle'
+// apply from: 'https://raw.githubusercontent.com/Tickaroo/findbugs-script/master/findbugs.gradle'
