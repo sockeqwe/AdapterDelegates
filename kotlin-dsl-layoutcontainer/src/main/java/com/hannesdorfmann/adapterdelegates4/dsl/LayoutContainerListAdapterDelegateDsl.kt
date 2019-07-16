@@ -27,20 +27,29 @@ import kotlin.IllegalArgumentException
 inline fun <reified I : T, T> adapterDelegateLayoutContainer(
     @LayoutRes layout: Int,
     noinline on: (item: T, items: List<T>, position: Int) -> Boolean = { item, _, _ -> item is I },
+    noinline layoutInflater: (parent: ViewGroup, layoutRes: Int) -> View = { parent, layout ->
+        LayoutInflater.from(parent.context).inflate(
+            layout,
+            parent,
+            false
+        )
+    },
     noinline block: AdapterDelegateLayoutContainerViewHolder<I>.() -> Unit
 ): AdapterDelegate<List<T>> {
 
     return DslLayoutContainerListAdapterDelegate(
         layout = layout,
         on = on,
-        intializerBlock = block
+        intializerBlock = block,
+        layoutInflater = layoutInflater
     )
 }
 
 class DslLayoutContainerListAdapterDelegate<I : T, T>(
     @LayoutRes private val layout: Int,
     private val on: (item: T, items: List<T>, position: Int) -> Boolean,
-    private val intializerBlock: AdapterDelegateLayoutContainerViewHolder<I>.() -> Unit
+    private val intializerBlock: AdapterDelegateLayoutContainerViewHolder<I>.() -> Unit,
+    private val layoutInflater: (parent: ViewGroup, layoutRes: Int) -> View
 ) : AbsListItemAdapterDelegate<I, T, AdapterDelegateLayoutContainerViewHolder<I>>() {
 
     override fun isForViewType(item: T, items: MutableList<T>, position: Int): Boolean = on(
@@ -49,11 +58,7 @@ class DslLayoutContainerListAdapterDelegate<I : T, T>(
 
     override fun onCreateViewHolder(parent: ViewGroup): AdapterDelegateLayoutContainerViewHolder<I> =
         AdapterDelegateLayoutContainerViewHolder<I>(
-            LayoutInflater.from(parent.context).inflate(
-                layout,
-                parent,
-                false
-            )
+            layoutInflater(parent, layout)
         ).also {
             intializerBlock(it)
         }
@@ -71,12 +76,11 @@ class DslLayoutContainerListAdapterDelegate<I : T, T>(
 /**
  * ViewHolder that is used internally if you use [adapterDelegate] DSL to create your Adapter
  */
-open class AdapterDelegateLayoutContainerViewHolder<T>(
+class AdapterDelegateLayoutContainerViewHolder<T>(
     override val containerView: View
 ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    // TODO private?
-    internal object Uninitialized
+    private object Uninitialized
 
     /**
      * Used only internally to set the item.

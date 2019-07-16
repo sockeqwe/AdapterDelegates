@@ -1,5 +1,6 @@
 package com.hannesdorfmann.adapterdelegates4.dsl
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,20 +26,29 @@ import kotlin.IllegalArgumentException
 inline fun <reified I : T, T> adapterDelegate(
     @LayoutRes layout: Int,
     noinline on: (item: T, items: List<T>, position: Int) -> Boolean = { item, _, _ -> item is I },
+    noinline layoutInflater: (parent: ViewGroup, layoutRes: Int) -> View = { parent, layout ->
+        LayoutInflater.from(parent.context).inflate(
+            layout,
+            parent,
+            false
+        )
+    },
     noinline block: AdapterDelegateViewHolder<I>.() -> Unit
 ): AdapterDelegate<List<T>> {
 
     return DslListAdapterDelegate(
         layout = layout,
         on = on,
-        intializerBlock = block
+        intializerBlock = block,
+        layoutInflater = layoutInflater
     )
 }
 
 class DslListAdapterDelegate<I : T, T>(
     @LayoutRes private val layout: Int,
     private val on: (item: T, items: List<T>, position: Int) -> Boolean,
-    private val intializerBlock: AdapterDelegateViewHolder<I>.() -> Unit
+    private val intializerBlock: AdapterDelegateViewHolder<I>.() -> Unit,
+    private val layoutInflater: (parent: ViewGroup, layout: Int) -> View
 ) : AbsListItemAdapterDelegate<I, T, AdapterDelegateViewHolder<I>>() {
 
     override fun isForViewType(item: T, items: MutableList<T>, position: Int): Boolean = on(
@@ -47,11 +57,7 @@ class DslListAdapterDelegate<I : T, T>(
 
     override fun onCreateViewHolder(parent: ViewGroup): AdapterDelegateViewHolder<I> =
         AdapterDelegateViewHolder<I>(
-            LayoutInflater.from(parent.context).inflate(
-                layout,
-                parent,
-                false
-            )
+            layoutInflater(parent, layout)
         ).also {
             intializerBlock(it)
         }
@@ -69,10 +75,9 @@ class DslListAdapterDelegate<I : T, T>(
 /**
  * ViewHolder that is used internally if you use [adapterDelegate] DSL to create your Adapter
  */
-open class AdapterDelegateViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {
+class AdapterDelegateViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {
 
-    // TODO private?
-    internal object Uninitialized
+    private object Uninitialized
 
     /**
      * Used only internally to set the item.
