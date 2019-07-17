@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        MainAdapter adapter = new MainAdapter(this, getAnimals());
+        MainListAdapter adapter = new MainListAdapter(this);
+        adapter.setItems(getAnimals());
         rv.setAdapter(adapter);
 
 
