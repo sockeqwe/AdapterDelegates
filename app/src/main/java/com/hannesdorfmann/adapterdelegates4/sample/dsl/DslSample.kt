@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item_cat.*
 fun catAdapterDelegate() = adapterDelegateLayoutContainer<Cat, DisplayableItem>(R.layout.item_cat) {
 
     name.setOnClickListener {
-        Log.d("Click", "Click on layoutcontainer $item")
+        Log.d("Click", "Click on $item")
     }
 
     bind {
