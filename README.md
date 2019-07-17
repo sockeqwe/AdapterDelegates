@@ -1,6 +1,8 @@
 # AdapterDelegates
 Read the motivation for this project in [my blog post](http://hannesdorfmann.com/android/adapter-delegates).
 
+For Kotlin, there is a convenient DSL. Check out that section in the documentation below.
+
 ## Dependencies
 This library is available on maven central:
 
@@ -278,6 +280,7 @@ val catDelegate = adapterDelegate<Cat, Animal> {
 }
 ```
 
+**Instead use top level functions:**
 
 ```kotlin
 // top level function inside CatDelegate.kt
@@ -286,6 +289,15 @@ fun catAdapterDelegate() = adapterDelegate<Cat, Animal> {
    bind { ... }
 }
 ```
+
+## Pagination
+There is an additional artifact for the pagination library:
+
+```gradle
+implementation 'com.hannesdorfmann:adapterdelegates4-pagination:4.1.0'
+```
+
+Use `PagedListDelegationAdapter`.
 
 ## Fallback AdapterDelegate
 What if your adapter's data source contains a certain element you don't have registered an `AdapterDelegate` for? In this case the `AdapterDelegateManager` will throw an exception at runtime. However, this is not always what you want. You can specify a fallback `AdapterDelegate` that will be used if no other `AdapterDelegate` has been found to handle a certain view type.
