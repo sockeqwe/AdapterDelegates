@@ -216,7 +216,7 @@ Now instead of creating your own class which extends `AdapterDelegate<T>` and im
 
 
 ```kotlin
-fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegate<Cat, Animal> {
+fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegate<Cat, Animal>(R.layout.item_cat) {
 
     // This is the initializer block where you initialize the ViewHolder.
     // Its called one time only in onCreateViewHolder.
@@ -235,7 +235,7 @@ fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegate<Ca
 In case you want to use kotlin android extensions and synthetic properties (as alternative to findViewById()) use `adapterDelegateLayoutContainer` instead of `adapterDelegate` like this:
 
 ```kotlin
-fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegateLayoutContainer<Cat, Animal> {
+fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegateLayoutContainer<Cat, Animal>(R.layout.item_cat) {
 
     name.setClickListener { itemClickedListener(item) } // no need for findViewById(). Name is imported as synthetic property from kotlinx.android.synthetic.main.item_cat
 
@@ -252,6 +252,7 @@ If you want to provide your own `isForViewType()` implementation you have to pro
 
 ```kotlin
 adapterDelegate<Cat, Animal> (
+    layout = R.layout.item_cat,
     on = { item: Animal, items: List, position: Int ->
         if (item is Cat && position == 0)
             true // return true: this adapterDelegate handles it
