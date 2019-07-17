@@ -12,11 +12,26 @@ import java.lang.IllegalStateException
 
 class ListAdapterDelegateDslTest {
 
-    @Test
-    fun `init block is called once - bind multiple times`() {
+    data class Item(val name: String)
+
+    private fun fakeLayoutInflater(layoutToInflate: Int): Pair<(ViewGroup, Int) -> View, ViewGroup> {
         val viewGroup = Mockito.mock(ViewGroup::class.java)
         val view = Mockito.mock(View::class.java)
+
+        val inflater = { parent: ViewGroup, layoutRes: Int ->
+            Assert.assertSame(viewGroup, parent)
+            Assert.assertEquals(layoutToInflate, layoutRes)
+            view
+        }
+
+        return Pair(inflater, viewGroup)
+    }
+
+    @Test
+    fun `init block is called once - bind multiple times`() {
         val layoutToInflate = 999
+        val (inflater, viewGroup) = fakeLayoutInflater(layoutToInflate)
+        val view = Mockito.mock(View::class.java)
         val items = listOf(Any(), Any())
         var payload = emptyList<Any>()
 
@@ -27,12 +42,10 @@ class ListAdapterDelegateDslTest {
         var bindPayload = emptyList<Any>()
         var boundItemInBindBlock: Any? = null
 
-        val delegate = adapterDelegate<Any, Any>(layoutToInflate,
-            layoutInflater = { parent, layoutRes ->
-                Assert.assertSame(viewGroup, parent)
-                Assert.assertEquals(layoutToInflate, layoutRes)
-                view
-            }) {
+        val delegate = adapterDelegate<Any, Any>(
+            layoutToInflate,
+            layoutInflater = inflater
+        ) {
             initCalled++
             viewHolder = this
             bind {
@@ -126,5 +139,149 @@ class ListAdapterDelegateDslTest {
         }
     }
 
-    data class Item(val name: String)
+    @Test
+    fun `onViewRecycled called`() {
+        val (inflater, viewGroup) = fakeLayoutInflater(0)
+        var called = 0
+        var viewHolder: AdapterDelegateViewHolder<Any>? = null
+        val delegate = adapterDelegate<Any, Any>(
+            layout = 0,
+            layoutInflater = inflater
+        ) {
+            viewHolder = this
+            onViewRecycled {
+                called++
+            }
+        }
+
+        delegate.onCreateViewHolder(viewGroup)
+        Assert.assertNotNull(viewHolder)
+        delegate.onViewRecycled(viewHolder!!)
+        Assert.assertEquals(1, called)
+    }
+
+    @Test
+    fun `multiple onViewRecycled throws exception`() {
+        try {
+            adapterDelegate<Any, Any>(0) {
+                onViewRecycled { }
+
+                onViewRecycled { }
+            }
+        } catch (e: IllegalStateException) {
+            val expectedMsg =
+                "onViewRecycled { ... } is already defined. Only one onViewRecycled { ... } block is allowed."
+            Assert.assertEquals(expectedMsg, e.message)
+        }
+    }
+
+    @Test
+    fun `onFailedToRecycleView called`() {
+        val (inflater, viewGroup) = fakeLayoutInflater(0)
+        var called = 0
+        var viewHolder: AdapterDelegateViewHolder<Any>? = null
+        val delegate = adapterDelegate<Any, Any>(
+            layout = 0,
+            layoutInflater = inflater
+        ) {
+            viewHolder = this
+            onFailedToRecycleView {
+                called++
+                true
+            }
+        }
+
+        delegate.onCreateViewHolder(viewGroup)
+        Assert.assertNotNull(viewHolder)
+        val ret = delegate.onFailedToRecycleView(viewHolder!!)
+        Assert.assertEquals(1, called)
+        Assert.assertTrue(ret)
+    }
+
+    @Test
+    fun `multiple onFailedToRecycleView throws exception`() {
+        try {
+            adapterDelegate<Any, Any>(0) {
+                onFailedToRecycleView { false }
+
+                onFailedToRecycleView { false }
+            }
+        } catch (e: IllegalStateException) {
+            val expectedMsg =
+                "onFailedToRecycleView { ... } is already defined. Only one onFailedToRecycleView { ... } block is allowed."
+            Assert.assertEquals(expectedMsg, e.message)
+        }
+    }
+
+    @Test
+    fun `onViewAttachedToWindow called`() {
+        val (inflater, viewGroup) = fakeLayoutInflater(0)
+        var called = 0
+        var viewHolder: AdapterDelegateViewHolder<Any>? = null
+        val delegate = adapterDelegate<Any, Any>(
+            layout = 0,
+            layoutInflater = inflater
+        ) {
+            viewHolder = this
+            onViewAttachedToWindow {
+                called++
+            }
+        }
+
+        delegate.onCreateViewHolder(viewGroup)
+        Assert.assertNotNull(viewHolder)
+        delegate.onViewAttachedToWindow(viewHolder!!)
+        Assert.assertEquals(1, called)
+    }
+
+    @Test
+    fun `multiple onViewAttachedToWindow throws exception`() {
+        try {
+            adapterDelegate<Any, Any>(0) {
+                onViewAttachedToWindow { }
+
+                onViewAttachedToWindow { }
+            }
+        } catch (e: IllegalStateException) {
+            val expectedMsg =
+                "onViewAttachedToWindow { ... } is already defined. Only one onViewAttachedToWindow { ... } block is allowed."
+            Assert.assertEquals(expectedMsg, e.message)
+        }
+    }
+
+    @Test
+    fun `onViewDetachedFromWindow called`() {
+        val (inflater, viewGroup) = fakeLayoutInflater(0)
+        var called = 0
+        var viewHolder: AdapterDelegateViewHolder<Any>? = null
+        val delegate = adapterDelegate<Any, Any>(
+            layout = 0,
+            layoutInflater = inflater
+        ) {
+            viewHolder = this
+            onViewDetachedFromWindow {
+                called++
+            }
+        }
+
+        delegate.onCreateViewHolder(viewGroup)
+        Assert.assertNotNull(viewHolder)
+        delegate.onViewDetachedFromWindow(viewHolder!!)
+        Assert.assertEquals(1, called)
+    }
+
+    @Test
+    fun `multiple onViewDetachedFromWindow throws exception`() {
+        try {
+            adapterDelegate<Any, Any>(0) {
+                onViewDetachedFromWindow { }
+
+                onViewDetachedFromWindow { }
+            }
+        } catch (e: IllegalStateException) {
+            val expectedMsg =
+                "onViewDetachedFromWindow { ... } is already defined. Only one onViewDetachedFromWindow { ... } block is allowed."
+            Assert.assertEquals(expectedMsg, e.message)
+        }
+    }
 }
