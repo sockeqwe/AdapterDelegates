@@ -177,7 +177,7 @@ class AdapterDelegateLayoutContainerViewHolder<T>(
      */
     fun bind(bindingBlock: (payloads: List<Any>) -> Unit) {
         if (_bind != null) {
-            throw IllegalStateException("bind { ... } is already defined. Only one bind block is allowed.")
+            throw IllegalStateException("bind { ... } is already defined. Only one bind { ... } is allowed.")
         }
         _bind = bindingBlock
     }

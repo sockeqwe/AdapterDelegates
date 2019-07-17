@@ -173,7 +173,7 @@ class AdapterDelegateViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {
      */
     fun bind(bindingBlock: (payloads: List<Any>) -> Unit) {
         if (_bind != null) {
-            throw IllegalStateException("bind { ... } is already defined. Only one bind block is allowed.")
+            throw IllegalStateException("bind { ... } is already defined. Only one bind { ... } is allowed.")
         }
         this._bind = bindingBlock
     }

@@ -31,7 +31,6 @@ class ListAdapterDelegateDslTest {
     fun `init block is called once - bind multiple times`() {
         val layoutToInflate = 999
         val (inflater, viewGroup) = fakeLayoutInflater(layoutToInflate)
-        val view = Mockito.mock(View::class.java)
         val items = listOf(Any(), Any())
         var payload = emptyList<Any>()
 
@@ -127,16 +126,22 @@ class ListAdapterDelegateDslTest {
 
     @Test
     fun `multiple binds throws exception`() {
+        val layoutToInflate = 0
+        val (inflater, viewGroup) = fakeLayoutInflater(layoutToInflate)
+
         try {
-            adapterDelegate<Any, Any>(0) {
+            val delegate = adapterDelegate<Any, Any>(
+                layout = 0,
+                layoutInflater = inflater
+            ) {
                 bind { }
 
                 bind { }
             }
-
+            delegate.onCreateViewHolder(viewGroup)
             Assert.fail("Exception expected")
         } catch (e: IllegalStateException) {
-            val expectedMsg = "bind { ... } is already defined. Only one bind block is allowed."
+            val expectedMsg = "bind { ... } is already defined. Only one bind { ... } is allowed."
             Assert.assertEquals(expectedMsg, e.message)
         }
     }
@@ -164,16 +169,23 @@ class ListAdapterDelegateDslTest {
 
     @Test
     fun `multiple onViewRecycled throws exception`() {
+        val layoutToInflate = 0
+        val (inflater, viewGroup) = fakeLayoutInflater(layoutToInflate)
+
         try {
-            adapterDelegate<Any, Any>(0) {
+            val delegate = adapterDelegate<Any, Any>(
+                layout = 0,
+                layoutInflater = inflater
+            ) {
                 onViewRecycled { }
 
                 onViewRecycled { }
             }
+            delegate.onCreateViewHolder(viewGroup)
             Assert.fail("Exception expected")
         } catch (e: IllegalStateException) {
             val expectedMsg =
-                "onViewRecycled { ... } is already defined. Only one onViewRecycled { ... } block is allowed."
+                "onViewRecycled { ... } is already defined. Only one onViewRecycled { ... } is allowed."
             Assert.assertEquals(expectedMsg, e.message)
         }
     }
@@ -203,16 +215,23 @@ class ListAdapterDelegateDslTest {
 
     @Test
     fun `multiple onFailedToRecycleView throws exception`() {
+        val layoutToInflate = 0
+        val (inflater, viewGroup) = fakeLayoutInflater(layoutToInflate)
+
         try {
-            adapterDelegate<Any, Any>(0) {
+            val delegate = adapterDelegate<Any, Any>(
+                layout = 0,
+                layoutInflater = inflater
+            ) {
                 onFailedToRecycleView { false }
 
                 onFailedToRecycleView { false }
             }
+            delegate.onCreateViewHolder(viewGroup)
             Assert.fail("Exception expected")
         } catch (e: IllegalStateException) {
             val expectedMsg =
-                "onFailedToRecycleView { ... } is already defined. Only one onFailedToRecycleView { ... } block is allowed."
+                "onFailedToRecycleView { ... } is already defined. Only one onFailedToRecycleView { ... } is allowed."
             Assert.assertEquals(expectedMsg, e.message)
         }
     }
@@ -240,16 +259,23 @@ class ListAdapterDelegateDslTest {
 
     @Test
     fun `multiple onViewAttachedToWindow throws exception`() {
+        val layoutToInflate = 0
+        val (inflater, viewGroup) = fakeLayoutInflater(layoutToInflate)
+
         try {
-            adapterDelegate<Any, Any>(0) {
+            val delegate = adapterDelegate<Any, Any>(
+                layout = 0,
+                layoutInflater = inflater
+            ) {
                 onViewAttachedToWindow { }
 
                 onViewAttachedToWindow { }
             }
+            delegate.onCreateViewHolder(viewGroup)
             Assert.fail("Exception expected")
         } catch (e: IllegalStateException) {
             val expectedMsg =
-                "onViewAttachedToWindow { ... } is already defined. Only one onViewAttachedToWindow { ... } block is allowed."
+                "onViewAttachedToWindow { ... } is already defined. Only one onViewAttachedToWindow { ... } is allowed."
             Assert.assertEquals(expectedMsg, e.message)
         }
     }
@@ -277,16 +303,23 @@ class ListAdapterDelegateDslTest {
 
     @Test
     fun `multiple onViewDetachedFromWindow throws exception`() {
+        val layoutToInflate = 0
+        val (inflater, viewGroup) = fakeLayoutInflater(layoutToInflate)
+
         try {
-            adapterDelegate<Any, Any>(0) {
+            val delegate = adapterDelegate<Any, Any>(
+                layout = 0,
+                layoutInflater = inflater
+            ) {
                 onViewDetachedFromWindow { }
 
                 onViewDetachedFromWindow { }
             }
+            delegate.onCreateViewHolder(viewGroup)
             Assert.fail("Exception expected")
         } catch (e: IllegalStateException) {
             val expectedMsg =
-                "onViewDetachedFromWindow { ... } is already defined. Only one onViewDetachedFromWindow { ... } block is allowed."
+                "onViewDetachedFromWindow { ... } is already defined. Only one onViewDetachedFromWindow { ... } is allowed."
             Assert.assertEquals(expectedMsg, e.message)
         }
     }
