@@ -72,6 +72,19 @@ public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
         this.delegatesManager = delegatesManager;
     }
 
+    /**
+     * Adds a list of {@link AdapterDelegate}s
+     *
+     * @param delegates Items to add
+     * @since 4.1.0
+     */
+    public AbsDelegationAdapter(@NonNull AdapterDelegate<T>... delegates) {
+        this();
+        for (int i = 0; i < delegates.length; i++) {
+            delegatesManager.addDelegate(delegates[i]);
+        }
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

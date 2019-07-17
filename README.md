@@ -5,7 +5,7 @@ Read the motivation for this project in [my blog post](http://hannesdorfmann.com
 This library is available on maven central:
 
 ```groovy
-compile 'com.hannesdorfmann:adapterdelegates4:4.0.0'
+implementation 'com.hannesdorfmann:adapterdelegates4:4.1.0'
 ```
 [![Build Status](https://travis-ci.org/sockeqwe/AdapterDelegates.svg?branch=master)](https://travis-ci.org/sockeqwe/AdapterDelegates)
 
@@ -14,7 +14,7 @@ Please note that since 4.0 the group id has been changed to `adapterdelegates4`.
 ### Snapshot
 
 ```groovy
-compile 'com.hannesdorfmann:adapterdelegates4:4.0.1-SNAPSHOT'
+implementation 'com.hannesdorfmann:adapterdelegates4:4.1.1-SNAPSHOT'
 ```
 
 You also have to add the url to the snapshot repository:
@@ -197,6 +197,93 @@ public class DiffAdapter extends AsyncListDifferDelegationAdapter<Animal> {
             .addDelegate(new DogAdapterDelegate());
             .addDelegate(new CatAdapterDelegate());
     }
+}
+```
+
+## Kotlin DSL
+There are 2 more artifacts for kotlin users that allow you to write Adapter Delegates more convenient by providing a `DSL`:
+
+```
+implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.1.0'
+
+// If you use Kotlin Android Extensions and synthetic properties (alternative to findViewById())
+implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-layoutcontainer:4.1.0'
+```
+
+Now instead of creating your own class which extends `AdapterDelegate<T>` and implement the `onCreateViewHolder` and `onBindViewHolder` you can use the following Kotlin DSL to write the same `CatListItemAdapterDelegate` shown in the example above:
+
+
+```kotlin
+fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegate<Cat, Animal> {
+
+    // This is the initializer block where you initialize the ViewHolder.
+    // Its called one time only in onCreateViewHolder.
+    // this is where you can call findViewById() and setup click listeners etc.
+
+    val name : TextView = findViewById(R.id.name)
+    name.setClickListener { itemClickedListener(item) } // Item is automatically set for you. It's set lazily though (set in onBindViewHolder()). So only use it for deferred calls like clickListeners.
+
+    bind { diffPayloads -> // diffPayloads is a List<Any> containing the Payload from your DiffUtils
+        // This is called anytime onBindViewHolder() is called
+        name.text = item.name // Item is of type Cat and is the current bound item.
+    }
+}
+```
+
+In case you want to use kotlin android extensions and synthetic properties (as alternative to findViewById()) use `adapterDelegateLayoutContainer` instead of `adapterDelegate` like this:
+
+```kotlin
+fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegateLayoutContainer<Cat, Animal> {
+
+    name.setClickListener { itemClickedListener(item) } // no need for findViewById(). Name is imported as synthetic property from kotlinx.android.synthetic.main.item_cat
+
+    bind { diffPayloads ->
+        name.text = item.name
+    }
+}
+```
+
+As you see, thanks to Kotlin DSL you can write the same adapter in much less code.
+`isForViewType()` is implemented by checking the two generic parameters.
+In the example above it is `Cat instanceof Animal`.
+If you want to provide your own `isForViewType()` implementation you have to provide a parameter `on` and return true or false:
+
+```kotlin
+adapterDelegate<Cat, Animal> (
+    on = { item: Animal, items: List, position: Int ->
+        if (item is Cat && position == 0)
+            true // return true: this adapterDelegate handles it
+        else
+            false // return false
+    }
+){
+    ...
+    bind { ... }
+}
+```
+
+The same `on` parameter is available for `adapterDelegateLayoutContainer()` DSL.
+
+
+### Danger: Memory leaks!
+Never ever use a top level `val` to hold a reference as top level `val` are static and will hold a reference to the adapter delegate and underlying ViewHolder and underlying android context (like activity) forever.
+**Don't do this:**
+
+
+```kotlin
+// top level property inside CatDelegate.kt
+val catDelegate = adapterDelegate<Cat, Animal> {
+    ...
+    bind { ... }
+}
+```
+
+
+```kotlin
+// top level function inside CatDelegate.kt
+fun catAdapterDelegate() = adapterDelegate<Cat, Animal> {
+   ...
+   bind { ... }
 }
 ```
 
