@@ -133,6 +133,8 @@ class ListAdapterDelegateDslTest {
 
                 bind { }
             }
+
+            Assert.fail("Exception expected")
         } catch (e: IllegalStateException) {
             val expectedMsg = "bind { ... } is already defined. Only one bind block is allowed."
             Assert.assertEquals(expectedMsg, e.message)
@@ -168,6 +170,7 @@ class ListAdapterDelegateDslTest {
 
                 onViewRecycled { }
             }
+            Assert.fail("Exception expected")
         } catch (e: IllegalStateException) {
             val expectedMsg =
                 "onViewRecycled { ... } is already defined. Only one onViewRecycled { ... } block is allowed."
@@ -206,6 +209,7 @@ class ListAdapterDelegateDslTest {
 
                 onFailedToRecycleView { false }
             }
+            Assert.fail("Exception expected")
         } catch (e: IllegalStateException) {
             val expectedMsg =
                 "onFailedToRecycleView { ... } is already defined. Only one onFailedToRecycleView { ... } block is allowed."
@@ -242,6 +246,7 @@ class ListAdapterDelegateDslTest {
 
                 onViewAttachedToWindow { }
             }
+            Assert.fail("Exception expected")
         } catch (e: IllegalStateException) {
             val expectedMsg =
                 "onViewAttachedToWindow { ... } is already defined. Only one onViewAttachedToWindow { ... } block is allowed."
@@ -278,6 +283,7 @@ class ListAdapterDelegateDslTest {
 
                 onViewDetachedFromWindow { }
             }
+            Assert.fail("Exception expected")
         } catch (e: IllegalStateException) {
             val expectedMsg =
                 "onViewDetachedFromWindow { ... } is already defined. Only one onViewDetachedFromWindow { ... } block is allowed."
