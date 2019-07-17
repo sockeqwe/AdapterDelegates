@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 gradle.ext.isCiServer = System.getenv().containsKey("CI")
 logger.warn("Running on CI: ${gradle.ext.isCiServer}")
@@ -38,9 +39,9 @@ android {
 }
 
 dependencies {
-    api rootProject.ext.recyclerView
-    api rootProject.ext.androidAnnotations
+    api project(":library")
 
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-inline:2.21.0'
 }

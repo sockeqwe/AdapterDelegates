@@ -42,10 +42,21 @@ import androidx.annotation.NonNull;
 public class ListDelegationAdapter<T extends List<?>> extends AbsDelegationAdapter<T> {
 
     public ListDelegationAdapter() {
+        super();
     }
 
     public ListDelegationAdapter(@NonNull AdapterDelegatesManager<T> delegatesManager) {
         super(delegatesManager);
+    }
+
+    /**
+     * Adds a list of {@link AdapterDelegate}s
+     *
+     * @param delegates
+     * @since 4.1.0
+     */
+    public ListDelegationAdapter(@NonNull AdapterDelegate<T>... delegates) {
+        super(delegates);
     }
 
     @Override

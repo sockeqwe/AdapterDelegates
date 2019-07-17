@@ -16,7 +16,7 @@ public class AbsDelegationAdapterTest {
     @Test
     public void delegatesManagerNull() {
         try {
-            AbsDelegationAdapter<Object> adapter = new AbsDelegationAdapter<Object>(null) {
+            AbsDelegationAdapter<Object> adapter = new AbsDelegationAdapter<Object>((AdapterDelegatesManager)null) {
                 @Override
                 public int getItemCount() {
                     return 0;

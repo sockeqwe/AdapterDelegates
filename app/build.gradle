@@ -1,4 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+androidExtensions {
+    experimental = true
+}
 
 android {
     compileSdkVersion rootProject.ext.compileSdk
@@ -36,5 +42,11 @@ dependencies {
 
     implementation project(':library')
     implementation project(':paging')
+    implementation project(':kotlin-dsl')
+    implementation project(':kotlin-dsl-layoutcontainer')
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

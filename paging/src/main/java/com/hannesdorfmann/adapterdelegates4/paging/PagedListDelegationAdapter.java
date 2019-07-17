@@ -2,6 +2,7 @@ package com.hannesdorfmann.adapterdelegates4.paging;
 
 import android.view.ViewGroup;
 
+import com.hannesdorfmann.adapterdelegates4.AdapterDelegate;
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegatesManager;
 
 import java.util.List;
@@ -22,6 +23,18 @@ import androidx.recyclerview.widget.RecyclerView;
 public class PagedListDelegationAdapter<T> extends PagedListAdapter<T, RecyclerView.ViewHolder> {
 
     protected final AdapterDelegatesManager<List<T>> delegatesManager;
+
+    /**
+     * @param diffCallback The Callback
+     * @param delegates    The {@link AdapterDelegate}s that should be added
+     * @since 4.1.0
+     */
+    public PagedListDelegationAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback, AdapterDelegate<List<T>>... delegates) {
+        this(new AdapterDelegatesManager<List<T>>(), diffCallback);
+        for (int i = 0; i < delegates.length; i++) {
+            delegatesManager.addDelegate(delegates[i]);
+        }
+    }
 
     public PagedListDelegationAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback) {
         this(new AdapterDelegatesManager<List<T>>(), diffCallback);
