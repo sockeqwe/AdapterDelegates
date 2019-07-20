@@ -136,6 +136,11 @@ class AdapterDelegateLayoutContainerViewHolder<T>(
         }
 
     /**
+     * Get the context.
+     */
+    val context = containerView.context
+
+    /**
      * This should never be called directly.
      * Use [bind] instead which internally sets this field.
      */

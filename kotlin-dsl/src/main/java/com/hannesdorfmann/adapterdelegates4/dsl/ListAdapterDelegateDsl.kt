@@ -132,6 +132,11 @@ class AdapterDelegateViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {
         }
 
     /**
+     * Get the context.
+     */
+    val context = view.context
+
+    /**
      * This should never be called directly.
      * Use [bind] instead which internally sets this field.
      */
