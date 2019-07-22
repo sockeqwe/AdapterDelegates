@@ -1,7 +1,7 @@
 # AdapterDelegates
 Read the motivation for this project in [my blog post](http://hannesdorfmann.com/android/adapter-delegates).
 
-For Kotlin, there is a convenient DSL. Check out that section in the documentation below.
+**[If you use Kotlin then this library has a convenient DSL you can use. Check out that section in the documentation below](https://github.com/sockeqwe/AdapterDelegates#kotlin-dsl)**.
 
 ## Dependencies
 This library is available on maven central:
