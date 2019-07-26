@@ -1,14 +1,14 @@
 package com.hannesdorfmann.adapterdelegates4
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.dsl.AdapterDelegateViewHolder
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegate
 import org.junit.Assert
 import org.junit.Test
 import org.mockito.Mockito
-import java.lang.IllegalStateException
+import org.mockito.Mockito.`when` as whenever
 
 class ListAdapterDelegateDslTest {
 
@@ -17,6 +17,8 @@ class ListAdapterDelegateDslTest {
     private fun fakeLayoutInflater(layoutToInflate: Int): Pair<(ViewGroup, Int) -> View, ViewGroup> {
         val viewGroup = Mockito.mock(ViewGroup::class.java)
         val view = Mockito.mock(View::class.java)
+        val context = Mockito.mock(Context::class.java)
+        whenever(view.context).thenReturn(context)
 
         val inflater = { parent: ViewGroup, layoutRes: Int ->
             Assert.assertSame(viewGroup, parent)
