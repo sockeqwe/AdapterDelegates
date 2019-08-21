@@ -12,14 +12,11 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
-import androidx.annotation.NonNull
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
-import java.lang.IllegalStateException
-import kotlin.IllegalArgumentException
 
 /**
  * Simple DSL builder to create an [AdapterDelegate] that is backed by a [List] as dataset.
@@ -49,15 +46,16 @@ inline fun <reified I : T, T> adapterDelegateLayoutContainer(
     return DslLayoutContainerListAdapterDelegate(
         layout = layout,
         on = on,
-        intializerBlock = block,
+        initializerBlock = block,
         layoutInflater = layoutInflater
     )
 }
 
-class DslLayoutContainerListAdapterDelegate<I : T, T>(
+@PublishedApi
+internal class DslLayoutContainerListAdapterDelegate<I : T, T>(
     @LayoutRes private val layout: Int,
     private val on: (item: T, items: List<T>, position: Int) -> Boolean,
-    private val intializerBlock: AdapterDelegateLayoutContainerViewHolder<I>.() -> Unit,
+    private val initializerBlock: AdapterDelegateLayoutContainerViewHolder<I>.() -> Unit,
     private val layoutInflater: (parent: ViewGroup, layoutRes: Int) -> View
 ) : AbsListItemAdapterDelegate<I, T, AdapterDelegateLayoutContainerViewHolder<I>>() {
 
@@ -69,7 +67,7 @@ class DslLayoutContainerListAdapterDelegate<I : T, T>(
         AdapterDelegateLayoutContainerViewHolder<I>(
             layoutInflater(parent, layout)
         ).also {
-            intializerBlock(it)
+            initializerBlock(it)
         }
 
     override fun onBindViewHolder(
