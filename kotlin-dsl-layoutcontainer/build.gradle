@@ -41,6 +41,11 @@ android {
     libraryVariants.all {
         it.generateBuildConfig.enabled = false
     }
+
+    lintOptions {
+        textReport true
+        textOutput 'stdout'
+    }
 }
 
 dependencies {
@@ -49,6 +54,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-inline:2.21.0'
+    lintPublish project(":lint_rules")
 }
 
 // apply from: 'https://raw.github.com/sockeqwe/gradle-mvn-push/master/gradle-mvn-push.gradle'
