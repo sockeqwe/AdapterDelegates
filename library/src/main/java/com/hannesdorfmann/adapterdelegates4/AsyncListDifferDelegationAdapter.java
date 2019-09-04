@@ -83,7 +83,7 @@ public class AsyncListDifferDelegationAdapter<T> extends RecyclerView.Adapter {
      * @since 4.2.0
      */
     public AsyncListDifferDelegationAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback,
-                                            @NonNull AdapterDelegate<T>... delegates) {
+                                            @NonNull AdapterDelegate<List<T>>... delegates) {
 
         if (diffCallback == null) {
             throw new NullPointerException("ItemCallback is null");
@@ -101,7 +101,7 @@ public class AsyncListDifferDelegationAdapter<T> extends RecyclerView.Adapter {
      * @since 4.2.0
      */
     public AsyncListDifferDelegationAdapter(@NonNull AsyncDifferConfig differConfig,
-                                            @NonNull AdapterDelegate<T>... delegates) {
+                                            @NonNull AdapterDelegate<List<T>>... delegates) {
 
         if (differConfig == null) {
             throw new NullPointerException("AsyncDifferConfig is null");
