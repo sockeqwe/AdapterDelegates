@@ -16,8 +16,6 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
-import java.lang.IllegalStateException
-import kotlin.IllegalArgumentException
 
 /**
  * Simple DSL builder to create an [AdapterDelegate] that is backed by a [List] as dataset.
@@ -55,7 +53,8 @@ inline fun <reified I : T, T> adapterDelegate(
  * Delegate used internally in combination with [adapterDelegate]
  * @since 4.1.0
  */
-class DslListAdapterDelegate<I : T, T>(
+@PublishedApi
+internal class DslListAdapterDelegate<I : T, T>(
     @LayoutRes private val layout: Int,
     private val on: (item: T, items: List<T>, position: Int) -> Boolean,
     private val intializerBlock: AdapterDelegateViewHolder<I>.() -> Unit,
