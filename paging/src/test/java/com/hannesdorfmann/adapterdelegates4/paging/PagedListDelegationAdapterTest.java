@@ -49,7 +49,7 @@ public class PagedListDelegationAdapterTest {
     @Test
     public void adapterDelegateManagerIsNull() {
         try {
-            AsyncListDifferDelegationAdapter<Object> adapter = new PagedListDelegationAdapter<Object>(null, callback) {
+            PagedListDelegationAdapter<Object> adapter = new PagedListDelegationAdapter<Object>(null, callback) {
                 @Override
                 public int getItemCount() {
                     return 0;
