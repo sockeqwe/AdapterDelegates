@@ -73,6 +73,21 @@ public class AdapterDelegatesManager<T> {
      */
     protected SparseArrayCompat<AdapterDelegate<T>> delegates = new SparseArrayCompat();
     protected AdapterDelegate<T> fallbackDelegate;
+    
+    /**
+     * Creates a AdapterDelegatesManager without any delegates.
+     */
+    public AdapterDelegatesManager() {
+    }
+    
+    /**
+     * Creates a AdapterDelegatesManager which already has the gived delegates added to it.
+     */
+    public AdapterDelegatesManager(@NonNull AdapterDelegate<T>... delegates) {
+        for (int i = 0; i < delegates.length; i++) {
+            addDelegate(delegates[i]);
+        }
+    }
 
     /**
      * Adds an {@link AdapterDelegate}.
