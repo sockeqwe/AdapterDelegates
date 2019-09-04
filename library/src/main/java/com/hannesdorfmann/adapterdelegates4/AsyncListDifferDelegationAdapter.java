@@ -90,7 +90,7 @@ public class AsyncListDifferDelegationAdapter<T> extends RecyclerView.Adapter {
         }
         
         this.differ = new AsyncListDiffer<T>(this, diffCallback);
-        this.delegatesManager = new AdapterDelegatesManager<T>(delegates);
+        this.delegatesManager = new AdapterDelegatesManager<List<T>>(delegates);
     }
 
 
@@ -108,7 +108,7 @@ public class AsyncListDifferDelegationAdapter<T> extends RecyclerView.Adapter {
         }
 
         this.differ = new AsyncListDiffer<T>(new AdapterListUpdateCallback(this), differConfig);
-        this.delegatesManager = new AdapterDelegatesManager<T>(delegates);
+        this.delegatesManager = new AdapterDelegatesManager<List<T>>(delegates);
     }
 
     @NonNull
