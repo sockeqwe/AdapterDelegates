@@ -8,6 +8,8 @@ See [releases section](https://github.com/sockeqwe/AdapterDelegates/releases)
 # Quickstart: Kotlin DSL
 There are 2 artifacts for kotlin users that allow you to write Adapter Delegates more convenient by providing a `DSL`:
 
+## Dependencies
+
 ```
 implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.1.1'
 
@@ -15,8 +17,7 @@ implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.1.1'
 implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-layoutcontainer:4.1.1'
 ```
 
-Now instead of creating your own class which extends `AdapterDelegate<T>` and implement the `onCreateViewHolder` and `onBindViewHolder` you can use the following Kotlin DSL to write the same `CatListItemAdapterDelegate` shown in the example above:
-
+## How to use it
 
 ```kotlin
 fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegate<Cat, Animal>(R.layout.item_cat) {
@@ -48,10 +49,10 @@ fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegateLay
 }
 ```
 
-As you see, thanks to Kotlin DSL you can write the same adapter in much less code.
-`isForViewType()` is implemented by checking the two generic parameters.
-In the example above it is `Cat instanceof Animal`.
-If you want to provide your own `isForViewType()` implementation you have to provide a parameter `on` and return true or false:
+You have to specify if a specific AdapterDelegate is responsible for a specific item.
+Per default this is done with an `instanceof` check like  `Cat instanceof Animal`.
+You can override this if you want to handle it in a custom way by setting the `on` lambda
+and return true or false:
 
 ```kotlin
 adapterDelegate<Cat, Animal> (
