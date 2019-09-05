@@ -44,7 +44,7 @@ inline fun <reified I : T, T> adapterDelegate(
     return DslListAdapterDelegate(
         layout = layout,
         on = on,
-        intializerBlock = block,
+        initializerBlock = block,
         layoutInflater = layoutInflater
     )
 }
@@ -57,7 +57,7 @@ inline fun <reified I : T, T> adapterDelegate(
 internal class DslListAdapterDelegate<I : T, T>(
     @LayoutRes private val layout: Int,
     private val on: (item: T, items: List<T>, position: Int) -> Boolean,
-    private val intializerBlock: AdapterDelegateViewHolder<I>.() -> Unit,
+    private val initializerBlock: AdapterDelegateViewHolder<I>.() -> Unit,
     private val layoutInflater: (parent: ViewGroup, layout: Int) -> View
 ) : AbsListItemAdapterDelegate<I, T, AdapterDelegateViewHolder<I>>() {
 
@@ -69,7 +69,7 @@ internal class DslListAdapterDelegate<I : T, T>(
         AdapterDelegateViewHolder<I>(
             layoutInflater(parent, layout)
         ).also {
-            intializerBlock(it)
+            initializerBlock(it)
         }
 
     override fun onBindViewHolder(
