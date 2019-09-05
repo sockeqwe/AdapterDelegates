@@ -100,7 +100,7 @@ fun catAdapterDelegate() = adapterDelegate<Cat, Animal> {
 ```
 
 
-## Dependencies
+## Dependencies if you dont use Kotlin DSL
 This library is available on maven central:
 
 ```groovy
@@ -128,7 +128,8 @@ allprojects {
 ```
 
 
-## Idea
+## How to use it in Java
+
 The idea of this library is to build your adapters by composing reusable components.
 
 > Favor composition over inheritance
