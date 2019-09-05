@@ -75,6 +75,41 @@ public class AsyncListDifferDelegationAdapter<T> extends RecyclerView.Adapter {
         this.differ = new AsyncListDiffer<T>(new AdapterListUpdateCallback(this), differConfig);
         this.delegatesManager = delegatesManager;
     }
+    
+    /**
+     * Adds a list of {@link AdapterDelegate}s
+     *
+     * @param delegates
+     * @since 4.2.0
+     */
+    public AsyncListDifferDelegationAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback,
+                                            @NonNull AdapterDelegate<List<T>>... delegates) {
+
+        if (diffCallback == null) {
+            throw new NullPointerException("ItemCallback is null");
+        }
+        
+        this.differ = new AsyncListDiffer<T>(this, diffCallback);
+        this.delegatesManager = new AdapterDelegatesManager<List<T>>(delegates);
+    }
+
+
+    /**
+     * Adds a list of {@link AdapterDelegate}s
+     *
+     * @param delegates
+     * @since 4.2.0
+     */
+    public AsyncListDifferDelegationAdapter(@NonNull AsyncDifferConfig differConfig,
+                                            @NonNull AdapterDelegate<List<T>>... delegates) {
+
+        if (differConfig == null) {
+            throw new NullPointerException("AsyncDifferConfig is null");
+        }
+
+        this.differ = new AsyncListDiffer<T>(new AdapterListUpdateCallback(this), differConfig);
+        this.delegatesManager = new AdapterDelegatesManager<List<T>>(delegates);
+    }
 
     @NonNull
     @Override

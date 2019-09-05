@@ -48,7 +48,7 @@ public class AsyncListDifferDelegationAdapterTest {
     @Test
     public void adapterDelegateManagerIsNull() {
         try {
-            AsyncListDifferDelegationAdapter<Object> adapter = new AsyncListDifferDelegationAdapter<Object>(callback, null) {
+            AsyncListDifferDelegationAdapter<Object> adapter = new AsyncListDifferDelegationAdapter<Object>(callback, (AdapterDelegatesManager) null) {
                 @Override
                 public int getItemCount() {
                     return 0;

@@ -79,10 +79,7 @@ public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
      * @since 4.1.0
      */
     public AbsDelegationAdapter(@NonNull AdapterDelegate<T>... delegates) {
-        this();
-        for (int i = 0; i < delegates.length; i++) {
-            delegatesManager.addDelegate(delegates[i]);
-        }
+        this(new AdapterDelegatesManager<T>(delegates));
     }
 
     @NonNull
