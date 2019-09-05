@@ -1,7 +1,103 @@
 # AdapterDelegates
 Read the motivation for this project in [my blog post](http://hannesdorfmann.com/android/adapter-delegates).
 
-**[If you use Kotlin then this library has a convenient DSL you can use. Check out that section in the documentation below](https://github.com/sockeqwe/AdapterDelegates#kotlin-dsl)**.
+### Changelog
+See [releases section](https://github.com/sockeqwe/AdapterDelegates/releases)
+
+
+# Quickstart: Kotlin DSL
+There are 2 artifacts for kotlin users that allow you to write Adapter Delegates more convenient by providing a `DSL`:
+
+```
+implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.1.1'
+
+// If you use Kotlin Android Extensions and synthetic properties (alternative to findViewById())
+implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-layoutcontainer:4.1.1'
+```
+
+Now instead of creating your own class which extends `AdapterDelegate<T>` and implement the `onCreateViewHolder` and `onBindViewHolder` you can use the following Kotlin DSL to write the same `CatListItemAdapterDelegate` shown in the example above:
+
+
+```kotlin
+fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegate<Cat, Animal>(R.layout.item_cat) {
+
+    // This is the initializer block where you initialize the ViewHolder.
+    // Its called one time only in onCreateViewHolder.
+    // this is where you can call findViewById() and setup click listeners etc.
+
+    val name : TextView = findViewById(R.id.name)
+    name.setClickListener { itemClickedListener(item) } // Item is automatically set for you. It's set lazily though (set in onBindViewHolder()). So only use it for deferred calls like clickListeners.
+
+    bind { diffPayloads -> // diffPayloads is a List<Any> containing the Payload from your DiffUtils
+        // This is called anytime onBindViewHolder() is called
+        name.text = item.name // Item is of type Cat and is the current bound item.
+    }
+}
+```
+
+In case you want to use kotlin android extensions and synthetic properties (as alternative to findViewById()) use `adapterDelegateLayoutContainer` instead of `adapterDelegate` like this:
+
+```kotlin
+fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegateLayoutContainer<Cat, Animal>(R.layout.item_cat) {
+
+    name.setClickListener { itemClickedListener(item) } // no need for findViewById(). Name is imported as synthetic property from kotlinx.android.synthetic.main.item_cat
+
+    bind { diffPayloads ->
+        name.text = item.name
+    }
+}
+```
+
+As you see, thanks to Kotlin DSL you can write the same adapter in much less code.
+`isForViewType()` is implemented by checking the two generic parameters.
+In the example above it is `Cat instanceof Animal`.
+If you want to provide your own `isForViewType()` implementation you have to provide a parameter `on` and return true or false:
+
+```kotlin
+adapterDelegate<Cat, Animal> (
+    layout = R.layout.item_cat,
+    on = { item: Animal, items: List, position: Int ->
+        if (item is Cat && position == 0)
+            true // return true: this adapterDelegate handles it
+        else
+            false // return false
+    }
+){
+    ...
+    bind { ... }
+}
+```
+
+The same `on` parameter is available for `adapterDelegateLayoutContainer()` DSL.
+
+
+### `fun` vs. `val`
+You could define your AdapterDelegate also as TopLevel `val` like this:
+
+```kotlin
+// top level property inside CatDelegate.kt
+val catDelegate = adapterDelegate<Cat, Animal> {
+    ...
+    bind { ... }
+}
+```
+
+but a top level val is a static field at the end so that this adapter delegate will be kept for the
+lifetime of your application in memory.
+Therefore, we would recommend to prefer write your AdapterDelegate as a function and call this function to
+actually instantiate the AdapterDelegate.
+Then the AdapterDelegate can be garbage collected as soon as the user leaves the screen the
+AdapterDelegate is used in.
+
+
+```kotlin
+// top level function inside CatDelegate.kt
+fun catAdapterDelegate() = adapterDelegate<Cat, Animal> {
+   ...
+   bind { ... }
+}
+```
+
 
 ## Dependencies
 This library is available on maven central:
@@ -30,8 +126,6 @@ allprojects {
 }
 ```
 
-### Changelog
-See [releases section](https://github.com/sockeqwe/AdapterDelegates/releases)
 
 ## Idea
 The idea of this library is to build your adapters by composing reusable components.
@@ -202,94 +296,6 @@ public class DiffAdapter extends AsyncListDifferDelegationAdapter<Animal> {
 }
 ```
 
-## Kotlin DSL
-There are 2 more artifacts for kotlin users that allow you to write Adapter Delegates more convenient by providing a `DSL`:
-
-```
-implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.1.1'
-
-// If you use Kotlin Android Extensions and synthetic properties (alternative to findViewById())
-implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-layoutcontainer:4.1.1'
-```
-
-Now instead of creating your own class which extends `AdapterDelegate<T>` and implement the `onCreateViewHolder` and `onBindViewHolder` you can use the following Kotlin DSL to write the same `CatListItemAdapterDelegate` shown in the example above:
-
-
-```kotlin
-fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegate<Cat, Animal>(R.layout.item_cat) {
-
-    // This is the initializer block where you initialize the ViewHolder.
-    // Its called one time only in onCreateViewHolder.
-    // this is where you can call findViewById() and setup click listeners etc.
-
-    val name : TextView = findViewById(R.id.name)
-    name.setClickListener { itemClickedListener(item) } // Item is automatically set for you. It's set lazily though (set in onBindViewHolder()). So only use it for deferred calls like clickListeners.
-
-    bind { diffPayloads -> // diffPayloads is a List<Any> containing the Payload from your DiffUtils
-        // This is called anytime onBindViewHolder() is called
-        name.text = item.name // Item is of type Cat and is the current bound item.
-    }
-}
-```
-
-In case you want to use kotlin android extensions and synthetic properties (as alternative to findViewById()) use `adapterDelegateLayoutContainer` instead of `adapterDelegate` like this:
-
-```kotlin
-fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegateLayoutContainer<Cat, Animal>(R.layout.item_cat) {
-
-    name.setClickListener { itemClickedListener(item) } // no need for findViewById(). Name is imported as synthetic property from kotlinx.android.synthetic.main.item_cat
-
-    bind { diffPayloads ->
-        name.text = item.name
-    }
-}
-```
-
-As you see, thanks to Kotlin DSL you can write the same adapter in much less code.
-`isForViewType()` is implemented by checking the two generic parameters.
-In the example above it is `Cat instanceof Animal`.
-If you want to provide your own `isForViewType()` implementation you have to provide a parameter `on` and return true or false:
-
-```kotlin
-adapterDelegate<Cat, Animal> (
-    layout = R.layout.item_cat,
-    on = { item: Animal, items: List, position: Int ->
-        if (item is Cat && position == 0)
-            true // return true: this adapterDelegate handles it
-        else
-            false // return false
-    }
-){
-    ...
-    bind { ... }
-}
-```
-
-The same `on` parameter is available for `adapterDelegateLayoutContainer()` DSL.
-
-
-### Danger: Memory leaks!
-Never ever use a top level `val` to hold a reference as top level `val` are static and will hold a reference to the adapter delegate and underlying ViewHolder and underlying android context (like activity) forever.
-**Don't do this:**
-
-
-```kotlin
-// top level property inside CatDelegate.kt
-val catDelegate = adapterDelegate<Cat, Animal> {
-    ...
-    bind { ... }
-}
-```
-
-**Instead use top level functions:**
-
-```kotlin
-// top level function inside CatDelegate.kt
-fun catAdapterDelegate() = adapterDelegate<Cat, Animal> {
-   ...
-   bind { ... }
-}
-```
 
 ## Pagination
 There is an additional artifact for the pagination library:
