@@ -5,7 +5,9 @@ The idea of this library is to build your adapters by composing reusable compone
 
     Favor composition over inheritance
 
-The idea is that you define an AdapterDelegate for each view type. This delegate is responsible for creating ViewHolder and binding ViewHolder for a certain viewtype. 
+The idea is that you define an AdapterDelegate for each view type. 
+This delegate is responsible for creating ViewHolder and binding ViewHolder for a certain viewtype. 
+Then you can compose your RecyclerView Adapter by registering the AdapterDelegates that you really need.
 
 ### Changelog
 See [releases section](https://github.com/sockeqwe/AdapterDelegates/releases)
@@ -77,6 +79,16 @@ adapterDelegate<Cat, Animal> (
 
 The same `on` parameter is available for `adapterDelegateLayoutContainer()` DSL.
 
+### Compose your Adapter
+Finally, you can compose your RecyclerViewAdapter by registering your AdapterDelegates like this:
+
+```kotlin
+val adapter = ListDelegationAdapter<List<Animal>>(
+    catAdapterDelegate(...),
+    catAdapterDelegate(),
+    snakeAdapterDelegate()
+)
+```
 
 ### `fun` vs. `val`
 You could define your AdapterDelegate also as TopLevel `val` like this:
