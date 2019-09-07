@@ -85,7 +85,7 @@ Finally, you can compose your `RecyclerView Adapter` by registering your Adapter
 ```kotlin
 val adapter = ListDelegationAdapter<List<Animal>>(
     catAdapterDelegate(...),
-    catAdapterDelegate(),
+    dogAdapterDelegate(),
     snakeAdapterDelegate()
 )
 ```
