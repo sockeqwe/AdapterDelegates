@@ -80,7 +80,7 @@ adapterDelegate<Cat, Animal> (
 The same `on` parameter is available for `adapterDelegateLayoutContainer()` DSL.
 
 ### Compose your Adapter
-Finally, you can compose your RecyclerViewAdapter by registering your AdapterDelegates like this:
+Finally, you can compose your `RecyclerView Adapter` by registering your AdapterDelegates like this:
 
 ```kotlin
 val adapter = ListDelegationAdapter<List<Animal>>(
