@@ -1,6 +1,12 @@
 # AdapterDelegates
 Read the motivation for this project in [my blog post](http://hannesdorfmann.com/android/adapter-delegates).
 
+The idea of this library is to build your adapters by composing reusable components.
+
+    Favor composition over inheritance
+
+The idea is that you define an AdapterDelegate for each view type. This delegate is responsible for creating ViewHolder and binding ViewHolder for a certain viewtype. 
+
 ### Changelog
 See [releases section](https://github.com/sockeqwe/AdapterDelegates/releases)
 
