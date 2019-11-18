@@ -118,7 +118,7 @@ fun catAdapterDelegate() = adapterDelegate<Cat, Animal> {
 ```
 
 
-## Dependencies if you dont use Kotlin DSL
+## Dependencies if you don't use Kotlin DSL
 This library is available on maven central:
 
 ```groovy
