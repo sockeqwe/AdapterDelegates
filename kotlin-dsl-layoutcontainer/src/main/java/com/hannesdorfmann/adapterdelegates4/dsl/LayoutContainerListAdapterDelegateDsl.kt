@@ -16,6 +16,8 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
+import kotlinx.android.extensions.CacheImplementation
+import kotlinx.android.extensions.ContainerOptions
 import kotlinx.android.extensions.LayoutContainer
 
 /**
@@ -115,6 +117,7 @@ internal class DslLayoutContainerListAdapterDelegate<I : T, T>(
  *
  * @since 4.1.0
  */
+@ContainerOptions(cache = CacheImplementation.SPARSE_ARRAY)
 class AdapterDelegateLayoutContainerViewHolder<T>(
     override val containerView: View
 ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
