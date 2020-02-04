@@ -32,6 +32,10 @@ android {
         disable 'GoogleAppIndexingWarning'
         abortOnError false
     }
+
+    viewBinding {
+        enabled = true
+    }
 }
 
 
@@ -44,6 +48,7 @@ dependencies {
     implementation project(':paging')
     implementation project(':kotlin-dsl')
     implementation project(':kotlin-dsl-layoutcontainer')
+    implementation project(':kotlin-dsl-viewbinding')
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
