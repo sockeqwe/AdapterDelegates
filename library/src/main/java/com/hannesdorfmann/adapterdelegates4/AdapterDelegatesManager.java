@@ -18,13 +18,13 @@ package com.hannesdorfmann.adapterdelegates4;
 
 import android.view.ViewGroup;
 
-import java.util.Collections;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.collection.SparseArrayCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This class is the element that ties {@link RecyclerView.Adapter} together with {@link
@@ -236,7 +236,12 @@ public class AdapterDelegatesManager<T> {
         for (int i = 0; i < delegatesCount; i++) {
             AdapterDelegate<T> delegate = delegates.valueAt(i);
             if (delegate.isForViewType(items, position)) {
-                return delegates.keyAt(i);
+                int itemViewType = delegate.getItemViewType(items, position);
+                if (itemViewType == AdapterDelegate.UNKNOWN) {
+                    return delegates.keyAt(i);
+                } else {
+                    return itemViewType;
+                }
             }
         }
 

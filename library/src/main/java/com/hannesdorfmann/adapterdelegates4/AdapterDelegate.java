@@ -18,10 +18,10 @@ package com.hannesdorfmann.adapterdelegates4;
 
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 /**
  * This delegate provide method to hook in this delegate to {@link RecyclerView.Adapter} lifecycle.
@@ -35,6 +35,8 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public abstract class AdapterDelegate<T> {
 
+    public static final int UNKNOWN = 0;
+
     /**
      * Called to determine whether this AdapterDelegate is the responsible for the given data
      * element.
@@ -44,6 +46,25 @@ public abstract class AdapterDelegate<T> {
      * @return true, if this item is responsible,  otherwise false
      */
     protected abstract boolean isForViewType(@NonNull T items, int position);
+
+    /**
+     * Return the view type of the item at <code>position</code> for the purposes
+     * of view recycling.
+     *
+     * <p>The default implementation of this method returns 0, making the assumption of
+     * a single view type for the adapter. Unlike ListView adapters, types need not
+     * be contiguous. Consider using id resources to uniquely identify item view types.
+     *
+     * see detail {@link AdapterDelegatesManager#getItemViewType(T items, int position)}
+     *
+     * @param items The data source of the Adapter
+     * @param position The position in the datasource
+     * @return integer value identifying the type of the view needed to represent the item at
+     *                 <code>position</code>. Type codes need not be contiguous.
+     */
+    protected int getItemViewType(T items, int position) {
+        return UNKNOWN;
+    }
 
     /**
      * Creates the  {@link RecyclerView.ViewHolder} for the given data source item
