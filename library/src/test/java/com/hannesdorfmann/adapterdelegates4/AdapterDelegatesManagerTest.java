@@ -98,57 +98,15 @@ public class AdapterDelegatesManagerTest {
     public void isForViewType() {
 
         // 3 elements and each element has it's own viewtype and hence own delegate
-        List<Object> items = Arrays.asList(new Object(), new Object(), new Object(), "Test", 0L);
+        List<Object> items = Arrays.asList(new Object(), new Object(), new Object());
         SpyableAdapterDelegate<List<Object>> d0 = new SpyableAdapterDelegate<>(0);
         SpyableAdapterDelegate<List<Object>> d1 = new SpyableAdapterDelegate<>(1);
         SpyableAdapterDelegate<List<Object>> d2 = new SpyableAdapterDelegate<>(2);
-        AdapterDelegate<List<Object>> d3 = new AdapterDelegate<List<Object>>() {
-            @Override
-            protected boolean isForViewType(@NonNull List<Object> items, int position) {
-                return items.get(position) instanceof String;
-            }
-
-            @Override
-            protected int getItemViewType(List<Object> items, int position) {
-                return 99;
-            }
-
-            @NonNull
-            @Override
-            protected RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
-                return null;
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull List<Object> items, int position, @NonNull RecyclerView.ViewHolder holder, @NonNull List<Object> payloads) {
-
-            }
-        };
-
-        AdapterDelegate<List<Object>> d4 = new AdapterDelegate<List<Object>>() {
-            @Override
-            protected boolean isForViewType(@NonNull List<Object> items, int position) {
-                return items.get(position) instanceof Long;
-            }
-
-            @NonNull
-            @Override
-            protected RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
-                return null;
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull List<Object> items, int position, @NonNull RecyclerView.ViewHolder holder, @NonNull List<Object> payloads) {
-
-            }
-        };
 
         AdapterDelegatesManager<List<Object>> manager = new AdapterDelegatesManager<>();
         manager.addDelegate(d0);
         manager.addDelegate(d1);
         manager.addDelegate(d2);
-        manager.addDelegate(d3);
-        manager.addDelegate(d4);
 
         // Test first item
         int viewType = manager.getItemViewType(items, 0);
@@ -172,13 +130,6 @@ public class AdapterDelegatesManagerTest {
         Assert.assertTrue(d2.isForViewTypeReturnedYes);
         Assert.assertFalse(d0.isForViewTypeReturnedYes);
         Assert.assertFalse(d1.isForViewTypeReturnedYes);
-        resetDelegates(d0, d1, d2);
-
-        // Test adapter with non default viewtype
-        viewType = manager.getItemViewType(items, 3);
-        Assert.assertEquals(viewType, 99);
-        viewType = manager.getItemViewType(items, 4);
-        Assert.assertEquals(viewType, 4);
         resetDelegates(d0, d1, d2);
     }
 

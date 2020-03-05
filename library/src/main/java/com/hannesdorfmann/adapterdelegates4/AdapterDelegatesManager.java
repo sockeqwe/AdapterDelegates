@@ -236,12 +236,7 @@ public class AdapterDelegatesManager<T> {
         for (int i = 0; i < delegatesCount; i++) {
             AdapterDelegate<T> delegate = delegates.valueAt(i);
             if (delegate.isForViewType(items, position)) {
-                int itemViewType = delegate.getItemViewType(items, position);
-                if (itemViewType == AdapterDelegate.UNKNOWN) {
-                    return delegates.keyAt(i);
-                } else {
-                    return itemViewType;
-                }
+                return delegates.keyAt(i);
             }
         }
 

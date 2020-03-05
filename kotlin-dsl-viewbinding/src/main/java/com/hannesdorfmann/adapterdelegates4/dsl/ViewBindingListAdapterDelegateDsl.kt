@@ -32,7 +32,6 @@ import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 inline fun <reified I : T, T, V : ViewBinding> adapterDelegateViewBinding(
     noinline viewBinding: (layoutInflater: LayoutInflater, parent: ViewGroup) -> V,
     noinline on: (item: T, items: List<T>, position: Int) -> Boolean = { item, _, _ -> item is I },
-    noinline viewType: ((items: List<T>, position: Int) -> Int)? = null,
     noinline layoutInflater: (parent: ViewGroup) -> LayoutInflater = { parent -> LayoutInflater.from(parent.context) },
     noinline block: AdapterDelegateViewBindingViewHolder<I, V>.() -> Unit
 ): AdapterDelegate<List<T>> {
@@ -41,8 +40,7 @@ inline fun <reified I : T, T, V : ViewBinding> adapterDelegateViewBinding(
         binding = viewBinding,
         on = on,
         initializerBlock = block,
-        layoutInflater = layoutInflater,
-        viewType = viewType)
+        layoutInflater = layoutInflater)
 }
 
 @PublishedApi
@@ -50,15 +48,10 @@ internal class DslViewBindingListAdapterDelegate<I : T, T, V : ViewBinding>(
     private val binding: (layoutInflater: LayoutInflater, parent: ViewGroup) -> V,
     private val on: (item: T, items: List<T>, position: Int) -> Boolean,
     private val initializerBlock: AdapterDelegateViewBindingViewHolder<I, V>.()->Unit,
-    private val layoutInflater: (parent: ViewGroup) -> LayoutInflater,
-    private val viewType: ((items: List<T>, position: Int) -> Int)? = null
+    private val layoutInflater: (parent: ViewGroup) -> LayoutInflater
     ) : AbsListItemAdapterDelegate<I, T, AdapterDelegateViewBindingViewHolder<I, V>>() {
 
-    override fun getItemViewType(items: List<T>, position: Int): Int {
-        return viewType?.invoke(items, position) ?: super.getItemViewType(items, position)
-    }
-
-    override fun isForViewType(item: T, items: List<T>, position: Int): Boolean = on(
+    override fun isForViewType(item: T, items: MutableList<T>, position: Int): Boolean = on(
         item, items, position
     )
 
