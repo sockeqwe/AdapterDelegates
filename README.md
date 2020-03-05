@@ -60,21 +60,19 @@ fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegateLay
 }
 ```
 
-In case you want to use ViewBinding use `adapterDelegateViewBinding` instead of `adapterDelegate` like this:
+In case you want to use ViewBinding\DataBinding use `adapterDelegateViewBinding` instead of `adapterDelegate` like this:
 
 ```kotlin
 fun cat2AdapterDelegate() = adapterDelegateViewBinding<Cat, DisplayableItem, ItemCatBinding>(
-    viewBinding = { layoutInflater, root ->
-        ItemCatBinding.inflate(layoutInflater, root, false)
-    }, block = {
-        binding.name.setOnClickListener {
-            Log.d("Click", "Click on $item")
-        }
-        bind {
-            binding.name.text = item.name
-        }
+    { layoutInflater, root -> ItemCatBinding.inflate(layoutInflater, root, false) }
+) {
+    binding.name.setOnClickListener {
+        Log.d("Click", "Click on $item")
     }
-)
+    bind {
+        binding.name.text = item.name
+    }
+}
 ```
 
 You have to specify if a specific AdapterDelegate is responsible for a specific item.

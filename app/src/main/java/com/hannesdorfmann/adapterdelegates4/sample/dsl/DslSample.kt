@@ -23,14 +23,12 @@ fun catAdapterDelegate() = adapterDelegateLayoutContainer<Cat,
 }
 
 fun cat2AdapterDelegate() = adapterDelegateViewBinding<Cat, DisplayableItem, ItemCatBinding>(
-    viewBinding = { layoutInflater, root ->
-        ItemCatBinding.inflate(layoutInflater, root, false)
-    }, block = {
-        binding.name.setOnClickListener {
-            Log.d("Click", "Click on $item")
-        }
-        bind {
-            binding.name.text = item.name
-        }
+    { layoutInflater, root -> ItemCatBinding.inflate(layoutInflater, root, false) }
+) {
+    binding.name.setOnClickListener {
+        Log.d("Click", "Click on $item")
     }
-)
+    bind {
+        binding.name.text = item.name
+    }
+}
