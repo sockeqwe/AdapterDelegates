@@ -149,7 +149,7 @@ Please note that since 4.0 the group id has been changed to `adapterdelegates4`.
 ### Snapshot
 
 ```groovy
-implementation 'com.hannesdorfmann:adapterdelegates4:4.2.1-SNAPSHOT'
+implementation 'com.hannesdorfmann:adapterdelegates4:4.3.1-SNAPSHOT'
 ```
 
 You also have to add the url to the snapshot repository:
