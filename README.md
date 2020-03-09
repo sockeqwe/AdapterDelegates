@@ -60,6 +60,15 @@ fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegateLay
 }
 ```
 
+If you use `adapterDelegateLayoutContainer()` don't forget to add
+```
+androidExtensions {
+    experimental = true
+}
+```
+
+to your build.gradle to enable LayoutContaier.
+
 In case you want to use ViewBinding\DataBinding use `adapterDelegateViewBinding` instead of `adapterDelegate` like this:
 
 ```kotlin
