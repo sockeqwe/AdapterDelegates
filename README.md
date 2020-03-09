@@ -23,6 +23,9 @@ implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.2.0'
 
 // If you use Kotlin Android Extensions and synthetic properties (alternative to findViewById())
 implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-layoutcontainer:4.2.0'
+
+// If you use ViewBinding
+implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.2.0'
 ```
 
 ## How to use it
@@ -53,6 +56,21 @@ fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegateLay
 
     bind { diffPayloads ->
         name.text = item.name
+    }
+}
+```
+
+In case you want to use ViewBinding\DataBinding use `adapterDelegateViewBinding` instead of `adapterDelegate` like this:
+
+```kotlin
+fun cat2AdapterDelegate() = adapterDelegateViewBinding<Cat, DisplayableItem, ItemCatBinding>(
+    { layoutInflater, root -> ItemCatBinding.inflate(layoutInflater, root, false) }
+) {
+    binding.name.setOnClickListener {
+        Log.d("Click", "Click on $item")
+    }
+    bind {
+        binding.name.text = item.name
     }
 }
 ```

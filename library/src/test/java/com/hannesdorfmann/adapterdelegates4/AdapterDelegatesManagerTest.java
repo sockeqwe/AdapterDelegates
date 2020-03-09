@@ -2,6 +2,10 @@ package com.hannesdorfmann.adapterdelegates4;
 
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -9,10 +13,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * @author Hannes Dorfmann

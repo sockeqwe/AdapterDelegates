@@ -3,7 +3,6 @@ package com.hannesdorfmann.adapterdelegates4.dsl
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,20 +10,18 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
-import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
-import kotlinx.android.extensions.CacheImplementation
-import kotlinx.android.extensions.ContainerOptions
-import kotlinx.android.extensions.LayoutContainer
 
 /**
  * Simple DSL builder to create an [AdapterDelegate] that is backed by a [List] as dataset.
- * This DSL builds on top of [LayoutContainer] so that no findViewById is needed anymore.
+ * This DSL builds on top of [ViewBinding] so that no findViewById is needed anymore.
  *
- * @param layout The android xml layout resource that contains the layout for this adapter delegate.
+ * @param viewBinding ViewBinding for this adapter delegate.
  * @param on The check that should be run if the AdapterDelegate is for the corresponding Item in the datasource.
  * In other words its the implementation of [AdapterDelegate.isForViewType].
  * @param block The DSL block. Specify here what to do when the ViewHolder gets created. Think of it as some kind of
@@ -32,49 +29,44 @@ import kotlinx.android.extensions.LayoutContainer
  * what to do once the ViewHolder binds to the data by specifying a bind block for
  * @since 4.1.0
  */
-inline fun <reified I : T, T> adapterDelegateLayoutContainer(
-    @LayoutRes layout: Int,
+inline fun <reified I : T, T, V : ViewBinding> adapterDelegateViewBinding(
+    noinline viewBinding: (layoutInflater: LayoutInflater, parent: ViewGroup) -> V,
     noinline on: (item: T, items: List<T>, position: Int) -> Boolean = { item, _, _ -> item is I },
-    noinline layoutInflater: (parent: ViewGroup, layoutRes: Int) -> View = { parent, layout ->
-        LayoutInflater.from(parent.context).inflate(
-            layout,
-            parent,
-            false
-        )
-    },
-    noinline block: AdapterDelegateLayoutContainerViewHolder<I>.() -> Unit
+    noinline layoutInflater: (parent: ViewGroup) -> LayoutInflater = { parent -> LayoutInflater.from(parent.context) },
+    noinline block: AdapterDelegateViewBindingViewHolder<I, V>.() -> Unit
 ): AdapterDelegate<List<T>> {
 
-    return DslLayoutContainerListAdapterDelegate(
-        layout = layout,
+    return DslViewBindingListAdapterDelegate(
+        binding = viewBinding,
         on = on,
         initializerBlock = block,
-        layoutInflater = layoutInflater
-    )
+        layoutInflater = layoutInflater)
 }
 
 @PublishedApi
-internal class DslLayoutContainerListAdapterDelegate<I : T, T>(
-    @LayoutRes private val layout: Int,
+internal class DslViewBindingListAdapterDelegate<I : T, T, V : ViewBinding>(
+    private val binding: (layoutInflater: LayoutInflater, parent: ViewGroup) -> V,
     private val on: (item: T, items: List<T>, position: Int) -> Boolean,
-    private val initializerBlock: AdapterDelegateLayoutContainerViewHolder<I>.() -> Unit,
-    private val layoutInflater: (parent: ViewGroup, layoutRes: Int) -> View
-) : AbsListItemAdapterDelegate<I, T, AdapterDelegateLayoutContainerViewHolder<I>>() {
+    private val initializerBlock: AdapterDelegateViewBindingViewHolder<I, V>.()->Unit,
+    private val layoutInflater: (parent: ViewGroup) -> LayoutInflater
+    ) : AbsListItemAdapterDelegate<I, T, AdapterDelegateViewBindingViewHolder<I, V>>() {
 
     override fun isForViewType(item: T, items: MutableList<T>, position: Int): Boolean = on(
         item, items, position
     )
 
-    override fun onCreateViewHolder(parent: ViewGroup): AdapterDelegateLayoutContainerViewHolder<I> =
-        AdapterDelegateLayoutContainerViewHolder<I>(
-            layoutInflater(parent, layout)
+    override fun onCreateViewHolder(parent: ViewGroup): AdapterDelegateViewBindingViewHolder<I, V> {
+        val binding = binding(layoutInflater(parent), parent)
+        return AdapterDelegateViewBindingViewHolder<I, V>(
+            binding
         ).also {
             initializerBlock(it)
         }
+    }
 
     override fun onBindViewHolder(
         item: I,
-        holder: AdapterDelegateLayoutContainerViewHolder<I>,
+        holder: AdapterDelegateViewBindingViewHolder<I, V>,
         payloads: MutableList<Any>
     ) {
         holder._item = item as Any
@@ -83,14 +75,14 @@ internal class DslLayoutContainerListAdapterDelegate<I : T, T>(
 
     override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         @Suppress("UNCHECKED_CAST")
-        val vh = (holder as AdapterDelegateLayoutContainerViewHolder<I>)
+        val vh = (holder as AdapterDelegateViewBindingViewHolder<I, V>)
 
         vh._onViewRecycled?.invoke()
     }
 
     override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder): Boolean {
         @Suppress("UNCHECKED_CAST")
-        val vh = (holder as AdapterDelegateLayoutContainerViewHolder<I>)
+        val vh = (holder as AdapterDelegateViewBindingViewHolder<I, V>)
         val block = vh._onFailedToRecycleView
         return if (block == null) {
             super.onFailedToRecycleView(holder)
@@ -101,26 +93,25 @@ internal class DslLayoutContainerListAdapterDelegate<I : T, T>(
 
     override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
         @Suppress("UNCHECKED_CAST")
-        val vh = (holder as AdapterDelegateLayoutContainerViewHolder<I>)
+        val vh = (holder as AdapterDelegateViewBindingViewHolder<I, V>)
         vh._onViewAttachedToWindow?.invoke()
     }
 
     override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
         @Suppress("UNCHECKED_CAST")
-        val vh = (holder as AdapterDelegateLayoutContainerViewHolder<I>)
+        val vh = (holder as AdapterDelegateViewBindingViewHolder<I, V>)
         vh._onViewDetachedFromWindow?.invoke()
     }
 }
 
 /**
- * ViewHolder that is used internally if you use [adapterDelegateLayoutContainer] DSL to create your AdapterDelegate
+ * ViewHolder that is used internally if you use [adapterDelegateViewBinding] DSL to create your AdapterDelegate
  *
  * @since 4.1.0
  */
-@ContainerOptions(cache = CacheImplementation.SPARSE_ARRAY)
-class AdapterDelegateLayoutContainerViewHolder<T>(
-    override val containerView: View
-) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+class AdapterDelegateViewBindingViewHolder<T, V: ViewBinding>(
+    val binding: V, view: View = binding.root
+) : RecyclerView.ViewHolder(view) {
 
     private object Uninitialized
 
@@ -140,7 +131,7 @@ class AdapterDelegateLayoutContainerViewHolder<T>(
         get() = if (_item === Uninitialized) {
             throw IllegalArgumentException(
                 "Item has not been set yet. That is an internal issue. " +
-                    "Please report at https://github.com/sockeqwe/AdapterDelegates"
+                        "Please report at https://github.com/sockeqwe/AdapterDelegates"
             )
         } else {
             @Suppress("UNCHECKED_CAST")
@@ -152,7 +143,7 @@ class AdapterDelegateLayoutContainerViewHolder<T>(
      *
      * @since 4.1.1
      */
-    val context: Context = containerView.context
+    val context: Context = view.context
 
     /**
      * Returns a localized string from the application's package's
@@ -200,11 +191,7 @@ class AdapterDelegateLayoutContainerViewHolder<T>(
      */
     @ColorInt
     fun getColor(@ColorRes id: Int): Int {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            context.getColor(id)
-        } else {
-            context.resources.getColor(id)
-        }
+        return ContextCompat.getColor(context, id)
     }
 
     /**
@@ -220,12 +207,8 @@ class AdapterDelegateLayoutContainerViewHolder<T>(
      *
      * @since 4.1.1
      */
-    fun getDrawable(@DrawableRes id: Int): Drawable {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            context.getDrawable(id)
-        } else {
-            context.resources.getDrawable(id)
-        }
+    fun getDrawable(@DrawableRes id: Int): Drawable? {
+        return ContextCompat.getDrawable(context, id)
     }
 
     /**
@@ -239,12 +222,8 @@ class AdapterDelegateLayoutContainerViewHolder<T>(
      * @throws android.content.res.Resources.NotFoundException if the given ID
      * does not exist.
      */
-    fun getColorStateList(@ColorRes id: Int): ColorStateList {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            context.getColorStateList(id)
-        } else {
-           context.resources.getColorStateList(id)
-        }
+    fun getColorStateList(@ColorRes id: Int): ColorStateList? {
+        return ContextCompat.getColorStateList(context, id)
     }
 
     /**
@@ -301,7 +280,7 @@ class AdapterDelegateLayoutContainerViewHolder<T>(
         if (_onViewRecycled != null) {
             throw IllegalStateException(
                 "onViewRecycled { ... } is already defined. " +
-                    "Only one onViewRecycled { ... } is allowed."
+                        "Only one onViewRecycled { ... } is allowed."
             )
         }
         _onViewRecycled = block
@@ -314,7 +293,7 @@ class AdapterDelegateLayoutContainerViewHolder<T>(
         if (_onFailedToRecycleView != null) {
             throw IllegalStateException(
                 "onFailedToRecycleView { ... } is already defined. " +
-                    "Only one onFailedToRecycleView { ... } is allowed."
+                        "Only one onFailedToRecycleView { ... } is allowed."
             )
         }
         _onFailedToRecycleView = block
@@ -327,7 +306,7 @@ class AdapterDelegateLayoutContainerViewHolder<T>(
         if (_onViewAttachedToWindow != null) {
             throw IllegalStateException(
                 "onViewAttachedToWindow { ... } is already defined. " +
-                    "Only one onViewAttachedToWindow { ... } is allowed."
+                        "Only one onViewAttachedToWindow { ... } is allowed."
             )
         }
         _onViewAttachedToWindow = block
@@ -340,7 +319,7 @@ class AdapterDelegateLayoutContainerViewHolder<T>(
         if (_onViewDetachedFromWindow != null) {
             throw IllegalStateException(
                 "onViewDetachedFromWindow { ... } is already defined. " +
-                    "Only one onViewDetachedFromWindow { ... } is allowed."
+                        "Only one onViewDetachedFromWindow { ... } is allowed."
             )
         }
         _onViewDetachedFromWindow = block

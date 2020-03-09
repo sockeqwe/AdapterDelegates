@@ -6,12 +6,12 @@ import com.hannesdorfmann.adapterdelegates4.sample.adapterdelegates.Advertisemen
 import com.hannesdorfmann.adapterdelegates4.sample.adapterdelegates.DogAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.sample.adapterdelegates.GeckoAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.sample.adapterdelegates.SnakeListItemAdapterDelegate
-import com.hannesdorfmann.adapterdelegates4.sample.dsl.catAdapterDelegate
+import com.hannesdorfmann.adapterdelegates4.sample.dsl.cat2AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.sample.model.DisplayableItem
 
 class MainListAdapter(activity: Activity) : ListDelegationAdapter<List<DisplayableItem>>(
     AdvertisementAdapterDelegate(activity),
-    catAdapterDelegate(),
+    cat2AdapterDelegate(),
     DogAdapterDelegate(activity),
     GeckoAdapterDelegate(activity),
     SnakeListItemAdapterDelegate(activity)
