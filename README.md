@@ -63,11 +63,11 @@ fun catAdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegateLay
 In case you want to use ViewBinding\DataBinding use `adapterDelegateViewBinding` instead of `adapterDelegate` like this:
 
 ```kotlin
-fun cat2AdapterDelegate() = adapterDelegateViewBinding<Cat, DisplayableItem, ItemCatBinding>(
+fun cat2AdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegateViewBinding<Cat, DisplayableItem, ItemCatBinding>(
     { layoutInflater, root -> ItemCatBinding.inflate(layoutInflater, root, false) }
 ) {
     binding.name.setOnClickListener {
-        Log.d("Click", "Click on $item")
+        itemClickedListener(item)
     }
     bind {
         binding.name.text = item.name
@@ -95,7 +95,7 @@ adapterDelegate<Cat, Animal> (
 }
 ```
 
-The same `on` parameter is available for `adapterDelegateLayoutContainer()` DSL.
+The same `on` parameter is available for `adapterDelegateLayoutContainer()` and `adapterDelegateViewBinding()` DSL.
 
 ### Compose your Adapter
 Finally, you can compose your `RecyclerView Adapter` by registering your AdapterDelegates like this:

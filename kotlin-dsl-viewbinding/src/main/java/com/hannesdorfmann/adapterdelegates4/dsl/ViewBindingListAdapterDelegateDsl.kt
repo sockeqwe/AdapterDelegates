@@ -21,13 +21,13 @@ import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
  * Simple DSL builder to create an [AdapterDelegate] that is backed by a [List] as dataset.
  * This DSL builds on top of [ViewBinding] so that no findViewById is needed anymore.
  *
- * @param viewBinding ViewBinding for this adapter delegate.
+ * @param viewBinding return a [ViewBinding] for this adapter delegate.
  * @param on The check that should be run if the AdapterDelegate is for the corresponding Item in the datasource.
  * In other words its the implementation of [AdapterDelegate.isForViewType].
  * @param block The DSL block. Specify here what to do when the ViewHolder gets created. Think of it as some kind of
  * initializer block. For example, you would setup a click listener on a Ui widget in that block followed by specifying
  * what to do once the ViewHolder binds to the data by specifying a bind block for
- * @since 4.1.0
+ * @since 4.3.0
  */
 inline fun <reified I : T, T, V : ViewBinding> adapterDelegateViewBinding(
     noinline viewBinding: (layoutInflater: LayoutInflater, parent: ViewGroup) -> V,
@@ -107,7 +107,7 @@ internal class DslViewBindingListAdapterDelegate<I : T, T, V : ViewBinding>(
 /**
  * ViewHolder that is used internally if you use [adapterDelegateViewBinding] DSL to create your AdapterDelegate
  *
- * @since 4.1.0
+ * @since 4.3.0
  */
 class AdapterDelegateViewBindingViewHolder<T, V: ViewBinding>(
     val binding: V, view: View = binding.root
@@ -141,7 +141,7 @@ class AdapterDelegateViewBindingViewHolder<T, V: ViewBinding>(
     /**
      * Get the context.
      *
-     * @since 4.1.1
+     * @since 4.3.0
      */
     val context: Context = view.context
 
@@ -153,7 +153,7 @@ class AdapterDelegateViewBindingViewHolder<T, V: ViewBinding>(
      * @return The string data associated with the resource, stripped of styled
      * text information.
      *
-     * @since 4.1.1
+     * @since 4.3.0
      */
     fun getString(@StringRes resId: Int): String {
         return context.getString(resId)
@@ -170,7 +170,7 @@ class AdapterDelegateViewBindingViewHolder<T, V: ViewBinding>(
      * @return The string data associated with the resource, formatted and
      * stripped of styled text information.
      *
-     * @since 4.1.1
+     * @since 4.3.0
      */
     fun getString(@StringRes resId: Int, vararg formatArgs: Any): String {
         return context.getString(resId, *formatArgs)
@@ -187,7 +187,7 @@ class AdapterDelegateViewBindingViewHolder<T, V: ViewBinding>(
      * @throws android.content.res.Resources.NotFoundException if the given ID
      * does not exist.
      *
-     * @since 4.1.1
+     * @since 4.3.0
      */
     @ColorInt
     fun getColor(@ColorRes id: Int): Int {
@@ -205,7 +205,7 @@ class AdapterDelegateViewBindingViewHolder<T, V: ViewBinding>(
      * @throws android.content.res.Resources.NotFoundException if the given ID
      * does not exist.
      *
-     * @since 4.1.1
+     * @since 4.3.0
      */
     fun getDrawable(@DrawableRes id: Int): Drawable? {
         return ContextCompat.getDrawable(context, id)
@@ -324,9 +324,4 @@ class AdapterDelegateViewBindingViewHolder<T, V: ViewBinding>(
         }
         _onViewDetachedFromWindow = block
     }
-
-    /**
-     * Convenience method find a given view with the given id inside the layout
-     */
-    fun <V : View> findViewById(@IdRes id: Int): V = itemView.findViewById(id) as V
 }
