@@ -244,8 +244,16 @@ public class AdapterDelegatesManager<T> {
             return FALLBACK_DELEGATE_VIEW_TYPE;
         }
 
-        throw new NullPointerException(
-                "No AdapterDelegate added that matches position=" + position + " in data source");
+        final String errorMessage;
+
+        if (items instanceof List<?>) {
+            String itemString = ((List<?>) items).get(position).toString();
+            errorMessage = "No AdapterDelegate added that matches item=" + itemString + " at position=" + position + " in data source";
+        }  else {
+            errorMessage = "No AdapterDelegate added for item at position=" + position + ". items=" + items;
+        }
+
+        throw new NullPointerException(errorMessage);
     }
 
     /**
