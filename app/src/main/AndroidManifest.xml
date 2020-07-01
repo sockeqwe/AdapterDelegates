@@ -22,6 +22,7 @@
         <activity android:name=".animations.AnimationDiffUtilsActivity" />
         <activity android:name=".DiffActivity" />
         <activity android:name=".pagination.PaginationActivity"></activity>
+        <activity android:name=".paging3.Paging3Activity" />
     </application>
 
 </manifest>

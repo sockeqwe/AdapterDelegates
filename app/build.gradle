@@ -28,6 +28,10 @@ android {
         targetCompatibility rootProject.ext.javaTargetCompatibility
     }
 
+    kotlinOptions {
+        jvmTarget = rootProject.ext.javaSourceCompatibility.toString()
+    }
+
     lintOptions {
         disable 'GoogleAppIndexingWarning'
         abortOnError false
@@ -46,6 +50,7 @@ dependencies {
 
     implementation project(':library')
     implementation project(':paging')
+    implementation project(':paging3')
     implementation project(':kotlin-dsl')
     implementation project(':kotlin-dsl-layoutcontainer')
     implementation project(':kotlin-dsl-viewbinding')

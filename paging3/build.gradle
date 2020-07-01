@@ -1,0 +1,58 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+gradle.ext.isCiServer = System.getenv().containsKey("CI")
+logger.warn("Running on CI: ${gradle.ext.isCiServer}")
+
+if (gradle.ext.isCiServer) {
+    apply plugin: "com.vanniktech.maven.publish"
+    mavenPublish {
+        releaseRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        snapshotRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdk
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 28
+        versionCode 1
+        versionName "4.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaSourceCompatibility
+        targetCompatibility rootProject.ext.javaTargetCompatibility
+    }
+    kotlinOptions {
+        jvmTarget = rootProject.ext.javaTargetCompatibility.toString()
+    }
+
+    libraryVariants.all {
+        it.generateBuildConfig.enabled = false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(":library")
+    api rootProject.ext.paging3
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-inline:2.21.0'
+}

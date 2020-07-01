@@ -12,6 +12,7 @@ import com.hannesdorfmann.adapterdelegates4.sample.model.Dog;
 import com.hannesdorfmann.adapterdelegates4.sample.model.Gecko;
 import com.hannesdorfmann.adapterdelegates4.sample.model.Snake;
 import com.hannesdorfmann.adapterdelegates4.sample.pagination.PaginationActivity;
+import com.hannesdorfmann.adapterdelegates4.sample.paging3.Paging3Activity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,6 +62,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, PaginationActivity.class));
+            }
+        });
+
+        findViewById(R.id.paging3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, Paging3Activity.class));
             }
         });
     }

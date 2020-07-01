@@ -1,1 +1,1 @@
-include ':app', ':library', ':paging', ':kotlin-dsl', ':kotlin-dsl-layoutcontainer', ':kotlin-dsl-viewbinding'
+include ':app', ':library', ':paging', ':kotlin-dsl', ':kotlin-dsl-layoutcontainer', ':kotlin-dsl-viewbinding', ':paging3'
