@@ -63,7 +63,7 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
      * @param position The items position in the dataset (list)
      * @return true if this AdapterDelegate is responsible for that, otherwise false
      */
-    protected abstract boolean isForViewType(@NonNull T item, @NonNull List<T> items, int position);
+    public abstract boolean isForViewType(@NonNull T item, @NonNull List<T> items, int position);
 
     /**
      * Creates the  {@link RecyclerView.ViewHolder} for the given data source item
@@ -73,7 +73,7 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
      */
     @NonNull
     @Override
-    protected abstract VH onCreateViewHolder(@NonNull ViewGroup parent);
+    public abstract VH onCreateViewHolder(@NonNull ViewGroup parent);
 
     /**
      * Called to bind the {@link RecyclerView.ViewHolder} to the item of the dataset
@@ -82,6 +82,6 @@ public abstract class AbsListItemAdapterDelegate<I extends T, T, VH extends Recy
      * @param holder   The ViewHolder
      * @param payloads The payloads
      */
-    protected abstract void onBindViewHolder(@NonNull I item, @NonNull VH holder,
+    public abstract void onBindViewHolder(@NonNull I item, @NonNull VH holder,
                                              @NonNull List<Object> payloads);
 }
