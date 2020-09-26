@@ -67,7 +67,7 @@ androidExtensions {
 }
 ```
 
-to your build.gradle to enable LayoutContaier.
+to your build.gradle to enable LayoutContainer.
 
 In case you want to use ViewBinding\DataBinding use `adapterDelegateViewBinding` instead of `adapterDelegate` like this:
 
