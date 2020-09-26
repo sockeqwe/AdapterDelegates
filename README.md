@@ -85,7 +85,7 @@ fun cat2AdapterDelegate(itemClickedListener : (Cat) -> Unit) = adapterDelegateVi
 ```
 
 You have to specify if a specific AdapterDelegate is responsible for a specific item.
-Per default this is done with an `instanceof` check like  `Cat instanceof Animal`.
+Per default this is done with an `instanceof` check like  `item instanceof Cat`.
 You can override this if you want to handle it in a custom way by setting the `on` lambda
 and return true or false:
 
