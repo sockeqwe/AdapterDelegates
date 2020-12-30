@@ -1,6 +1,7 @@
 package com.hannesdorfmann.adapterdelegates4.sample.dsl
 
 import android.util.Log
+import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateLayoutContainer
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.hannesdorfmann.adapterdelegates4.sample.R
@@ -22,13 +23,13 @@ fun catAdapterDelegate() = adapterDelegateLayoutContainer<Cat,
     }
 }
 
-fun cat2AdapterDelegate() = adapterDelegateViewBinding<Cat, DisplayableItem, ItemCatBinding>(
-    { layoutInflater, root -> ItemCatBinding.inflate(layoutInflater, root, false) }
-) {
-    binding.name.setOnClickListener {
-        Log.d("Click", "Click on $item")
-    }
-    bind {
-        binding.name.text = item.name
+fun cat2AdapterDelegate(): AdapterDelegate<List<DisplayableItem>> {
+    return adapterDelegateViewBinding<Cat, DisplayableItem, ItemCatBinding>(ItemCatBinding::inflate) {
+        binding.name.setOnClickListener {
+            Log.d("Click", "Click on $item")
+        }
+        bind {
+            binding.name.text = item.name
+        }
     }
 }

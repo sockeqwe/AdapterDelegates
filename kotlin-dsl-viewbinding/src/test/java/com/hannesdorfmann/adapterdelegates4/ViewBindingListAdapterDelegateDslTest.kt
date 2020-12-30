@@ -20,11 +20,13 @@ class ViewBindingListAdapterDelegateDslTest {
         return Mockito.mock(LayoutInflater::class.java)
     }
 
-    private fun fakeView(): View {
+    private fun fakeViewBinding(): (layoutInflater: LayoutInflater, parent: ViewGroup, attachToParent: Boolean) -> ViewBinding {
         val view = Mockito.mock(View::class.java)
         val context = Mockito.mock(Context::class.java)
         whenever(view.context).thenReturn(context)
-        return view
+        return { _, _, _ ->
+            ViewBinding { view }
+        }
     }
 
     private fun fakeViewGroup(): ViewGroup {
@@ -43,16 +45,12 @@ class ViewBindingListAdapterDelegateDslTest {
         var bindCalled = 0
         var bindPayload = emptyList<Any>()
         var boundItemInBindBlock: Any? = null
-        val view = fakeView()
         val viewGroup = fakeViewGroup()
         val layoutInflater = fakeLayoutInflater()
 
-        val binding = ViewBinding {
-            view
-        }
         val delegate =
             adapterDelegateViewBinding<Any, Any, ViewBinding>(
-                viewBinding = { _, _ -> binding },
+                viewBinding = fakeViewBinding(),
                 layoutInflater = { layoutInflater }
             ) {
                 initCalled++
@@ -87,14 +85,9 @@ class ViewBindingListAdapterDelegateDslTest {
 
     @Test
     fun `isForViewType is determined from generics correctly`() {
-        val view = fakeView()
-
-        val binding = ViewBinding {
-            view
-        }
         val delegate =
             adapterDelegateViewBinding<Item, Any, ViewBinding>(
-                viewBinding = { _, _ -> binding }) {
+                fakeViewBinding()) {
             }
 
         val item = Item("foo")
@@ -106,19 +99,15 @@ class ViewBindingListAdapterDelegateDslTest {
 
     @Test
     fun `custom on block is used for isForViewType`() {
-        val view = fakeView()
 
         var onBlockCalled = 0
         var onBlockItem: Any? = null
         var onBlockList: List<Any>? = null
         var onBlockPosition = -1
 
-        val binding = ViewBinding {
-            view
-        }
         val delegate =
             adapterDelegateViewBinding<Item, Any, ViewBinding>(
-                viewBinding = { _, _ -> binding },
+                viewBinding = fakeViewBinding(),
                 on = { item, list, position ->
                     onBlockItem = item
                     onBlockList = list
@@ -147,17 +136,13 @@ class ViewBindingListAdapterDelegateDslTest {
 
     @Test
     fun `multiple binds throws exception`() {
-        val view = fakeView()
         val viewGroup = fakeViewGroup()
         val layoutInflater = fakeLayoutInflater()
 
-        val binding = ViewBinding {
-            view
-        }
         try {
             val delegate =
                 adapterDelegateViewBinding<Any, Any, ViewBinding>(
-                    viewBinding = { _, _ -> binding },
+                    viewBinding = fakeViewBinding(),
                     layoutInflater = { layoutInflater }
                 ) {
                     bind { }
@@ -174,17 +159,13 @@ class ViewBindingListAdapterDelegateDslTest {
 
     @Test
     fun `onViewRecycled called`() {
-        val view = fakeView()
         val viewGroup = fakeViewGroup()
         val layoutInflater = fakeLayoutInflater()
         var called = 0
         var viewHolder: AdapterDelegateViewBindingViewHolder<Any, ViewBinding>? = null
-        val binding = ViewBinding {
-            view
-        }
         val delegate =
             adapterDelegateViewBinding<Any, Any, ViewBinding>(
-                viewBinding = { _, _ -> binding },
+                viewBinding = fakeViewBinding(),
                 layoutInflater = { layoutInflater }
             ) {
                 viewHolder = this
@@ -201,17 +182,13 @@ class ViewBindingListAdapterDelegateDslTest {
 
     @Test
     fun `multiple onViewRecycled throws exception`() {
-        val view = fakeView()
         val viewGroup = fakeViewGroup()
         val layoutInflater = fakeLayoutInflater()
 
-        val binding = ViewBinding {
-            view
-        }
         try {
             val delegate =
                 adapterDelegateViewBinding<Any, Any, ViewBinding>(
-                    viewBinding = { _, _ -> binding },
+                    viewBinding = fakeViewBinding(),
                     layoutInflater = { layoutInflater }
                 ) {
                     onViewRecycled { }
@@ -229,18 +206,14 @@ class ViewBindingListAdapterDelegateDslTest {
 
     @Test
     fun `onFailedToRecycleView called`() {
-        val view = fakeView()
         val viewGroup = fakeViewGroup()
         val layoutInflater = fakeLayoutInflater()
 
         var called = 0
         var viewHolder: AdapterDelegateViewBindingViewHolder<Any, ViewBinding>? = null
-        val binding = ViewBinding {
-            view
-        }
         val delegate =
             adapterDelegateViewBinding<Any, Any, ViewBinding>(
-                viewBinding = { _, _ -> binding },
+                viewBinding = fakeViewBinding(),
                 layoutInflater = { layoutInflater }
             ) {
                 viewHolder = this
@@ -259,17 +232,13 @@ class ViewBindingListAdapterDelegateDslTest {
 
     @Test
     fun `multiple onFailedToRecycleView throws exception`() {
-        val view = fakeView()
         val viewGroup = fakeViewGroup()
         val layoutInflater = fakeLayoutInflater()
 
-        val binding = ViewBinding {
-            view
-        }
         try {
             val delegate =
                 adapterDelegateViewBinding<Any, Any, ViewBinding>(
-                    viewBinding = { _, _ -> binding },
+                    viewBinding = fakeViewBinding(),
                     layoutInflater = { layoutInflater }
                 ) {
                     onFailedToRecycleView { false }
@@ -287,18 +256,14 @@ class ViewBindingListAdapterDelegateDslTest {
 
     @Test
     fun `onViewAttachedToWindow called`() {
-        val view = fakeView()
         val viewGroup = fakeViewGroup()
         val layoutInflater = fakeLayoutInflater()
 
         var called = 0
         var viewHolder: AdapterDelegateViewBindingViewHolder<Any, ViewBinding>? = null
-        val binding = ViewBinding {
-            view
-        }
         val delegate =
             adapterDelegateViewBinding<Any, Any, ViewBinding>(
-                viewBinding = { _, _ -> binding },
+                viewBinding = fakeViewBinding(),
                 layoutInflater = { layoutInflater }
             ) {
                 viewHolder = this
@@ -315,17 +280,13 @@ class ViewBindingListAdapterDelegateDslTest {
 
     @Test
     fun `multiple onViewAttachedToWindow throws exception`() {
-        val view = fakeView()
         val viewGroup = fakeViewGroup()
         val layoutInflater = fakeLayoutInflater()
 
-        val binding = ViewBinding {
-            view
-        }
         try {
             val delegate =
                 adapterDelegateViewBinding<Any, Any, ViewBinding>(
-                    viewBinding = { _, _ -> binding },
+                    viewBinding = fakeViewBinding(),
                     layoutInflater = { layoutInflater }
                 ) {
                     onViewAttachedToWindow { }
@@ -344,18 +305,14 @@ class ViewBindingListAdapterDelegateDslTest {
 
     @Test
     fun `onViewDetachedFromWindow called`() {
-        val view = fakeView()
         val viewGroup = fakeViewGroup()
         val layoutInflater = fakeLayoutInflater()
 
         var called = 0
         var viewHolder: AdapterDelegateViewBindingViewHolder<Any, ViewBinding>? = null
-        val binding = ViewBinding {
-            view
-        }
         val delegate =
             adapterDelegateViewBinding<Any, Any, ViewBinding>(
-                viewBinding = { _, _ -> binding },
+                viewBinding = fakeViewBinding(),
                 layoutInflater = { layoutInflater }
             ) {
                 viewHolder = this
@@ -372,17 +329,13 @@ class ViewBindingListAdapterDelegateDslTest {
 
     @Test
     fun `multiple onViewDetachedFromWindow throws exception`() {
-        val view = fakeView()
         val viewGroup = fakeViewGroup()
         val layoutInflater = fakeLayoutInflater()
 
-        val binding = ViewBinding {
-            view
-        }
         try {
             val delegate =
                 adapterDelegateViewBinding<Any, Any, ViewBinding>(
-                    viewBinding = { _, _ -> binding },
+                    viewBinding = fakeViewBinding(),
                     layoutInflater = { layoutInflater }
                 ) {
                     onViewDetachedFromWindow { }

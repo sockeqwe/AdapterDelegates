@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +20,8 @@ import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
  * Simple DSL builder to create an [AdapterDelegate] that is backed by a [List] as dataset.
  * This DSL builds on top of [ViewBinding] so that no findViewById is needed anymore.
  *
- * @param viewBinding return a [ViewBinding] for this adapter delegate.
+ * @param viewBinding return a [ViewBinding] for this adapter delegate. Typically a method reference. For
+ * example MyBinding::inflate
  * @param on The check that should be run if the AdapterDelegate is for the corresponding Item in the datasource.
  * In other words its the implementation of [AdapterDelegate.isForViewType].
  * @param block The DSL block. Specify here what to do when the ViewHolder gets created. Think of it as some kind of
@@ -30,7 +30,7 @@ import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
  * @since 4.3.0
  */
 inline fun <reified I : T, T, V : ViewBinding> adapterDelegateViewBinding(
-    noinline viewBinding: (layoutInflater: LayoutInflater, parent: ViewGroup) -> V,
+    noinline viewBinding: (layoutInflater: LayoutInflater, parent: ViewGroup, attachToParent: Boolean) -> V,
     noinline on: (item: T, items: List<T>, position: Int) -> Boolean = { item, _, _ -> item is I },
     noinline layoutInflater: (parent: ViewGroup) -> LayoutInflater = { parent -> LayoutInflater.from(parent.context) },
     noinline block: AdapterDelegateViewBindingViewHolder<I, V>.() -> Unit
@@ -43,20 +43,21 @@ inline fun <reified I : T, T, V : ViewBinding> adapterDelegateViewBinding(
         layoutInflater = layoutInflater)
 }
 
+
 @PublishedApi
 internal class DslViewBindingListAdapterDelegate<I : T, T, V : ViewBinding>(
-    private val binding: (layoutInflater: LayoutInflater, parent: ViewGroup) -> V,
+    private val binding: (layoutInflater: LayoutInflater, parent: ViewGroup, attachToParent: Boolean) -> V,
     private val on: (item: T, items: List<T>, position: Int) -> Boolean,
-    private val initializerBlock: AdapterDelegateViewBindingViewHolder<I, V>.()->Unit,
+    private val initializerBlock: AdapterDelegateViewBindingViewHolder<I, V>.() -> Unit,
     private val layoutInflater: (parent: ViewGroup) -> LayoutInflater
-    ) : AbsListItemAdapterDelegate<I, T, AdapterDelegateViewBindingViewHolder<I, V>>() {
+) : AbsListItemAdapterDelegate<I, T, AdapterDelegateViewBindingViewHolder<I, V>>() {
 
     override fun isForViewType(item: T, items: MutableList<T>, position: Int): Boolean = on(
         item, items, position
     )
 
     override fun onCreateViewHolder(parent: ViewGroup): AdapterDelegateViewBindingViewHolder<I, V> {
-        val binding = binding(layoutInflater(parent), parent)
+        val binding = binding(layoutInflater(parent), parent, false)
         return AdapterDelegateViewBindingViewHolder<I, V>(
             binding
         ).also {
@@ -109,7 +110,7 @@ internal class DslViewBindingListAdapterDelegate<I : T, T, V : ViewBinding>(
  *
  * @since 4.3.0
  */
-class AdapterDelegateViewBindingViewHolder<T, V: ViewBinding>(
+class AdapterDelegateViewBindingViewHolder<T, V : ViewBinding>(
     val binding: V, view: View = binding.root
 ) : RecyclerView.ViewHolder(view) {
 
