@@ -170,6 +170,15 @@ public class AsyncListDifferDelegationAdapter<T> extends RecyclerView.Adapter {
         differ.submitList(items);
     }
 
+    /**
+     * Set the items / data source of this adapter
+     *
+     * @param items The items / data source
+     * @param commitCallback Runnable that is executed when the List is committed, if it is committed
+     */
+    public void setItems(List<T> items, Runnable commitCallback) {
+        differ.submitList(items, commitCallback);
+    }
 
     @Override
     public int getItemCount() {
