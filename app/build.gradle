@@ -44,13 +44,13 @@ dependencies {
     implementation rootProject.ext.recyclerView
     implementation rootProject.ext.core
     implementation rootProject.ext.constraintLayout
+    implementation rootProject.ext.kotlinStdLib
 
     implementation project(':library')
     implementation project(':paging')
     implementation project(':kotlin-dsl')
     implementation project(':kotlin-dsl-layoutcontainer')
     implementation project(':kotlin-dsl-viewbinding')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 repositories {
     mavenCentral()

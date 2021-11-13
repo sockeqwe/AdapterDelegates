@@ -1,22 +1,12 @@
 apply plugin: 'com.android.library'
-
-gradle.ext.isCiServer = System.getenv().containsKey("CI")
-logger.warn("Running on CI: ${gradle.ext.isCiServer}")
-
-if (gradle.ext.isCiServer) {
-    apply plugin: "com.vanniktech.maven.publish"
-    mavenPublish {
-        releaseRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-        snapshotRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-    }
-}
+apply plugin: "com.vanniktech.maven.publish"
 
 android {
     compileSdkVersion rootProject.ext.compileSdk
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 28
+        minSdkVersion rootProject.ext.minSdk
+        targetSdkVersion rootProject.ext.targetSdk
     }
     buildTypes {
         release {
@@ -39,9 +29,6 @@ dependencies {
     api rootProject.ext.recyclerView
     api rootProject.ext.androidAnnotations
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-inline:2.21.0'
+    testImplementation rootProject.ext.junit
+    testImplementation rootProject.ext.mockito
 }
-
-// apply from: 'https://raw.github.com/sockeqwe/gradle-mvn-push/master/gradle-mvn-push.gradle'
-// apply from: 'https://raw.githubusercontent.com/Tickaroo/findbugs-script/master/findbugs.gradle'
