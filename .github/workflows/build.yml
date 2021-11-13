@@ -17,7 +17,4 @@ jobs:
           java-version: 11
 
       - name: Build
-        run: ./gradlew build
-
-      - name: Buld Android sample app
-        run: ./gradlew :app:assembleDebug
+        run: ./gradlew build --stacktrace
