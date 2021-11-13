@@ -29,6 +29,7 @@ android {
     }
 
     lintOptions {
+        checkReleaseBuilds false
         disable 'GoogleAppIndexingWarning'
         abortOnError false
     }
