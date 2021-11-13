@@ -19,13 +19,13 @@ There are 2 artifacts for kotlin users that allow you to write Adapter Delegates
 ## Dependencies
 
 ```
-implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.3.0'
+implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.3.1'
 
 // If you use Kotlin Android Extensions and synthetic properties (alternative to findViewById())
-implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-layoutcontainer:4.3.0'
+implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-layoutcontainer:4.3.1'
 
 // If you use ViewBinding
-implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.0'
+implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.1'
 ```
 
 ## How to use it
@@ -149,7 +149,7 @@ fun catAdapterDelegate() = adapterDelegate<Cat, Animal> {
 This library is available on maven central:
 
 ```groovy
-implementation 'com.hannesdorfmann:adapterdelegates4:4.3.0'
+implementation 'com.hannesdorfmann:adapterdelegates4:4.3.1'
 ```
 [![Build Status](https://travis-ci.org/sockeqwe/AdapterDelegates.svg?branch=master)](https://travis-ci.org/sockeqwe/AdapterDelegates)
 
@@ -158,7 +158,7 @@ Please note that since 4.0 the group id has been changed to `adapterdelegates4`.
 ### Snapshot
 
 ```groovy
-implementation 'com.hannesdorfmann:adapterdelegates4:4.3.1-SNAPSHOT'
+implementation 'com.hannesdorfmann:adapterdelegates4:4.3.2-SNAPSHOT'
 ```
 
 You also have to add the url to the snapshot repository:
@@ -348,7 +348,7 @@ public class DiffAdapter extends AsyncListDifferDelegationAdapter<Animal> {
 There is an additional artifact for the pagination library:
 
 ```gradle
-implementation 'com.hannesdorfmann:adapterdelegates4-pagination:4.3.0'
+implementation 'com.hannesdorfmann:adapterdelegates4-pagination:4.3.1'
 ```
 
 Use `PagedListDelegationAdapter`.
