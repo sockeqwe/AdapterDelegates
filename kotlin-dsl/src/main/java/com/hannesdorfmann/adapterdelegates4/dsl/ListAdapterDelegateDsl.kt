@@ -219,7 +219,7 @@ class AdapterDelegateViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {
      */
     fun getDrawable(@DrawableRes id: Int): Drawable {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            context.getDrawable(id)
+            context.getDrawable(id)!!
         } else {
             context.resources.getDrawable(id)
         }

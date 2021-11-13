@@ -9,7 +9,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +22,7 @@
             android:label="Reptiels" />
         <activity android:name=".animations.AnimationDiffUtilsActivity" />
         <activity android:name=".DiffActivity" />
-        <activity android:name=".pagination.PaginationActivity"></activity>
+        <activity android:name=".pagination.PaginationActivity" />
     </application>
 
 </manifest>
