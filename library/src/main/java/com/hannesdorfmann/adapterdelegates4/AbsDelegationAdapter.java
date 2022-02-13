@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -58,7 +59,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
 
     protected AdapterDelegatesManager<T> delegatesManager;
-    protected T items;
+    @Nullable protected T items;
 
     public AbsDelegationAdapter() {
         this(new AdapterDelegatesManager<T>());
@@ -128,6 +129,7 @@ public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
      *
      * @return The items / data source
      */
+    @Nullable
     public T getItems() {
         return items;
     }
@@ -137,7 +139,7 @@ public abstract class AbsDelegationAdapter<T> extends RecyclerView.Adapter {
      *
      * @param items The items / data source
      */
-    public void setItems(T items) {
+    public void setItems(@Nullable T items) {
         this.items = items;
     }
 }
