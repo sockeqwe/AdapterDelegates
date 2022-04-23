@@ -13,34 +13,31 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val animals: List<DisplayableItem>
-        get() {
-            return mutableListOf<DisplayableItem>().apply {
-                add(Cat("American Curl"))
-                add(Cat("Baliness"))
-                add(Cat("Bengal"))
-                add(Cat("Corat"))
-                add(Cat("Manx"))
-                add(Cat("Nebelung"))
-                add(Dog("Aidi"))
-                add(Dog("Chinook"))
-                add(Dog("Appenzeller"))
-                add(Dog("Collie"))
-                add(Snake("Mub Adder", "Adder"))
-                add(Snake("Texas Blind Snake", "Blind snake"))
-                add(Snake("Tree Boa", "Boa"))
-                add(Gecko("Fat-tailed", "Hemitheconyx"))
-                add(Gecko("Stenodactylus", "Dune Gecko"))
-                add(Gecko("Leopard Gecko", "Eublepharis"))
-                add(Gecko("Madagascar Gecko", "Phelsuma"))
-                add(Advertisement())
-                add(Advertisement())
-                add(Advertisement())
-                add(Advertisement())
-                add(Advertisement())
-                shuffle()
-            }
-        }
+    private val animals = mutableListOf<DisplayableItem>().apply {
+        add(Cat("American Curl"))
+        add(Cat("Baliness"))
+        add(Cat("Bengal"))
+        add(Cat("Corat"))
+        add(Cat("Manx"))
+        add(Cat("Nebelung"))
+        add(Dog("Aidi"))
+        add(Dog("Chinook"))
+        add(Dog("Appenzeller"))
+        add(Dog("Collie"))
+        add(Snake("Mub Adder", "Adder"))
+        add(Snake("Texas Blind Snake", "Blind snake"))
+        add(Snake("Tree Boa", "Boa"))
+        add(Gecko("Fat-tailed", "Hemitheconyx"))
+        add(Gecko("Stenodactylus", "Dune Gecko"))
+        add(Gecko("Leopard Gecko", "Eublepharis"))
+        add(Gecko("Madagascar Gecko", "Phelsuma"))
+        add(Advertisement())
+        add(Advertisement())
+        add(Advertisement())
+        add(Advertisement())
+        add(Advertisement())
+        shuffle()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
